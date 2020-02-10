@@ -1,3 +1,7 @@
+# so it turns out this just straight up does not work
+# Requires ffmpeg, but I had no luck getting pydub to work with it.
+# moving on.
+
 import pyaudio
 import wave
 from pydub import AudioSegment
