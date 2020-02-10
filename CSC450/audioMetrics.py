@@ -33,14 +33,19 @@ m = mfcc(win_s, n_filters, n_coeffs, samplerate)
 
 mfccs = zeros([n_coeffs,])
 frames_read = 0
+runner = ""
 while True:
     samples, read = s()
     spec = p(samples)
     mfcc_out = m(spec)
     mfccs = vstack((mfccs, mfcc_out))
+    runner = runner+str(mfccs) #the numbers Mason
     frames_read += read
     if read < hop_s: break
 
+with open("Output.txt", "w") as text_file:
+    print(f"{runner}", file=text_file)
+print(runner)
 # do plotting
 from numpy import arange
 from demo_waveform_plot import get_waveform_plot
