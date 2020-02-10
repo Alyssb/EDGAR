@@ -4,6 +4,8 @@ from pydub import AudioSegment
 from pydub.playback import play
 import random
 
+AudioSegment.ffmpeg = "C:\\Users\\alyss\\Documents\\miscDevTools\\ffmpeg-20200209-5ad1c1a-win64-static\\bin"
+
 print("Press 'r' to beging recording.")
 start = input()
 
