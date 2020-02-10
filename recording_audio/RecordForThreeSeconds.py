@@ -5,7 +5,7 @@ from pydub.playback import play
 import random
 
 print("Press 'r' to beging recording.")
-start = raw_input()
+start = input()
 
 if start == 'r' or 'R':
     chunk = 1024  # Record in chunks of 1024 samples
