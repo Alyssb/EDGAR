@@ -12,7 +12,7 @@ n_coeffs = 13
 if len(sys.argv) < 2:
     print("Usage: %s <source_filename> [samplerate] [win_s] [hop_s] [mode]" % sys.argv[0])
     print("  where [mode] can be 'delta' or 'ddelta' for first and second derivatives")
-    sys.exit(1)
+    #sys.exit(1)
 
 source_filename = sys.argv[1]
 
