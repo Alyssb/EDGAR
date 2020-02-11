@@ -3,6 +3,8 @@
 import sys
 from aubio import source, pvoc, mfcc
 from numpy import vstack, zeros, diff
+from numpy import save, load, set_printoptions #Cory's mess
+import time #file naming scheme - Cory
 
 n_filters = 40              # must be 40 for mfcc
 n_coeffs = 13
@@ -10,7 +12,7 @@ n_coeffs = 13
 if len(sys.argv) < 2:
     print("Usage: %s <source_filename> [samplerate] [win_s] [hop_s] [mode]" % sys.argv[0])
     print("  where [mode] can be 'delta' or 'ddelta' for first and second derivatives")
-    sys.exit(1)
+    #sys.exit(1)
 
 source_filename = sys.argv[1]
 
@@ -69,6 +71,18 @@ for i in range(n_coeffs):
     ax.set_yticks([])
     ax.set_ylabel('%d' % i)
     ax.plot(all_times, mfccs.T[i])
+
+
+#begin npy saving process
+timer = time.time()
+output_filename = 'output-' + str(timer) + '.npy'
+save(output_filename, all_times) #save numpy vstack data
+
+#testing- load npy file and display in console
+set_printoptions(precision=None, threshold=sys.maxsize)#edit numpy print options
+npy_file_test = load(output_filename)
+#print(npy_file_test)
+print("npy loaded and printed")
 
 # add time to the last axis
 set_xlabels_sample2time( ax, frames_read, samplerate)
