@@ -63,6 +63,7 @@ def get_spectrogram(filename, samplerate=0):
     for item in ([ax.title, ax.xaxis.label, ax.yaxis.label] +
                  ax.get_xticklabels() + ax.get_yticklabels()):
         item.set_fontsize('x-small')
+    plt.show()
     return fig
 
 
