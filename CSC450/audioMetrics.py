@@ -76,7 +76,7 @@ for i in range(n_coeffs):
 
 #begin npy saving process
 timer = time.time()
-output_filename = 'output-' + str(timer) + '.npy'
+output_filename = 'mfcc-outputs\output-' + str(timer) + '.npy'
 save(output_filename, all_times) #save numpy vstack data
 
 #testing- load npy file and display in console
