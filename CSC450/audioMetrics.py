@@ -76,14 +76,14 @@ for i in range(n_coeffs):
 
 #begin npy saving process
 timer = time.time()
-output_filename = 'mfcc-outputs\output-' + str(timer) + '.npy'
+output_filename = 'mfcc-outputs\\output-' + str(timer) + '.npy'
 save(output_filename, all_times) #save numpy vstack data
 
 #testing- load npy file and display in console
 set_printoptions(precision=None, threshold=sys.maxsize)#edit numpy print options
 npy_file_test = load(output_filename)
 print(npy_file_test)
-print("npy loaded and printed")
+# print("npy loaded and printed")
 
 # add time to the last axis
 set_xlabels_sample2time( ax, frames_read, samplerate)
@@ -94,4 +94,4 @@ title = 'MFCC for %s' % source_filename
 if mode == "delta": title = mode + " " + title
 elif mode == "ddelta": title = "double-delta" + " " + title
 wave.set_title(title)
-#plt.show()
+plt.show()
