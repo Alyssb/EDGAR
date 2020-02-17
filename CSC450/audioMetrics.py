@@ -4,10 +4,15 @@
 # must be run from the directory EDGAR in the project.
 
 import sys
-from aubio import source, pvoc, mfcc
+from aubio import source, pvoc, mfcc    # this line always has an error. Don't know why
 from numpy import vstack, zeros, diff
 from numpy import save, load, set_printoptions #Cory's mess
 import time #file naming scheme - Cory
+
+from numpy import arange
+from demo_waveform_plot import get_waveform_plot
+from demo_waveform_plot import set_xlabels_sample2time
+import matplotlib.pyplot as plt
 
 def getFilename(root):
     return(root + "Actor_01\\03-01-01-01-01-01-01.wav")
@@ -31,7 +36,7 @@ class doPlotting:
         self.m = mfcc(self.win_s, self.n_filters, self.n_coeffs, self.samplerate)
 
     def getMFCC(self):
-        mfccs = zeros([n_coeffs,])
+        mfccs = zeros([self.n_coeffs,])
         frames_read = 0
         
         while True:
@@ -42,12 +47,11 @@ class doPlotting:
             frames_read += read
             if read < self.hop_s: break
 
+    # I would like to break this down further.
+    # once I understand it better
     def createPlot(self):
         # these will only be usable within this function
-        from numpy import arange
-        from demo_waveform_plot import get_waveform_plot
-        from demo_waveform_plot import set_xlabels_sample2time
-        import matplotlib.pyplot as plt
+
 
         # do plotting
         fig = plt.figure()
@@ -64,26 +68,29 @@ class doPlotting:
         if self.mode == "ddelta":
             mfccs = diff(mfccs, axis = 0)
 
-        all_times = arange(mfccs.shape[0]) * self.hop_s
+        self.all_times = arange(mfccs.shape[0]) * self.hop_s
         n_coeffs = mfccs.shape[1]
         for i in range(n_coeffs):
             ax = plt.axes ( [0.1, 0.75 - ((i+1) * 0.65 / n_coeffs),  0.8, 0.65 / n_coeffs], sharex = wave )
             ax.xaxis.set_visible(False)
             ax.set_yticks([])
             ax.set_ylabel('%d' % i)
-            ax.plot(all_times, mfccs.T[i])
+            ax.plot(self.all_times, mfccs.T[i])
+
+    def saveNPY(self):
+        #begin npy saving process
+        timer = time.time()
+        output_filename = 'mfcc-outputs\\output-' + str(timer) + '.npy'
+        save(output_filename, self.all_times) #save numpy vstack data
 
 
-#begin npy saving process
-timer = time.time()
-output_filename = 'mfcc-outputs\\output-' + str(timer) + '.npy'
-save(output_filename, all_times) #save numpy vstack data
 
-#testing- load npy file and display in console
-set_printoptions(precision=None, threshold=sys.maxsize)#edit numpy print options
-npy_file_test = load(output_filename)
-print(npy_file_test)
-# print("npy loaded and printed")
+
+        #testing- load npy file and display in console
+        set_printoptions(precision=None, threshold=sys.maxsize)#edit numpy print options
+        npy_file_test = load(output_filename)
+        print(npy_file_test)
+        # print("npy loaded and printed")
 
 # add time to the last axis
 set_xlabels_sample2time( ax, frames_read, samplerate)
