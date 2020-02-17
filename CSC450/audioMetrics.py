@@ -9,6 +9,7 @@ from numpy import vstack, zeros, diff
 from numpy import save, load, set_printoptions #Cory's mess
 import time #file naming scheme - Cory
 
+
 n_filters = 40              # must be 40 for mfcc
 n_coeffs = 13
 root = ".\\CSC450\\data\\Audio_Speech_Actors_01-24\\"
@@ -91,3 +92,9 @@ if mode == "delta": title = mode + " " + title
 elif mode == "ddelta": title = "double-delta" + " " + title
 wave.set_title(title)
 plt.show()
+
+def main():
+    print("hello world.")
+
+if __name__ == "__main__":
+    main()
