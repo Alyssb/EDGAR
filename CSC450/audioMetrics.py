@@ -9,27 +9,29 @@ from numpy import vstack, zeros, diff
 from numpy import save, load, set_printoptions #Cory's mess
 import time #file naming scheme - Cory
 
+def getFilename(root):
+    return(root + "Actor_01\\03-01-01-01-01-01-01.wav")
 
-n_filters = 40              # must be 40 for mfcc
-n_coeffs = 13
-root = ".\\CSC450\\data\\Audio_Speech_Actors_01-24\\"
+# we're doing our best
+class doPlotting:
+    def __init__(self,filename):
+        self.n_filters = 40              # must be 40 for mfcc
+        self.n_coeffs = 13
 
-if len(sys.argv) < 2:
-    print("Usage: %s <source_filename> [samplerate] [win_s] [hop_s] [mode]" % sys.argv[0])
-    print("  where [mode] can be 'delta' or 'ddelta' for first and second derivatives")
-    #sys.exit(1)
+        self.source_filename = filename
 
-source_filename = root + "Actor_01\\03-01-01-01-01-01-01.wav"
+        self.samplerate = 0
+        self.win_s = 512
+        self.hop_s = self.win_s // 4
+        self.mode = "default"
 
-samplerate = 0
-win_s = 512
-hop_s = win_s // 4
-mode = "default"
+        self.s = source(self.source_filename, self.samplerate, self.hop_s)
+        self.samplerate = s.samplerate
+        self.p = pvoc(self.win_s, self.hop_s)
+        self.m = mfcc(self.win_s, self.n_filters, self.n_coeffs, self.samplerate)
 
-s = source(source_filename, samplerate, hop_s)
-samplerate = s.samplerate
-p = pvoc(win_s, hop_s)
-m = mfcc(win_s, n_filters, n_coeffs, samplerate)
+
+
 
 mfccs = zeros([n_coeffs,])
 frames_read = 0
@@ -94,6 +96,8 @@ wave.set_title(title)
 plt.show()
 
 def main():
+    root = "C:\\Users\\alyss\\Documents\\EDGAR\\CSC450\\data\\Audio_Speech_Actors_01-24\\"
+    filename = getFilename(root)
     print("hello world.")
 
 if __name__ == "__main__":
