@@ -36,14 +36,14 @@ class doPlotting:
         self.m = mfcc(self.win_s, self.n_filters, self.n_coeffs, self.samplerate)
 
     def getMFCC(self):
-        mfccs = zeros([self.n_coeffs,])
+        self.mfccs = zeros([self.n_coeffs,])
         frames_read = 0
         
         while True:
             self.samples, read = self.s()
             spec = self.p(self.samples)
             mfcc_out = self.m(spec)
-            mfccs = vstack((mfccs, mfcc_out))
+            self.mfccs = vstack((self.mfccs, mfcc_out))
             frames_read += read
             if read < self.hop_s: break
 
@@ -61,20 +61,20 @@ class doPlotting:
 
         # compute first and second derivatives
         if self.mode in ["delta", "ddelta"]:
-            mfccs = diff(mfccs, axis = 0)
+            self.mfccs = diff(self.mfccs, axis = 0)
         if self.mode == "ddelta":
-            mfccs = diff(mfccs, axis = 0)
+            self.mfccs = diff(self.mfccs, axis = 0)
 
-        self.all_times = arange(mfccs.shape[0]) * self.hop_s
-        n_coeffs = mfccs.shape[1]
+        self.all_times = arange(self.mfccs.shape[0]) * self.hop_s
+        n_coeffs = self.mfccs.shape[1]
 
     def defineAxes(self):
         for i in range(self.n_coeffs):
-            self.ax = plt.axes ( [0.1, 0.75 - ((i+1) * 0.65 / n_coeffs),  0.8, 0.65 / n_coeffs], sharex = wave )
+            self.ax = plt.axes ( [0.1, 0.75 - ((i+1) * 0.65 / self.n_coeffs),  0.8, 0.65 / n_coeffs], sharex = wave )
             self.ax.xaxis.set_visible(False)
             self.ax.set_yticks([])
             self.ax.set_ylabel('%d' % i)
-            self.ax.plot(self.all_times, mfccs.T[i])
+            self.ax.plot(self.all_times, self.mfccs.T[i])
 
     def saveNPY(self):
         #begin npy saving process
