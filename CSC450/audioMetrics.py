@@ -26,22 +26,25 @@ class doPlotting:
         self.mode = "default"
 
         self.s = source(self.source_filename, self.samplerate, self.hop_s)
-        self.samplerate = s.samplerate
+        self.samplerate = self.s.samplerate
         self.p = pvoc(self.win_s, self.hop_s)
         self.m = mfcc(self.win_s, self.n_filters, self.n_coeffs, self.samplerate)
 
+    def getMFCC(self):
+        mfccs = zeros([n_coeffs,])
+        frames_read = 0
+        
+        while True:
+            self.samples, read = self.s()
+            spec = self.p(self.samples)
+            mfcc_out = self.m(spec)
+            mfccs = vstack((mfccs, mfcc_out))
+            frames_read += read
+            if read < self.hop_s: break
 
 
 
-mfccs = zeros([n_coeffs,])
-frames_read = 0
-while True:
-    samples, read = s()
-    spec = p(samples)
-    mfcc_out = m(spec)
-    mfccs = vstack((mfccs, mfcc_out))
-    frames_read += read
-    if read < hop_s: break
+
 
 # do plotting
 from numpy import arange
