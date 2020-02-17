@@ -50,9 +50,6 @@ class doPlotting:
     # I would like to break this down further.
     # once I understand it better
     def createPlot(self):
-        # these will only be usable within this function
-
-
         # do plotting
         fig = plt.figure()
         plt.rc('lines',linewidth='.8')
@@ -70,21 +67,20 @@ class doPlotting:
 
         self.all_times = arange(mfccs.shape[0]) * self.hop_s
         n_coeffs = mfccs.shape[1]
-        for i in range(n_coeffs):
-            ax = plt.axes ( [0.1, 0.75 - ((i+1) * 0.65 / n_coeffs),  0.8, 0.65 / n_coeffs], sharex = wave )
-            ax.xaxis.set_visible(False)
-            ax.set_yticks([])
-            ax.set_ylabel('%d' % i)
-            ax.plot(self.all_times, mfccs.T[i])
+
+    def defineAxes(self):
+        for i in range(self.n_coeffs):
+            self.ax = plt.axes ( [0.1, 0.75 - ((i+1) * 0.65 / n_coeffs),  0.8, 0.65 / n_coeffs], sharex = wave )
+            self.ax.xaxis.set_visible(False)
+            self.ax.set_yticks([])
+            self.ax.set_ylabel('%d' % i)
+            self.ax.plot(self.all_times, mfccs.T[i])
 
     def saveNPY(self):
         #begin npy saving process
         timer = time.time()
         output_filename = 'mfcc-outputs\\output-' + str(timer) + '.npy'
         save(output_filename, self.all_times) #save numpy vstack data
-
-
-
 
         #testing- load npy file and display in console
         set_printoptions(precision=None, threshold=sys.maxsize)#edit numpy print options
