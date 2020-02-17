@@ -42,38 +42,36 @@ class doPlotting:
             frames_read += read
             if read < self.hop_s: break
 
+    def createPlot(self):
+        # these will only be usable within this function
+        from numpy import arange
+        from demo_waveform_plot import get_waveform_plot
+        from demo_waveform_plot import set_xlabels_sample2time
+        import matplotlib.pyplot as plt
 
+        # do plotting
+        fig = plt.figure()
+        plt.rc('lines',linewidth='.8')
+        wave = plt.axes([0.1, 0.75, 0.8, 0.19])
 
+        get_waveform_plot( self.source_filename, self.samplerate, block_size = self.hop_s, ax = wave)
+        wave.xaxis.set_visible(False)
+        wave.yaxis.set_visible(False)
 
+        # compute first and second derivatives
+        if self.mode in ["delta", "ddelta"]:
+            mfccs = diff(mfccs, axis = 0)
+        if self.mode == "ddelta":
+            mfccs = diff(mfccs, axis = 0)
 
-# do plotting
-from numpy import arange
-from demo_waveform_plot import get_waveform_plot
-from demo_waveform_plot import set_xlabels_sample2time
-import matplotlib.pyplot as plt
-
-fig = plt.figure()
-plt.rc('lines',linewidth='.8')
-wave = plt.axes([0.1, 0.75, 0.8, 0.19])
-
-get_waveform_plot( source_filename, samplerate, block_size = hop_s, ax = wave)
-wave.xaxis.set_visible(False)
-wave.yaxis.set_visible(False)
-
-# compute first and second derivatives
-if mode in ["delta", "ddelta"]:
-    mfccs = diff(mfccs, axis = 0)
-if mode == "ddelta":
-    mfccs = diff(mfccs, axis = 0)
-
-all_times = arange(mfccs.shape[0]) * hop_s
-n_coeffs = mfccs.shape[1]
-for i in range(n_coeffs):
-    ax = plt.axes ( [0.1, 0.75 - ((i+1) * 0.65 / n_coeffs),  0.8, 0.65 / n_coeffs], sharex = wave )
-    ax.xaxis.set_visible(False)
-    ax.set_yticks([])
-    ax.set_ylabel('%d' % i)
-    ax.plot(all_times, mfccs.T[i])
+        all_times = arange(mfccs.shape[0]) * self.hop_s
+        n_coeffs = mfccs.shape[1]
+        for i in range(n_coeffs):
+            ax = plt.axes ( [0.1, 0.75 - ((i+1) * 0.65 / n_coeffs),  0.8, 0.65 / n_coeffs], sharex = wave )
+            ax.xaxis.set_visible(False)
+            ax.set_yticks([])
+            ax.set_ylabel('%d' % i)
+            ax.plot(all_times, mfccs.T[i])
 
 
 #begin npy saving process
@@ -93,8 +91,8 @@ set_xlabels_sample2time( ax, frames_read, samplerate)
 #plt.ylabel('spectral descriptor value')
 ax.xaxis.set_visible(True)
 title = 'MFCC for %s' % source_filename
-if mode == "delta": title = mode + " " + title
-elif mode == "ddelta": title = "double-delta" + " " + title
+if self.mode == "delta": title = self.mode + " " + title
+elif self.mode == "ddelta": title = "double-delta" + " " + title
 wave.set_title(title)
 plt.show()
 
