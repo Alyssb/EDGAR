@@ -1,5 +1,7 @@
 #! /usr/bin/env python
 # This is just cory's code stolen
+# I will not be using system arguments, and instead going through it manually
+# must be run from the directory EDGAR in the project.
 
 import sys
 from aubio import source, pvoc, mfcc
@@ -9,25 +11,19 @@ import time #file naming scheme - Cory
 
 n_filters = 40              # must be 40 for mfcc
 n_coeffs = 13
+root = ".\\CSC450\\data\\Audio_Speech_Actors_01-24\\"
 
 if len(sys.argv) < 2:
     print("Usage: %s <source_filename> [samplerate] [win_s] [hop_s] [mode]" % sys.argv[0])
     print("  where [mode] can be 'delta' or 'ddelta' for first and second derivatives")
     #sys.exit(1)
 
-source_filename = sys.argv[1]
-
-if len(sys.argv) > 2: samplerate = int(sys.argv[2])
-else: samplerate = 0
-if len(sys.argv) > 3: win_s = int(sys.argv[3])
-else: win_s = 512
-if len(sys.argv) > 4: hop_s = int(sys.argv[4])
-else: hop_s = win_s // 4
-if len(sys.argv) > 5: mode = sys.argv[5]
-else: mode = "default"
+source_filename = root + "Actor_01\\03-01-01-01-01-01-01.wav"
 
 samplerate = 0
-if len( sys.argv ) > 2: samplerate = int(sys.argv[2])
+win_s = 512
+hop_s = win_s // 4
+mode = "default"
 
 s = source(source_filename, samplerate, hop_s)
 samplerate = s.samplerate
