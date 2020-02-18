@@ -35,7 +35,7 @@ class doPlotting:
         self.p = pvoc(self.win_s, self.hop_s)
         self.m = mfcc(self.win_s, self.n_filters, self.n_coeffs, self.samplerate)
 
-    def getMFCC(self):
+    def calcMFCC(self):
         self.mfccs = zeros([self.n_coeffs,])
         frames_read = 0
         
@@ -106,11 +106,15 @@ class doPlotting:
         plt.show()
 
 
-
-
 def main():
     root = "C:\\Users\\alyss\\Documents\\EDGAR\\CSC450\\data\\Audio_Speech_Actors_01-24\\"
     filename = getFilename(root)
+    plotFN = doPlotting(filename)
+    frames_read = plotFN.calcMFCC()
+    plotFN.createPlot()
+    ax = plotFN.defineAxes(frames_read)
+    plotFN.saveNPY()
+    plotFN.showPlot(ax)
     print("hello world.")
 
 if __name__ == "__main__":
