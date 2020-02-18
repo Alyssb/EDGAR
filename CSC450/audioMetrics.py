@@ -4,7 +4,7 @@
 # must be run from the directory EDGAR in the project.
 
 import sys
-from os import walk
+from os import walk, remove
 from aubio import source, pvoc, mfcc    # this line always has an error. Don't know why
 from numpy import vstack, zeros, diff
 from numpy import save, load, set_printoptions #Cory's mess
@@ -23,15 +23,30 @@ class getFiles:
         self.root = root
 
     def travelFolders(self):
+        folders = []
         for i in range(1,25):
             folder = "Actor_" + str(i)
-            self.travelFiles(folder)
+            folders.append(folder)
+        return folders
 
-    def travelFiles(self, folder):
-        pass
+    def travelFiles(self):
+        files = []
+        folders = self.travelFolders()
+        for folder in folders:
+            for contents in walk(self.root + folder, topdown=True):
+                print("CONTENTS AT 0 ", contents[0])
+                print("CONTENTS AT 1 ", contents[1])
+                # walks through a directory and returns everything inside of it
+                # an array of arrays, 3rd is what we want
+                files.append(contents[2]) # an array of arrays: array of files per folder
+                # print("FILES IN FOLDER ", folder, " ARE ", files)
+        print("LEN FILES ",len(files))
+        return files
 
-    def getFilename(self):
-        return(self.root + "Actor_01\\03-01-01-01-01-01-01.wav")
+    # def getFilename(self):
+    #     self.travelFolders()
+    #     return(self.root + "Actor_01\\03-01-01-01-01-01-01.wav")
+
 
 # we're doing our best
 class doPlotting:
@@ -104,10 +119,11 @@ class doPlotting:
         timer = time.time()
         output_filename = 'mfcc-outputs\\output-' + str(timer) + '.npy'
         save(output_filename, self.all_times) #save numpy vstack data
+        remove(output_filename)
 
         #testing- load npy file and display in console
         set_printoptions(precision=None, threshold=sys.maxsize)#edit numpy print options
-        npy_file_test = load(output_filename)
+        # npy_file_test = load(output_filename)
         # print(npy_file_test)
         # print("npy loaded and printed")
 
@@ -125,13 +141,24 @@ class doPlotting:
 def main():
     root = "C:\\Users\\alyss\\Documents\\EDGAR\\CSC450\\data\\Audio_Speech_Actors_01-24\\"
     filesFN = getFiles(root)
-    filename = filesFN.getFilename()
-    plotFN = doPlotting(filename)
-    frames_read = plotFN.calcMFCC()
-    plotFN.createPlot()
-    ax = plotFN.defineAxes(frames_read)
-    plotFN.saveNPY()
-    plotFN.showPlot(ax)
+    filesByFolder = filesFN.travelFiles()
+    print(len(filesByFolder))
+    for i in range(24):
+        files = filesByFolder[i]
+        # print("FILES " , files)
+        for filename in files:
+            if(i < 10):
+                stri = "0" + str(i+1)
+                # plotFN = doPlotting(root + "Actor_" + stri + "\\" + filename)
+            else:
+                pass
+                # plotFN = doPlotting(root + "Actor_" + str(i+1) + "\\" + filename)
+            # print(i)
+            # frames_read = plotFN.calcMFCC()
+            # plotFN.createPlot()
+            # ax = plotFN.defineAxes(frames_read)
+            # plotFN.saveNPY()
+            # plotFN.showPlot(ax)
     print("plotted.")
 
 if __name__ == "__main__":
