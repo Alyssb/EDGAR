@@ -47,17 +47,19 @@ class doPlotting:
             frames_read += read
             if read < self.hop_s: break
 
+        return frames_read
+
     # I would like to break this down further.
     # once I understand it better
     def createPlot(self):
         # do plotting
         fig = plt.figure()
         plt.rc('lines',linewidth='.8')
-        wave = plt.axes([0.1, 0.75, 0.8, 0.19])
+        self.wave = plt.axes([0.1, 0.75, 0.8, 0.19])
 
-        get_waveform_plot( self.source_filename, self.samplerate, block_size = self.hop_s, ax = wave)
-        wave.xaxis.set_visible(False)
-        wave.yaxis.set_visible(False)
+        get_waveform_plot( self.source_filename, self.samplerate, block_size = self.hop_s, ax = self.wave)
+        self.wave.xaxis.set_visible(False)
+        self.wave.yaxis.set_visible(False)
 
         # compute first and second derivatives
         if self.mode in ["delta", "ddelta"]:
@@ -66,15 +68,20 @@ class doPlotting:
             self.mfccs = diff(self.mfccs, axis = 0)
 
         self.all_times = arange(self.mfccs.shape[0]) * self.hop_s
-        n_coeffs = self.mfccs.shape[1]
+        self.n_coeffs = self.mfccs.shape[1]
 
-    def defineAxes(self):
+    def defineAxes(self, frames_read):
         for i in range(self.n_coeffs):
-            self.ax = plt.axes ( [0.1, 0.75 - ((i+1) * 0.65 / self.n_coeffs),  0.8, 0.65 / n_coeffs], sharex = wave )
-            self.ax.xaxis.set_visible(False)
-            self.ax.set_yticks([])
-            self.ax.set_ylabel('%d' % i)
-            self.ax.plot(self.all_times, self.mfccs.T[i])
+            ax = plt.axes ( [0.1, 0.75 - ((i+1) * 0.65 / self.n_coeffs),  0.8, 0.65 / self.n_coeffs], sharex = self.wave )
+            ax.xaxis.set_visible(False)
+            ax.set_yticks([])
+            ax.set_ylabel('%d' % i)
+            ax.plot(self.all_times, self.mfccs.T[i])
+
+        # add time to the last axis, originally came after pring(npy_file_test)
+        # might need to go back there
+        set_xlabels_sample2time( ax, frames_read, self.samplerate)
+        return ax
 
     def saveNPY(self):
         #begin npy saving process
@@ -88,16 +95,18 @@ class doPlotting:
         print(npy_file_test)
         # print("npy loaded and printed")
 
-# add time to the last axis
-set_xlabels_sample2time( ax, frames_read, samplerate)
+    # I just don't really want all of this to be in the same class
+    def showPlot(self, ax):
+        #plt.ylabel('spectral descriptor value')
+        ax.xaxis.set_visible(True)
+        title = 'MFCC for %s' % self.source_filename
+        if self.mode == "delta": title = self.mode + " " + title
+        elif self.mode == "ddelta": title = "double-delta" + " " + title
+        self.wave.set_title(title)
+        plt.show()
 
-#plt.ylabel('spectral descriptor value')
-ax.xaxis.set_visible(True)
-title = 'MFCC for %s' % source_filename
-if self.mode == "delta": title = self.mode + " " + title
-elif self.mode == "ddelta": title = "double-delta" + " " + title
-wave.set_title(title)
-plt.show()
+
+
 
 def main():
     root = "C:\\Users\\alyss\\Documents\\EDGAR\\CSC450\\data\\Audio_Speech_Actors_01-24\\"
