@@ -4,6 +4,7 @@
 # must be run from the directory EDGAR in the project.
 
 import sys
+from os import walk
 from aubio import source, pvoc, mfcc    # this line always has an error. Don't know why
 from numpy import vstack, zeros, diff
 from numpy import save, load, set_printoptions #Cory's mess
@@ -14,8 +15,23 @@ from demo_waveform_plot import get_waveform_plot
 from demo_waveform_plot import set_xlabels_sample2time
 import matplotlib.pyplot as plt
 
-def getFilename(root):
-    return(root + "Actor_01\\03-01-01-01-01-01-01.wav")
+# hardcoded for current directory
+# these files are not available on github
+# They're from sharepoint.
+class getFiles:
+    def __init__(self, root):
+        self.root = root
+
+    def travelFolders(self):
+        for i in range(1,25):
+            folder = "Actor_" + str(i)
+            self.travelFiles(folder)
+
+    def travelFiles(self, folder):
+        pass
+
+    def getFilename(self):
+        return(self.root + "Actor_01\\03-01-01-01-01-01-01.wav")
 
 # we're doing our best
 class doPlotting:
@@ -92,7 +108,7 @@ class doPlotting:
         #testing- load npy file and display in console
         set_printoptions(precision=None, threshold=sys.maxsize)#edit numpy print options
         npy_file_test = load(output_filename)
-        print(npy_file_test)
+        # print(npy_file_test)
         # print("npy loaded and printed")
 
     # I just don't really want all of this to be in the same class
@@ -103,19 +119,20 @@ class doPlotting:
         if self.mode == "delta": title = self.mode + " " + title
         elif self.mode == "ddelta": title = "double-delta" + " " + title
         self.wave.set_title(title)
-        plt.show()
+        # plt.show()
 
 
 def main():
     root = "C:\\Users\\alyss\\Documents\\EDGAR\\CSC450\\data\\Audio_Speech_Actors_01-24\\"
-    filename = getFilename(root)
+    filesFN = getFiles(root)
+    filename = filesFN.getFilename()
     plotFN = doPlotting(filename)
     frames_read = plotFN.calcMFCC()
     plotFN.createPlot()
     ax = plotFN.defineAxes(frames_read)
     plotFN.saveNPY()
     plotFN.showPlot(ax)
-    print("hello world.")
+    print("plotted.")
 
 if __name__ == "__main__":
     main()
