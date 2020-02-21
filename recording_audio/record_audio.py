@@ -9,20 +9,21 @@ def record_audio():
 
     custom_seconds = input("how long do you want to record? ")
     num_recordings = input("How many recordings of that length would you like? ")
-    start = raw_input("Press 'r' to beging recording. ")
+    #start = raw_input("Press 'r' to beging recording. ") #is this python 2?
+    start = input("type and enter 'r' to begin recording. ")
 
 
     if start == 'r' or 'R':
-        for b in range(num_recordings):
+        for b in range(int(num_recordings)):
             chunk = 1024  # Record in chunks of 1024 samples
             sample_format = pyaudio.paInt16  # 16 bits per sample
             channels = 2
             fs = 44100  # Record at 44100 samples per second
-            seconds = custom_seconds
+            seconds = int(custom_seconds)
 
             unique_num = random.randint(1,10000)
 
-            filename = 'Output/Output' + str(unique_num) + '.wav'
+            filename = 'recording_audio/Output/Output' + str(unique_num) + '.wav'
 
             p = pyaudio.PyAudio()  # Create an interface to PortAudio
 
@@ -59,6 +60,7 @@ def record_audio():
 
             # sound = AudioSegment.from_wav(filename)
             # play(sound)
+            return filename
 
     else:
         print("Incorrect key. Run program again.")
