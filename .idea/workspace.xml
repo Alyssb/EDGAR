@@ -1,0 +1,220 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project version="4">
+  <component name="ChangeListManager">
+    <list default="true" id="1043cb8c-6dd3-49d7-8671-c8e31b60673e" name="Default Changelist" comment="">
+      <change afterPath="$PROJECT_DIR$/get_audio_stream.py" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/get_log_mel_apectrogram.py" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/EDGAR_demo.py" beforeDir="false" afterPath="$PROJECT_DIR$/EDGAR_demo.py" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/get_audio.py" beforeDir="false" afterPath="$PROJECT_DIR$/get_audio.py" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/get_mfcc.py" beforeDir="false" afterPath="$PROJECT_DIR$/get_mfcc.py" afterDir="false" />
+    </list>
+    <option name="SHOW_DIALOG" value="false" />
+    <option name="HIGHLIGHT_CONFLICTS" value="true" />
+    <option name="HIGHLIGHT_NON_ACTIVE_CHANGELIST" value="false" />
+    <option name="LAST_RESOLUTION" value="IGNORE" />
+  </component>
+  <component name="FileTemplateManagerImpl">
+    <option name="RECENT_TEMPLATES">
+      <list>
+        <option value="Python Script" />
+      </list>
+    </option>
+  </component>
+  <component name="Git.Settings">
+    <option name="RECENT_GIT_ROOT_PATH" value="$PROJECT_DIR$" />
+  </component>
+  <component name="IgnoredFileRootStore">
+    <option name="generatedRoots">
+      <set>
+        <option value="$PROJECT_DIR$/.idea" />
+      </set>
+    </option>
+  </component>
+  <component name="ProjectId" id="1XjZAHkGoJtPF0XK7kkgfDjkQYU" />
+  <component name="ProjectViewState">
+    <option name="hideEmptyMiddlePackages" value="true" />
+    <option name="showExcludedFiles" value="true" />
+    <option name="showLibraryContents" value="true" />
+  </component>
+  <component name="PropertiesComponent">
+    <property name="RunOnceActivity.ShowReadmeOnStart" value="true" />
+    <property name="last_opened_file_path" value="$PROJECT_DIR$" />
+    <property name="settings.editor.selected.configurable" value="com.jetbrains.python.configuration.PyActiveSdkModuleConfigurable" />
+  </component>
+  <component name="RecentsManager">
+    <key name="CopyFile.RECENT_KEYS">
+      <recent name="$PROJECT_DIR$" />
+    </key>
+    <key name="MoveFile.RECENT_KEYS">
+      <recent name="$PROJECT_DIR$/CSC450/" />
+    </key>
+  </component>
+  <component name="RunManager" selected="Python.demo">
+    <configuration name="audioMetrics" type="PythonConfigurationType" factoryName="Python" temporary="true" nameIsGenerated="true">
+      <module name="EDGAR" />
+      <option name="INTERPRETER_OPTIONS" value="" />
+      <option name="PARENT_ENVS" value="true" />
+      <envs>
+        <env name="PYTHONUNBUFFERED" value="1" />
+      </envs>
+      <option name="SDK_HOME" value="" />
+      <option name="WORKING_DIRECTORY" value="$PROJECT_DIR$/CSC450" />
+      <option name="IS_MODULE_SDK" value="true" />
+      <option name="ADD_CONTENT_ROOTS" value="true" />
+      <option name="ADD_SOURCE_ROOTS" value="true" />
+      <option name="SCRIPT_NAME" value="$PROJECT_DIR$/CSC450/audioMetrics.py" />
+      <option name="PARAMETERS" value="" />
+      <option name="SHOW_COMMAND_LINE" value="false" />
+      <option name="EMULATE_TERMINAL" value="false" />
+      <option name="MODULE_MODE" value="false" />
+      <option name="REDIRECT_INPUT" value="false" />
+      <option name="INPUT_FILE" value="" />
+      <method v="2" />
+    </configuration>
+    <configuration name="demo" type="PythonConfigurationType" factoryName="Python" temporary="true" nameIsGenerated="true">
+      <module name="EDGAR" />
+      <option name="INTERPRETER_OPTIONS" value="" />
+      <option name="PARENT_ENVS" value="true" />
+      <envs>
+        <env name="PYTHONUNBUFFERED" value="1" />
+      </envs>
+      <option name="SDK_HOME" value="" />
+      <option name="WORKING_DIRECTORY" value="$PROJECT_DIR$" />
+      <option name="IS_MODULE_SDK" value="true" />
+      <option name="ADD_CONTENT_ROOTS" value="true" />
+      <option name="ADD_SOURCE_ROOTS" value="true" />
+      <option name="SCRIPT_NAME" value="$PROJECT_DIR$/demo.py" />
+      <option name="PARAMETERS" value="" />
+      <option name="SHOW_COMMAND_LINE" value="false" />
+      <option name="EMULATE_TERMINAL" value="false" />
+      <option name="MODULE_MODE" value="false" />
+      <option name="REDIRECT_INPUT" value="false" />
+      <option name="INPUT_FILE" value="" />
+      <method v="2" />
+    </configuration>
+    <configuration name="record_audio" type="PythonConfigurationType" factoryName="Python" temporary="true" nameIsGenerated="true">
+      <module name="EDGAR" />
+      <option name="INTERPRETER_OPTIONS" value="" />
+      <option name="PARENT_ENVS" value="true" />
+      <envs>
+        <env name="PYTHONUNBUFFERED" value="1" />
+      </envs>
+      <option name="SDK_HOME" value="" />
+      <option name="WORKING_DIRECTORY" value="$PROJECT_DIR$/recording_audio" />
+      <option name="IS_MODULE_SDK" value="true" />
+      <option name="ADD_CONTENT_ROOTS" value="true" />
+      <option name="ADD_SOURCE_ROOTS" value="true" />
+      <option name="SCRIPT_NAME" value="$PROJECT_DIR$/recording_audio/record_audio.py" />
+      <option name="PARAMETERS" value="" />
+      <option name="SHOW_COMMAND_LINE" value="false" />
+      <option name="EMULATE_TERMINAL" value="false" />
+      <option name="MODULE_MODE" value="false" />
+      <option name="REDIRECT_INPUT" value="false" />
+      <option name="INPUT_FILE" value="" />
+      <method v="2" />
+    </configuration>
+    <recent_temporary>
+      <list>
+        <item itemvalue="Python.demo" />
+        <item itemvalue="Python.record_audio" />
+        <item itemvalue="Python.audioMetrics" />
+      </list>
+    </recent_temporary>
+  </component>
+  <component name="SvnConfiguration">
+    <configuration />
+  </component>
+  <component name="TaskManager">
+    <task active="true" id="Default" summary="Default task">
+      <changelist id="1043cb8c-6dd3-49d7-8671-c8e31b60673e" name="Default Changelist" comment="" />
+      <created>1581561318133</created>
+      <option name="number" value="Default" />
+      <option name="presentableId" value="Default" />
+      <updated>1581561318133</updated>
+    </task>
+    <servers />
+  </component>
+  <component name="Vcs.Log.Tabs.Properties">
+    <option name="TAB_STATES">
+      <map>
+        <entry key="MAIN">
+          <value>
+            <State>
+              <option name="COLUMN_ORDER" />
+            </State>
+          </value>
+        </entry>
+      </map>
+    </option>
+  </component>
+  <component name="WindowStateProjectService">
+    <state x="304" y="187" width="1071" height="696" key="#com.intellij.execution.impl.EditConfigurationsDialog" timestamp="1581561690583">
+      <screen x="0" y="0" width="1680" height="1050" />
+    </state>
+    <state x="304" y="187" width="1071" height="696" key="#com.intellij.execution.impl.EditConfigurationsDialog/0.0.1680.1050@0.0.1680.1050" timestamp="1581561690583" />
+    <state x="545" y="306" key="#com.intellij.fileTypes.FileTypeChooser" timestamp="1581904074362">
+      <screen x="0" y="23" width="1680" height="947" />
+    </state>
+    <state x="545" y="306" key="#com.intellij.fileTypes.FileTypeChooser/0.23.1680.947@0.23.1680.947" timestamp="1581904074362" />
+    <state width="1659" height="363" key="GridCell.Tab.0.bottom" timestamp="1582400707897">
+      <screen x="0" y="0" width="1680" height="1050" />
+    </state>
+    <state width="1659" height="363" key="GridCell.Tab.0.bottom/0.0.1680.1050@0.0.1680.1050" timestamp="1582400707897" />
+    <state width="1659" height="253" key="GridCell.Tab.0.bottom/0.23.1680.947@0.23.1680.947" timestamp="1581904000725" />
+    <state width="1659" height="253" key="GridCell.Tab.0.bottom/775.-1057.1920.1057/0.23.1680.947/-1145.-1057.1920.1057@0.23.1680.947" timestamp="1581951189302" />
+    <state width="1659" height="363" key="GridCell.Tab.0.center" timestamp="1582400707895">
+      <screen x="0" y="0" width="1680" height="1050" />
+    </state>
+    <state width="1659" height="363" key="GridCell.Tab.0.center/0.0.1680.1050@0.0.1680.1050" timestamp="1582400707895" />
+    <state width="1659" height="253" key="GridCell.Tab.0.center/0.23.1680.947@0.23.1680.947" timestamp="1581904000723" />
+    <state width="1659" height="253" key="GridCell.Tab.0.center/775.-1057.1920.1057/0.23.1680.947/-1145.-1057.1920.1057@0.23.1680.947" timestamp="1581951189301" />
+    <state width="1659" height="363" key="GridCell.Tab.0.left" timestamp="1582400707895">
+      <screen x="0" y="0" width="1680" height="1050" />
+    </state>
+    <state width="1659" height="363" key="GridCell.Tab.0.left/0.0.1680.1050@0.0.1680.1050" timestamp="1582400707895" />
+    <state width="1659" height="253" key="GridCell.Tab.0.left/0.23.1680.947@0.23.1680.947" timestamp="1581904000723" />
+    <state width="1659" height="253" key="GridCell.Tab.0.left/775.-1057.1920.1057/0.23.1680.947/-1145.-1057.1920.1057@0.23.1680.947" timestamp="1581951189300" />
+    <state width="1659" height="363" key="GridCell.Tab.0.right" timestamp="1582400707896">
+      <screen x="0" y="0" width="1680" height="1050" />
+    </state>
+    <state width="1659" height="363" key="GridCell.Tab.0.right/0.0.1680.1050@0.0.1680.1050" timestamp="1582400707896" />
+    <state width="1659" height="253" key="GridCell.Tab.0.right/0.23.1680.947@0.23.1680.947" timestamp="1581904000724" />
+    <state width="1659" height="253" key="GridCell.Tab.0.right/775.-1057.1920.1057/0.23.1680.947/-1145.-1057.1920.1057@0.23.1680.947" timestamp="1581951189301" />
+    <state width="1659" height="363" key="GridCell.Tab.1.bottom" timestamp="1582400707899">
+      <screen x="0" y="0" width="1680" height="1050" />
+    </state>
+    <state width="1659" height="363" key="GridCell.Tab.1.bottom/0.0.1680.1050@0.0.1680.1050" timestamp="1582400707899" />
+    <state width="1659" height="363" key="GridCell.Tab.1.center" timestamp="1582400707898">
+      <screen x="0" y="0" width="1680" height="1050" />
+    </state>
+    <state width="1659" height="363" key="GridCell.Tab.1.center/0.0.1680.1050@0.0.1680.1050" timestamp="1582400707898" />
+    <state width="1659" height="363" key="GridCell.Tab.1.left" timestamp="1582400707898">
+      <screen x="0" y="0" width="1680" height="1050" />
+    </state>
+    <state width="1659" height="363" key="GridCell.Tab.1.left/0.0.1680.1050@0.0.1680.1050" timestamp="1582400707898" />
+    <state width="1659" height="363" key="GridCell.Tab.1.right" timestamp="1582400707899">
+      <screen x="0" y="0" width="1680" height="1050" />
+    </state>
+    <state width="1659" height="363" key="GridCell.Tab.1.right/0.0.1680.1050@0.0.1680.1050" timestamp="1582400707899" />
+    <state x="349" y="124" key="SettingsEditor" timestamp="1582374734106">
+      <screen x="0" y="0" width="1680" height="1050" />
+    </state>
+    <state x="349" y="124" key="SettingsEditor/0.0.1680.1050@0.0.1680.1050" timestamp="1582374734106" />
+    <state x="349" y="135" key="SettingsEditor/0.23.1680.947@0.23.1680.947" timestamp="1581902564316" />
+    <state x="519" y="339" key="com.intellij.ide.util.TipDialog" timestamp="1582371827664">
+      <screen x="0" y="0" width="1680" height="1050" />
+    </state>
+    <state x="519" y="339" key="com.intellij.ide.util.TipDialog/0.0.1680.1050@0.0.1680.1050" timestamp="1582371827664" />
+    <state x="519" y="329" key="com.intellij.ide.util.TipDialog/0.23.1680.947@0.23.1680.947" timestamp="1581899881032" />
+  </component>
+  <component name="XDebuggerManager">
+    <breakpoint-manager>
+      <breakpoints>
+        <line-breakpoint enabled="true" suspend="THREAD" type="python-line">
+          <url>file://$PROJECT_DIR$/get_audio_stream.py</url>
+          <option name="timeStamp" value="1" />
+        </line-breakpoint>
+      </breakpoints>
+    </breakpoint-manager>
+  </component>
+</project>
