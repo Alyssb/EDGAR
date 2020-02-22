@@ -7,7 +7,7 @@ from numpy import save, load, set_printoptions #Cory's mess
 import time #file naming scheme - Cory
 
 
-def get_Metrics(source_filename,samplerate, win_s, hop_s, mode):
+def get_MFCC(source_filename,samplerate, win_s, hop_s, mode):
     n_filters = 40              # must be 40 for mfcc
     n_coeffs = 13
 
@@ -102,6 +102,6 @@ if __name__ == '__main__':
 
     samplerate = 0
 
-    get_Metrics(source_filename, samplerate, win_s, hop_s, mode)
+    get_MFCC(source_filename, samplerate, win_s, hop_s, mode)
 
 

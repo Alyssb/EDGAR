@@ -5,7 +5,7 @@ from pydub.playback import play
 import random
 
 
-def record_audio():
+def get_audio():
 
     custom_seconds = input("how long do you want to record? ")
     num_recordings = input("How many recordings of that length would you like? ")
