@@ -17,13 +17,13 @@ def get_audio():
         for b in range(int(num_recordings)):
             chunk = 1024  # Record in chunks of 1024 samples
             sample_format = pyaudio.paInt16  # 16 bits per sample
-            channels = 2
+            channels = 1
             fs = 44100  # Record at 44100 samples per second
             seconds = int(custom_seconds)
 
             unique_num = random.randint(1,10000)
 
-            filename = 'recording_audio/Output/Output' + str(unique_num) + '.wav'
+            filename = 'live_audio/Output' + str(unique_num) + '.wav'
 
             p = pyaudio.PyAudio()  # Create an interface to PortAudio
 
