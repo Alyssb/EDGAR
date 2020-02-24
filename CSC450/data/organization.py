@@ -21,6 +21,8 @@ C:\\Users\\alyss\\Documents\\EDGAR\\CSC450\\data\\big-boy\\IEMOCAP_full_release\
                 bunch of directories
                     each one containss a bunch of data
 
+each .txt file corresponds to one subdirectory in sentences\\wav\\
+
 TREE NEEDS TO BE STRUCTURED LIKE THIS FOR THE PROGRAM TO WORK
 '''
 '''
@@ -37,6 +39,10 @@ IEMOCAP has more than this, I only keep the ones we're using.
 '''
 
 def main():
+    initRoot = "C:\\Users\\alyss\\Documents\\EDGAR\\CSC450\\data\\big-boy\\IEMOCAP_full_release\\"
+    finalRoot = "C:\\Users\\alyss\\Documents\\EDGAR\\CSC450\\data\\IEMOCAP\\"
+
+    
     print("hello world.")
 
 if __name__ == '__main__':
