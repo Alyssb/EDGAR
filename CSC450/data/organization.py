@@ -37,13 +37,47 @@ C:\\Users\\alyss\\Documents\\EDGAR\\CSC450\\data\\IEMOCAP\\
 
 IEMOCAP has more than this, I only keep the ones we're using.
 '''
+from os import walk, remove, listdir
+
+
+class travelFolders:
+    def __init__(self, root):
+        self.root = root
+
+    def getSessions(self):
+        contents = listdir(self.root)
+        sessions = []
+        for i in contents:
+            if i[0] == 'S':     # just checking if the item is a session name
+                sessions.append(self.root + i)
+        return(sessions)
+
+    def getSubsessions(self, session):
+        contents = listdir(session + "\\sentences\\wav")
+        subsessions = []
+        for i in contents:
+            subsessions.append(session + "\\sentences\\wav\\" + i)
+        return(subsessions)
+
+    def getWavs(self, subsession):
+        return(listdir(subsession))
+
+    def getGuideFile(self, session):
+        return(listdir(session + "\\dialog\\EmoEvaluation\\Categorical"))
+
 
 def main():
     initRoot = "C:\\Users\\alyss\\Documents\\EDGAR\\CSC450\\data\\big-boy\\IEMOCAP_full_release\\"
     finalRoot = "C:\\Users\\alyss\\Documents\\EDGAR\\CSC450\\data\\IEMOCAP\\"
 
+    traversal = travelFolders(initRoot)
+    sessions = traversal.getSessions()
+    subsessions = traversal.getSubsessions(sessions[0])
+    contentFiles = traversal.getGuideFile(sessions[0])
+    wavs = traversal.getWavs(subsessions[0])
+
     
-    print("hello world.")
+    print("traveling")
 
 if __name__ == '__main__':
     main()
