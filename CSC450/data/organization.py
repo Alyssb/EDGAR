@@ -72,7 +72,7 @@ class travelFolders:
         return(temp)
 
 def makeFolders(root):
-    # mkdir(root + "IEMOCAP\\")
+    mkdir(root + "IEMOCAP\\")
     root = root + "IEMOCAP\\"
     emotions = ["angry", "happy", "sad", "neutral", "frustrated", "excited", "fearful", "surprised", "disgusted", "other"]
     for emotion in emotions:
@@ -151,12 +151,7 @@ def main():
     initRoot = "C:\\Users\\alyss\\Documents\\EDGAR\\CSC450\\data\\big-boy\\IEMOCAP_full_release\\"
     finalRoot = "C:\\Users\\alyss\\Documents\\EDGAR\\CSC450\\data\\"
 
-    '''
-    RUN THIS ONCE
-    THIS WILL CREATE THE FOLDERS FOR YOUR FILES.
-    MAKE SURE FINALROOT IS UPDATED TO YOUR FILEPATH
-    '''
-    # makeFolders(finalRoot)
+    makeFolders(finalRoot)
 
     finalRoot = finalRoot + "IEMOCAP\\"
 
