@@ -62,9 +62,15 @@ class travelFolders:
     def getWavs(self, subsession):
         return(listdir(subsession))
 
-    def getGuideFile(self, session):
-        return(listdir(session + "\\dialog\\EmoEvaluation\\Categorical"))
+    def getGuideFilesList(self, session):
+        temp = listdir(session + "\\dialog\\EmoEvaluation\\Categorical\\")
+        for i in range(len(temp)):
+            temp[i] = session + "\\dialog\\EmoEvaluation\\Categorical\\" + temp[i]
+        return(temp)
 
+class classify:
+    def __init__(self, sessions):
+        self.sessions = sessions
 
 def main():
     initRoot = "C:\\Users\\alyss\\Documents\\EDGAR\\CSC450\\data\\big-boy\\IEMOCAP_full_release\\"
@@ -72,8 +78,17 @@ def main():
 
     traversal = travelFolders(initRoot)
     sessions = traversal.getSessions()
-    subsessions = traversal.getSubsessions(sessions[0])
-    contentFiles = traversal.getGuideFile(sessions[0])
+    for session in sessions:
+        subsessions = traversal.getSubsessions(session)
+        contentFiles = traversal.getGuideFilesList(session)
+        for i in range(len(subsessions)):
+            wavs = traversal.getWavs(subsessions[i])
+            file1 = contentFiles[i*3]
+            file2 = contentFiles[i*3+1]
+            file3 = contentFiles[i*3+2]
+
+            print(file1, " ", file2, " ", file3)
+        
     wavs = traversal.getWavs(subsessions[0])
 
     
