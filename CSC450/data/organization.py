@@ -37,7 +37,7 @@ C:\\Users\\alyss\\Documents\\EDGAR\\CSC450\\data\\IEMOCAP\\
 
 IEMOCAP has more than this, I only keep the ones we're using.
 '''
-from os import walk, remove, listdir
+from os import walk, remove, listdir, mkdir
 
 
 class travelFolders:
@@ -60,7 +60,10 @@ class travelFolders:
         return(subsessions)
 
     def getWavs(self, subsession):
-        return(listdir(subsession))
+        temp = listdir(subsession)
+        for i in range(len(temp)):
+            temp[i] = subsession + temp[i]
+        return(temp)
 
     def getGuideFilesList(self, session):
         temp = listdir(session + "\\dialog\\EmoEvaluation\\Categorical\\")
@@ -68,13 +71,56 @@ class travelFolders:
             temp[i] = session + "\\dialog\\EmoEvaluation\\Categorical\\" + temp[i]
         return(temp)
 
-class classify:
-    def __init__(self, sessions):
-        self.sessions = sessions
+def makeFolders(root):
+    # mkdir(root + "IEMOCAP\\")
+    root = root + "IEMOCAP\\"
+    emotions = ["angry", "happy", "sad", "neutral", "frustrated", "excited", "fearful", "surprised", "disgusted", "other"]
+    for emotion in emotions:
+        mkdir(root + emotion)
+
+def getClass(c):
+    if("Neutral" in c[1]):
+        return('neutral')
+    elif("Anger" in c[1]):
+        return('angry')
+    elif("Disgust" in c[1]):
+        return('disgust')
+    elif("Surprise" in c[1]):
+        return("surprise")
+    elif("Frustration" in c[1]):
+        return("frustrated")
+    elif("Happiness" in c[1]):
+        return("happy")
+    elif("Sadness" in c[1]):
+        return("sad")
+    elif("Fear" in c[1]):
+        return("fear")
+    elif("Excited" in c[1]):
+        return("excited")
+    else:
+        return("other")
+
+def classify(wav, c1, c2, c3):
+    # this is going to be yucky sorry
+    classes = []
+    classes.append(getClass(c1))
+    classes.append(getClass(c2))
+    classes.append(getClass(c3))
+
+    print(classes)
 
 def main():
     initRoot = "C:\\Users\\alyss\\Documents\\EDGAR\\CSC450\\data\\big-boy\\IEMOCAP_full_release\\"
-    finalRoot = "C:\\Users\\alyss\\Documents\\EDGAR\\CSC450\\data\\IEMOCAP\\"
+    finalRoot = "C:\\Users\\alyss\\Documents\\EDGAR\\CSC450\\data\\"
+
+    '''
+    RUN THIS ONCE
+    THIS WILL CREATE THE FOLDERS FOR YOUR FILES.
+    MAKE SURE FINALROOT IS UPDATED TO YOUR FILEPATH
+    '''
+    # makeFolders(finalRoot)
+
+    finalRoot = finalRoot + "IEMOCAP\\"
 
     traversal = travelFolders(initRoot)
     sessions = traversal.getSessions()
@@ -83,11 +129,13 @@ def main():
         contentFiles = traversal.getGuideFilesList(session)
         for i in range(len(subsessions)):
             wavs = traversal.getWavs(subsessions[i])
-            file1 = contentFiles[i*3]
-            file2 = contentFiles[i*3+1]
-            file3 = contentFiles[i*3+2]
+            file1 = open(contentFiles[i*3]).read().split("\n")
+            file2 = open(contentFiles[i*3+1]).read().split("\n")
+            file3 = open(contentFiles[i*3+2]).read().split("\n")
+            for i in range(len(wavs)-1):
+                classify(wavs[i], file1[i].split(' '), file2[i].split(' '), file3[i].split(' '))
 
-            print(file1, " ", file2, " ", file3)
+            # print(len(wavs), " ", len(open(file1).read().split("\n")), " ", len(file2), " ", len(file3))
         
     wavs = traversal.getWavs(subsessions[0])
 
