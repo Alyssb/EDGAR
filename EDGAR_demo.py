@@ -12,10 +12,10 @@ from os.path import exists
 
 input_name = get_audio()
 print("Audio file: " + input_name + " created")
-get_MFCC(input_name, 0, 512, 128, "delta")
-get_spectrogram(input_name, 0)
-get_MelSpectrogram(input_name)
-
+#get_MFCC(input_name, 0, 512, 128, "delta")
+#get_spectrogram(input_name, 0)
+melSpectrogram_nparray = get_MelSpectrogram(input_name)
+print("size of array: ", melSpectrogram_nparray.shape)
 
 if(exists(input_name)):
     remove(input_name)
