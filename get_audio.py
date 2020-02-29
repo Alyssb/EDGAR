@@ -14,14 +14,12 @@ import random
 import time
 
 class get_audio():
-    '''
-    prompt_user: entry point to class
 
-    prompts user for desired recordings and then 
-    '''
     def prompt_user(self):
         '''
-        will begin recording when R is pressed
+        will begin recording when 'R' or 'r' is entered into command line
+        will close if any other string is entered
+        calls setup_record, whch sets up a PyAudio recording.
 
         custom_seconds: number of seconds to record
         num_recordings: number of recordings to be taken
@@ -34,11 +32,16 @@ class get_audio():
         # if r or R typed
         if start == 'r' or start == 'R':
             for b in range(int(self.num_recordings)):
-                self.setupRecord(b)
+                self.setup_record(b)
         else:
             print("Incorrect key. Run program again.")
 
-    def setupRecord(self, b):
+
+    def setup_record(self, b):
+        '''
+        Uses PyAudio to setup a recording.
+        Calls recordAudio, which actually records
+        '''
         self.chunk = 1024                        # Record in chunks of 1024 samples
         self.sample_format = pyaudio.paInt16     # 16 bits per sample
         self.channels = 1                        # only using one channel
@@ -48,7 +51,7 @@ class get_audio():
         self.unique_num = int(time.time())
         self.filename = 'live_audio/Output' + str(self.unique_num) + '.wav'
 
-        self.p = pyaudio.PyAudio()  # Create an interface to PortAudio
+        self.p = pyaudio.PyAudio()               # Create an interface to PortAudio
 
 
         # open a recording stream
@@ -61,10 +64,14 @@ class get_audio():
         self.frames = []  # Initialize array to store frames
         
         print('Recording')
-        self.recordAudio(b)
+        self.record_audio(b)
     
 
-    def recordAudio(self, b):
+    def record_audio(self, b):
+        '''
+        takes recordings as specified by the user
+        calls save_file, which saves the audio data as a .wav file
+        '''
         # Store data in chunks
         for i in range(0, int(self.fs / self.chunk * int(self.custom_seconds))):
             data = self.stream.read(self.chunk)
@@ -73,12 +80,17 @@ class get_audio():
         # Stop and close the stream
         self.stream.stop_stream()
         self.stream.close()
+
         # Terminate the PortAudio interface
         self.p.terminate()
-        print('Finished recording ' + str(b))
-        self.saveFile(b)
 
-    def saveFile(self, b):
+        print('Finished recording ' + str(b))
+        self.save_file(b)
+
+    def save_file(self, b):
+        '''
+        saves the audio data as a .wav file
+        '''
         # Save the recorded data as a WAV file
         wf = wave.open(self.filename, 'wb')
         wf.setnchannels(self.channels)
@@ -89,7 +101,6 @@ class get_audio():
         
         print('file ' + self.filename + ' saved.')
         return self.filename
-
 
 
 if __name__ == '__main__':
