@@ -62,6 +62,7 @@ def get_audio():
             # Stop and close the stream
             stream.stop_stream()
             stream.close()
+
             # Terminate the PortAudio interface
             p.terminate()
             print('Finished recording ' + str(b))
@@ -74,8 +75,6 @@ def get_audio():
             wf.writeframes(b''.join(frames))
             wf.close()
 
-            # sound = AudioSegment.from_wav(filename)
-            # play(sound)
             return filename
 
     else:
