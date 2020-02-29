@@ -2,11 +2,9 @@
 <project version="4">
   <component name="ChangeListManager">
     <list default="true" id="1043cb8c-6dd3-49d7-8671-c8e31b60673e" name="Default Changelist" comment="">
-      <change afterPath="$PROJECT_DIR$/get_melspectrogram.py" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/EDGAR_demo.py" beforeDir="false" afterPath="$PROJECT_DIR$/EDGAR_demo.py" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/get_audio.py" beforeDir="false" afterPath="$PROJECT_DIR$/get_audio.py" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/get_mfcc.py" beforeDir="false" afterPath="$PROJECT_DIR$/get_mfcc.py" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/get_melspectrogram.py" beforeDir="false" afterPath="$PROJECT_DIR$/get_melspectrogram.py" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -49,7 +47,28 @@
       <recent name="$PROJECT_DIR$" />
     </key>
   </component>
-  <component name="RunManager" selected="Python.demo">
+  <component name="RunManager" selected="Python.EDGAR_demo">
+    <configuration name="EDGAR_demo" type="PythonConfigurationType" factoryName="Python" temporary="true" nameIsGenerated="true">
+      <module name="EDGAR" />
+      <option name="INTERPRETER_OPTIONS" value="" />
+      <option name="PARENT_ENVS" value="true" />
+      <envs>
+        <env name="PYTHONUNBUFFERED" value="1" />
+      </envs>
+      <option name="SDK_HOME" value="" />
+      <option name="WORKING_DIRECTORY" value="$PROJECT_DIR$" />
+      <option name="IS_MODULE_SDK" value="true" />
+      <option name="ADD_CONTENT_ROOTS" value="true" />
+      <option name="ADD_SOURCE_ROOTS" value="true" />
+      <option name="SCRIPT_NAME" value="$PROJECT_DIR$/EDGAR_demo.py" />
+      <option name="PARAMETERS" value="" />
+      <option name="SHOW_COMMAND_LINE" value="false" />
+      <option name="EMULATE_TERMINAL" value="false" />
+      <option name="MODULE_MODE" value="false" />
+      <option name="REDIRECT_INPUT" value="false" />
+      <option name="INPUT_FILE" value="" />
+      <method v="2" />
+    </configuration>
     <configuration name="demo" type="PythonConfigurationType" factoryName="Python" temporary="true" nameIsGenerated="true">
       <module name="EDGAR" />
       <option name="INTERPRETER_OPTIONS" value="" />
@@ -63,6 +82,27 @@
       <option name="ADD_CONTENT_ROOTS" value="true" />
       <option name="ADD_SOURCE_ROOTS" value="true" />
       <option name="SCRIPT_NAME" value="$PROJECT_DIR$/demo.py" />
+      <option name="PARAMETERS" value="" />
+      <option name="SHOW_COMMAND_LINE" value="false" />
+      <option name="EMULATE_TERMINAL" value="false" />
+      <option name="MODULE_MODE" value="false" />
+      <option name="REDIRECT_INPUT" value="false" />
+      <option name="INPUT_FILE" value="" />
+      <method v="2" />
+    </configuration>
+    <configuration name="get_melspectrogram" type="PythonConfigurationType" factoryName="Python" temporary="true" nameIsGenerated="true">
+      <module name="EDGAR" />
+      <option name="INTERPRETER_OPTIONS" value="" />
+      <option name="PARENT_ENVS" value="true" />
+      <envs>
+        <env name="PYTHONUNBUFFERED" value="1" />
+      </envs>
+      <option name="SDK_HOME" value="" />
+      <option name="WORKING_DIRECTORY" value="$PROJECT_DIR$" />
+      <option name="IS_MODULE_SDK" value="true" />
+      <option name="ADD_CONTENT_ROOTS" value="true" />
+      <option name="ADD_SOURCE_ROOTS" value="true" />
+      <option name="SCRIPT_NAME" value="$PROJECT_DIR$/get_melspectrogram.py" />
       <option name="PARAMETERS" value="" />
       <option name="SHOW_COMMAND_LINE" value="false" />
       <option name="EMULATE_TERMINAL" value="false" />
@@ -94,6 +134,8 @@
     </configuration>
     <recent_temporary>
       <list>
+        <item itemvalue="Python.EDGAR_demo" />
+        <item itemvalue="Python.get_melspectrogram" />
         <item itemvalue="Python.demo" />
         <item itemvalue="Python.record_audio" />
       </list>
@@ -130,32 +172,33 @@
       <screen x="0" y="0" width="1680" height="1050" />
     </state>
     <state x="304" y="187" width="1071" height="696" key="#com.intellij.execution.impl.EditConfigurationsDialog/0.0.1680.1050@0.0.1680.1050" timestamp="1581561690583" />
-    <state x="545" y="306" key="#com.intellij.fileTypes.FileTypeChooser" timestamp="1581904074362">
-      <screen x="0" y="23" width="1680" height="947" />
-    </state>
-    <state x="545" y="306" key="#com.intellij.fileTypes.FileTypeChooser/0.23.1680.947@0.23.1680.947" timestamp="1581904074362" />
-    <state width="1659" height="363" key="GridCell.Tab.0.bottom" timestamp="1582405057444">
+    <state x="545" y="314" key="#com.intellij.fileTypes.FileTypeChooser" timestamp="1582997101522">
       <screen x="0" y="0" width="1680" height="1050" />
     </state>
-    <state width="1659" height="363" key="GridCell.Tab.0.bottom/0.0.1680.1050@0.0.1680.1050" timestamp="1582405057444" />
+    <state x="545" y="314" key="#com.intellij.fileTypes.FileTypeChooser/0.0.1680.1050@0.0.1680.1050" timestamp="1582997101522" />
+    <state x="545" y="306" key="#com.intellij.fileTypes.FileTypeChooser/0.23.1680.947@0.23.1680.947" timestamp="1581904074362" />
+    <state width="829" height="294" key="GridCell.Tab.0.bottom" timestamp="1583007206441">
+      <screen x="0" y="0" width="1680" height="1050" />
+    </state>
+    <state width="829" height="294" key="GridCell.Tab.0.bottom/0.0.1680.1050@0.0.1680.1050" timestamp="1583007206441" />
     <state width="1659" height="253" key="GridCell.Tab.0.bottom/0.23.1680.947@0.23.1680.947" timestamp="1581904000725" />
     <state width="1659" height="253" key="GridCell.Tab.0.bottom/775.-1057.1920.1057/0.23.1680.947/-1145.-1057.1920.1057@0.23.1680.947" timestamp="1581951189302" />
-    <state width="1659" height="363" key="GridCell.Tab.0.center" timestamp="1582405057442">
+    <state width="829" height="294" key="GridCell.Tab.0.center" timestamp="1583007206440">
       <screen x="0" y="0" width="1680" height="1050" />
     </state>
-    <state width="1659" height="363" key="GridCell.Tab.0.center/0.0.1680.1050@0.0.1680.1050" timestamp="1582405057442" />
+    <state width="829" height="294" key="GridCell.Tab.0.center/0.0.1680.1050@0.0.1680.1050" timestamp="1583007206440" />
     <state width="1659" height="253" key="GridCell.Tab.0.center/0.23.1680.947@0.23.1680.947" timestamp="1581904000723" />
     <state width="1659" height="253" key="GridCell.Tab.0.center/775.-1057.1920.1057/0.23.1680.947/-1145.-1057.1920.1057@0.23.1680.947" timestamp="1581951189301" />
-    <state width="1659" height="363" key="GridCell.Tab.0.left" timestamp="1582405057304">
+    <state width="829" height="294" key="GridCell.Tab.0.left" timestamp="1583007206439">
       <screen x="0" y="0" width="1680" height="1050" />
     </state>
-    <state width="1659" height="363" key="GridCell.Tab.0.left/0.0.1680.1050@0.0.1680.1050" timestamp="1582405057304" />
+    <state width="829" height="294" key="GridCell.Tab.0.left/0.0.1680.1050@0.0.1680.1050" timestamp="1583007206439" />
     <state width="1659" height="253" key="GridCell.Tab.0.left/0.23.1680.947@0.23.1680.947" timestamp="1581904000723" />
     <state width="1659" height="253" key="GridCell.Tab.0.left/775.-1057.1920.1057/0.23.1680.947/-1145.-1057.1920.1057@0.23.1680.947" timestamp="1581951189300" />
-    <state width="1659" height="363" key="GridCell.Tab.0.right" timestamp="1582405057443">
+    <state width="829" height="294" key="GridCell.Tab.0.right" timestamp="1583007206440">
       <screen x="0" y="0" width="1680" height="1050" />
     </state>
-    <state width="1659" height="363" key="GridCell.Tab.0.right/0.0.1680.1050@0.0.1680.1050" timestamp="1582405057443" />
+    <state width="829" height="294" key="GridCell.Tab.0.right/0.0.1680.1050@0.0.1680.1050" timestamp="1583007206440" />
     <state width="1659" height="253" key="GridCell.Tab.0.right/0.23.1680.947@0.23.1680.947" timestamp="1581904000724" />
     <state width="1659" height="253" key="GridCell.Tab.0.right/775.-1057.1920.1057/0.23.1680.947/-1145.-1057.1920.1057@0.23.1680.947" timestamp="1581951189301" />
     <state width="1659" height="363" key="GridCell.Tab.1.bottom" timestamp="1582405057446">
@@ -179,10 +222,10 @@
     </state>
     <state x="349" y="124" key="SettingsEditor/0.0.1680.1050@0.0.1680.1050" timestamp="1582405328838" />
     <state x="349" y="135" key="SettingsEditor/0.23.1680.947@0.23.1680.947" timestamp="1581902564316" />
-    <state x="519" y="339" key="com.intellij.ide.util.TipDialog" timestamp="1582371827664">
+    <state x="519" y="339" key="com.intellij.ide.util.TipDialog" timestamp="1582926230224">
       <screen x="0" y="0" width="1680" height="1050" />
     </state>
-    <state x="519" y="339" key="com.intellij.ide.util.TipDialog/0.0.1680.1050@0.0.1680.1050" timestamp="1582371827664" />
+    <state x="519" y="339" key="com.intellij.ide.util.TipDialog/0.0.1680.1050@0.0.1680.1050" timestamp="1582926230224" />
     <state x="519" y="329" key="com.intellij.ide.util.TipDialog/0.23.1680.947@0.23.1680.947" timestamp="1581899881032" />
     <state x="595" y="245" key="git4idea.branch.GitSmartOperationDialog" timestamp="1582405219008">
       <screen x="0" y="0" width="1680" height="1050" />
