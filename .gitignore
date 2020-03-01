@@ -1,6 +1,6 @@
 EDGAR/recording_audio/Output/
 /live_audio/
-./mfcc_outputs/
+/mfcc-outputs/
 /.vscode/
 /CSC450/data/
 /CSC450/data/ALL
