@@ -27,6 +27,15 @@ class get_audio():
 
         self.custom_seconds = input("how many seconds do you want to record? ")
         self.num_recordings = input("How many recordings of that length would you like? ")
+        try:
+            int(self.custom_seconds)
+            int(self.num_recordings)
+            return(self.initiate_record())
+        except:
+            print("please input an integer number")
+            
+
+    def initiate_record(self):
         start = input("type and enter 'r' to begin recording. ")
 
         filenames = []
