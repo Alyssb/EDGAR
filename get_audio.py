@@ -29,12 +29,15 @@ class get_audio():
         self.num_recordings = input("How many recordings of that length would you like? ")
         start = input("type and enter 'r' to begin recording. ")
 
+        filenames = []
         # if r or R typed
         if start == 'r' or start == 'R':
             for b in range(int(self.num_recordings)):
-                return(self.setup_record(b))
+                filenames.append(self.setup_record(b))
         else:
             print("Incorrect key. Run program again.")
+
+        return filenames
 
     def setup_record(self, b):
         '''

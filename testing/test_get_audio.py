@@ -7,26 +7,41 @@ test cases:
     creates file
     returns file
 '''
-import get_audio
+import sys
+import subprocess
+from time import sleep
 from os import system
 
+sys.path.insert(1, 'C:\\Users\\alyss\\Documents\\EDGAR\\')
+
+import get_audio
+
 def create_audio():
-    audio_object = get_audio.get_audio()
-    return audio_object
-
+    p = subprocess.Popen(['python', 'C:\\Users\\alyss\\Documents\\EDGAR\\get_audio.py'], stdin=subprocess.PIPE)
+    return p
 # will input 3 to command line, for use as the default for recording length
-def default_seconds():
-    system("3")
+def default_seconds(p):
+    sleep(1)
+    num_seconds = 2
+    p.stdin.write('{}\n'.format(num_seconds).encode('utf-8'))
 
-def default_num_recordings():
-    system("1")
+def default_num_recordings(p):
+    sleep(1)
+    num_recordings = 3
+    p.stdin.write('{}\n'.format(num_recordings).encode('utf-8'))
 
-def test_seconds():
-    audio_object = create_audio()
-
+def default_test():
+    p = create_audio()
+    default_seconds(p)
+    default_num_recordings(p)
+    record_input = 'r'
+    p.stdin.write('{}\n'.format(record_input).encode('utf-8'))
+    p.stdin.close()
+    p.wait()
+    p.kill()
 
 def main():
-    print("hello world.")
+    default_test()
 
 if __name__ == '__main__':
     main()
