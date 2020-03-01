@@ -32,10 +32,9 @@ class get_audio():
         # if r or R typed
         if start == 'r' or start == 'R':
             for b in range(int(self.num_recordings)):
-                self.setup_record(b)
+                return(self.setup_record(b))
         else:
             print("Incorrect key. Run program again.")
-
 
     def setup_record(self, b):
         '''
@@ -64,7 +63,7 @@ class get_audio():
         self.frames = []  # Initialize array to store frames
         
         print('Recording')
-        self.record_audio(b)
+        return(self.record_audio(b))
     
 
     def record_audio(self, b):
@@ -85,7 +84,7 @@ class get_audio():
         self.p.terminate()
 
         print('Finished recording ' + str(b))
-        self.save_file(b)
+        return(self.save_file(b))
 
     def save_file(self, b):
         '''
