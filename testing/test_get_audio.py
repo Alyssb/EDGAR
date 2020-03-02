@@ -3,9 +3,12 @@ Alyssa Slayton 2020
 '''
 '''
 test cases:
-    idk yo
-    creates file
-    returns file
+    A standard run
+    Make multiple recordings
+    Use capital R
+    Input invalid number of seconds
+    Input invalid number of recordings
+    Input invalid starting character
 '''
 import sys
 import subprocess
@@ -16,10 +19,71 @@ sys.path.insert(1, 'C:\\Users\\alyss\\Documents\\EDGAR\\')
 
 import get_audio
 
+def default_test():
+    print("\nRunning default_test\n")
+    p = create_audio()
+    default_seconds(p)
+    default_num_recordings(p)
+    press_r(p)
+    p.wait()
+    p.kill()
+
+def multiple_records():
+    print("\nRunning multiple_records\n")
+    p = create_audio()
+    default_seconds(p)
+    num_recordings = 3
+    p.stdin.write('{}\n'.format(num_recordings).encode('utf-8'))
+    press_r(p)
+    p.wait()
+    p.kill()
+
+def capital_r():
+    print("\nRunning capital_r\n")
+    p = create_audio()
+    default_seconds(p)
+    default_num_recordings(p)
+    r = 'R'
+    p.stdin.write('{}\n'.format(r).encode('utf-8'))
+    p.stdin.close()
+    p.wait()
+    p.kill()
+
+def invalid_seconds():
+    print("\nRunning invalid_seconds\n")
+    p = create_audio()
+    num_seconds = 'q'
+    p.stdin.write('{}\n'.format(num_seconds).encode('utf-8'))
+    default_num_recordings(p)
+    press_r(p)
+    p.wait()
+    p.kill()
+
+def invalid_num_recordings():
+    print("\nRunning invalid_num_recordings\n")
+    p = create_audio()
+    default_seconds(p)
+    num_recordings = 'q'
+    p.stdin.write('{}\n'.format(num_recordings).encode('utf-8'))
+    press_r(p)
+    p.wait()
+    p.kill()
+
+def invalid_r():
+    print("\nRunning invalid_r\n")
+    p = create_audio()
+    default_seconds(p)
+    default_num_recordings(p)
+    r = 'q'
+    p.stdin.write('{}\n'.format(r).encode('utf-8'))
+    p.stdin.close()
+    p.wait()
+    p.kill()
+
 def create_audio():
     p = subprocess.Popen(['python', 'C:\\Users\\alyss\\Documents\\EDGAR\\get_audio.py'], stdin=subprocess.PIPE)
     return p
-# will input 3 to command line, for use as the default for recording length
+
 def default_seconds(p):
     sleep(1)
     num_seconds = 2
@@ -27,21 +91,22 @@ def default_seconds(p):
 
 def default_num_recordings(p):
     sleep(1)
-    num_recordings = 3
+    num_recordings = 1
     p.stdin.write('{}\n'.format(num_recordings).encode('utf-8'))
 
-def default_test():
-    p = create_audio()
-    default_seconds(p)
-    default_num_recordings(p)
-    record_input = 'r'
-    p.stdin.write('{}\n'.format(record_input).encode('utf-8'))
+def press_r(p):
+    sleep(1)
+    r = 'r'
+    p.stdin.write('{}\n'.format(r).encode('utf-8'))
     p.stdin.close()
-    p.wait()
-    p.kill()
 
 def main():
     default_test()
+    multiple_records()
+    capital_r()
+    invalid_seconds()
+    invalid_num_recordings()
+    invalid_r()
 
 if __name__ == '__main__':
     main()
