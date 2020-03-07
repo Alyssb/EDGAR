@@ -14,9 +14,13 @@ def get_MelSpectrogram(source_filename, samplerate=16000):
 
     # Passing through arguments to the Mel filters
     S_dB = librosa.power_to_db(S, ref=max)
+    S_dB_out = librosa.util.fix_length(S_dB, 1067, axis=1)
     ms_delta_dB = librosa.power_to_db(ms_delta, ref=max)
+    ms_delta_dB_out = librosa.util.fix_length(ms_delta_dB, 1067, axis=1)
     ms_delta2_dB = librosa.power_to_db(ms_delta2, ref=max)
-    output = dstack((S_dB, ms_delta_dB, ms_delta2_dB))
+    ms_delta2_dB_out = librosa.util.fix_length(ms_delta2_dB, 1067, axis=1)
+    output = dstack((S_dB_out, ms_delta_dB_out, ms_delta2_dB_out))
+
 
     # #Plotting the Mel Spectrogram
     # plt.figure(figsize=(10, 4))
