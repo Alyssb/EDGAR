@@ -10,15 +10,18 @@ from get_audio import get_audio
 from os import remove
 from os.path import exists
 
-input_name = get_audio()
-print("Audio file: " + input_name + " created")
+recording = get_audio()
+input_name = recording.prompt_user()
+print("Audio file: " + input_name[0] + " created")
 #get_MFCC(input_name, 0, 512, 128, "delta")
 #get_spectrogram(input_name, 0)
-melSpectrogram_nparray = get_MelSpectrogram(input_name)
-print("size of array: ", melSpectrogram_nparray.shape)
+melSpectrogram_nparray = get_MelSpectrogram(input_name[0])
+print(melSpectrogram_nparray)
+print("shape of array(should be 40, 1067, 3): ", melSpectrogram_nparray.shape)
+print("size of array(should be 3): ", melSpectrogram_nparray.ndim)
 
-if(exists(input_name)):
-    remove(input_name)
+if(exists(input_name[0])):
+    remove(input_name[0])
     print("file deleted")
 else:
     print("file error")
