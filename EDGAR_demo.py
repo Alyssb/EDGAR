@@ -22,15 +22,7 @@ from os.path import exists
 
 ################################### demo ######################################
 def runDemo():
-    '''
-    runs the demo
-    files currently used:
-        get_audio.py
-        get_melspectrogram.py
-        get_mfcc.py
 
-    input_name : array of filenames
-    '''
     recording = get_audio()                 # creates an instance of get_audio.py
     input_names = recording.prompt_user()    # creates .wav files and returns an array of names
     
