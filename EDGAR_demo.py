@@ -34,13 +34,13 @@ def runDemo():
     recording = get_audio()                 # creates an instance of get_audio.py
     input_names = recording.prompt_user()    # creates .wav files and returns an array of names
     
-    #get_MFCC(input_name, 0, 512, 128, "delta")
-    #get_spectrogram(input_name, 0)
+    #get_MFCC(input_names, 0, 512, 128, "delta")
+    #get_spectrogram(input_names, 0)
     
     for i in range(len(input_names)):
-        print("Audio file: " + input_names[i] + " created")
+        print("Audio file: " + input_names[i] + " created")         # prints after the files are created
 
-        melSpectrogram_nparray = get_MelSpectrogram(input_names[i])  # creates a mel spectrogram for a given file
+        melSpectrogram_nparray = get_MelSpectrogram(input_names[i]) # creates a mel spectrogram for a given file
         print(melSpectrogram_nparray)                               # prints the array
         print("shape of array (should be 40, 1067, 3): ", 
                 melSpectrogram_nparray.shape)
