@@ -1,5 +1,10 @@
+'''
+CSC450 SP2020 Group 4
+
+'''
 import sys
 sys.path.append('./CSC450/')
+
 from get_mfcc import get_MFCC
 from get_spectrogram import get_spectrogram
 from get_melspectrogram import get_MelSpectrogram
@@ -22,7 +27,7 @@ print("size of array(should be 3): ", melSpectrogram_nparray.ndim)
 
 if(exists(input_name[0])):
     remove(input_name[0])
-    print("file deleted")
+    print("file " + str(input_name[0]) + " deleted")
 else:
     print("file error")
 
