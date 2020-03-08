@@ -3,7 +3,6 @@
   <component name="ChangeListManager">
     <list default="true" id="1043cb8c-6dd3-49d7-8671-c8e31b60673e" name="Default Changelist" comment="">
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/EDGAR_demo.py" beforeDir="false" afterPath="$PROJECT_DIR$/EDGAR_demo.py" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/get_melspectrogram.py" beforeDir="false" afterPath="$PROJECT_DIR$/get_melspectrogram.py" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
@@ -222,10 +221,10 @@
     </state>
     <state x="349" y="124" key="SettingsEditor/0.0.1680.1050@0.0.1680.1050" timestamp="1582405328838" />
     <state x="349" y="135" key="SettingsEditor/0.23.1680.947@0.23.1680.947" timestamp="1581902564316" />
-    <state x="519" y="339" key="com.intellij.ide.util.TipDialog" timestamp="1582926230224">
+    <state x="519" y="339" key="com.intellij.ide.util.TipDialog" timestamp="1583674813414">
       <screen x="0" y="0" width="1680" height="1050" />
     </state>
-    <state x="519" y="339" key="com.intellij.ide.util.TipDialog/0.0.1680.1050@0.0.1680.1050" timestamp="1582926230224" />
+    <state x="519" y="339" key="com.intellij.ide.util.TipDialog/0.0.1680.1050@0.0.1680.1050" timestamp="1583674813414" />
     <state x="519" y="329" key="com.intellij.ide.util.TipDialog/0.23.1680.947@0.23.1680.947" timestamp="1581899881032" />
     <state x="595" y="245" key="git4idea.branch.GitSmartOperationDialog" timestamp="1582405219008">
       <screen x="0" y="0" width="1680" height="1050" />
