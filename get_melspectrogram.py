@@ -59,7 +59,7 @@ class melSpectrogram:
         unique_num = int(time.time())
         filename = 'numpy_output\\Output' + str(unique_num)
         save(filename, contents)
-        print(filename + ".npy saved")
+        print("file " + filename + ".npy saved")
 
 ################################### main ######################################
 def main():
