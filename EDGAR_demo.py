@@ -1,5 +1,6 @@
 '''
 CSC450 SP2020 Group 4
+03/08/2020
 
 Currently configured for demo 2 on 03/12/2020
 '''
@@ -12,7 +13,7 @@ sys.path.append('./CSC450/recording_audio/')
 # import modules we have created
 from get_mfcc import get_MFCC
 from get_spectrogram import get_spectrogram
-from get_melspectrogram import get_MelSpectrogram
+from get_melspectrogram import melSpectrogram
 from get_audio import get_audio
 
 # imports for deleting audio file
@@ -31,8 +32,9 @@ def runDemo():
     
     for i in range(len(input_names)):
         print("Audio file: " + input_names[i] + " created")         # prints after the files are created
-
-        melSpectrogram_nparray = get_MelSpectrogram(input_names[i]) # creates a mel spectrogram for a given file
+        
+        mSpec = melSpectrogram(input_names[i])
+        melSpectrogram_nparray = mSpec.get_MelSpectrogram() # creates a mel spectrogram for a given file
         print(melSpectrogram_nparray)                               # prints the array
         print("shape of array (should be 40, 1067, 3): ", 
                 melSpectrogram_nparray.shape)
