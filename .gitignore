@@ -6,4 +6,4 @@ EDGAR/recording_audio/Output/
 /CSC450/data/ALL
 /venv/
 /__pycache__/ALL
-/numpy_output/ALL
+/numpy_output/*
