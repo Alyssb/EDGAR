@@ -9,7 +9,7 @@ Currently configured for demo 2 on 03/12/2020
 import sys
 sys.path.append('./CSC450/recording_audio/')
 
-##################################### imports ###################################
+# ***************************** imports *****************************
 # import modules we have created
 from get_mfcc import get_MFCC
 from get_spectrogram import get_spectrogram
@@ -21,7 +21,7 @@ from os import remove
 from os.path import exists
 
 
-################################### demo ######################################
+# ***************************** demo *****************************
 def runDemo():
 
     recording = get_audio()                 # creates an instance of get_audio.py
@@ -48,6 +48,7 @@ def deleteFile(input_name):
     else:
         print("file error")
 
+# ***************************** main *****************************
 def main():
     runDemo()
 
