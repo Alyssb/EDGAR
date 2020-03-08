@@ -37,7 +37,12 @@ class melSpectrogram:
         ms_delta2_dB = librosa.power_to_db(ms_delta2, ref=max)
         ms_delta2_dB_out = librosa.util.fix_length(ms_delta2_dB, 1067, axis=1)
         self.output = dstack((S_dB_out, ms_delta_dB_out, ms_delta2_dB_out))
-        self.displaySpectrogram()
+        
+        # CAN ONLY PLOT ONE FIGURE IN A PYTHON SCRIPT. uncomment only if there will be only one audio file
+        # self.displaySpectrogram()
+
+        self.saveFile(self.output)
+        return(self.output)
 
     def displaySpectrogram(self):
         # Plotting the Mel Spectrogram
@@ -49,8 +54,6 @@ class melSpectrogram:
         plt.title('Mel-frequency spectrogram')
         plt.tight_layout()
         plt.show()
-        self.saveFile(self.output)
-        return(self.output)
 
     def saveFile(self, contents):
         unique_num = int(time.time())
@@ -58,6 +61,7 @@ class melSpectrogram:
         save(filename, contents)
         print(filename + ".npy saved")
 
+################################### main ######################################
 def main():
     print("main function of get_melspectrogram.py")
 
