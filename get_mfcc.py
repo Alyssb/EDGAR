@@ -30,8 +30,8 @@ def get_MFCC(source_filename,samplerate, win_s, hop_s, mode):
 
     # do plotting
     from numpy import arange
-    from demo_waveform_plot import get_waveform_plot
-    from demo_waveform_plot import set_xlabels_sample2time
+    from get_waveform_plot import get_waveform_plot
+    from get_waveform_plot import set_xlabels_sample2time
     import matplotlib.pyplot as plt
 
     fig = plt.figure()

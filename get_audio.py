@@ -1,66 +1,119 @@
+'''
+Stephen Carr
+CSC450 SP2020 GROUP 4
+Missouri State University
+'''
+'''
+we should probably modularize this a bit
+'''
 import pyaudio
 import wave
 from pydub import AudioSegment
 from pydub.playback import play
 import random
+import time
+
+class get_audio():
+
+    def prompt_user(self):
+        '''
+        will begin recording when 'R' or 'r' is entered into command line
+        will close if any other string is entered
+        calls setup_record, whch sets up a PyAudio recording.
+
+        custom_seconds: number of seconds to record
+        num_recordings: number of recordings to be taken
+        '''
+
+        self.custom_seconds = input("how many seconds do you want to record? ")
+        self.num_recordings = input("How many recordings of that length would you like? ")
+        try:
+            int(self.custom_seconds)
+            int(self.num_recordings)
+            return(self.initiate_record())
+        except:
+            print("please input an integer number")
+            
+
+    def initiate_record(self):
+        start = input("type and enter 'r' to begin recording. ")
+
+        filenames = []
+        # if r or R typed
+        if start == 'r' or start == 'R':
+            for b in range(int(self.num_recordings)):
+                filenames.append(self.setup_record(b))
+        else:
+            print("Incorrect key. Run program again.")
+
+        return filenames
+
+    def setup_record(self, b):
+        '''
+        Uses PyAudio to setup a recording.
+        Calls recordAudio, which actually records
+        '''
+        self.chunk = 1024                        # Record in chunks of 1024 samples
+        self.sample_format = pyaudio.paInt16     # 16 bits per sample
+        self.channels = 1                        # only using one channel
+        self.fs = 44100                          # Record at 44100 samples per second
+
+        # get the current time for use in unique filename
+        self.unique_num = int(time.time())
+        self.filename = 'live_audio/Output' + str(self.unique_num) + '.wav'
+
+        self.p = pyaudio.PyAudio()               # Create an interface to PortAudio
 
 
-def get_audio():
-
-    custom_seconds = input("how long do you want to record? ")
-    num_recordings = input("How many recordings of that length would you like? ")
-    #start = raw_input("Press 'r' to beging recording. ") #is this python 2?
-    start = input("type and enter 'r' to begin recording. ")
-
-
-    if start == 'r' or 'R':
-        for b in range(int(num_recordings)):
-            chunk = 1024  # Record in chunks of 1024 samples
-            sample_format = pyaudio.paInt16  # 16 bits per sample
-            channels = 2
-            fs = 44100  # Record at 44100 samples per second
-            seconds = int(custom_seconds)
-
-            unique_num = random.randint(1,10000)
-
-            filename = 'recording_audio/Output/Output' + str(unique_num) + '.wav'
-
-            p = pyaudio.PyAudio()  # Create an interface to PortAudio
-
-            print('Recording')
-
-            stream = p.open(format=sample_format,
-                            channels=channels,
-                            rate=fs,
-                            frames_per_buffer=chunk,
+        # open a recording stream
+        self.stream = self.p.open(format=self.sample_format,
+                            channels=self.channels,
+                            rate=self.fs,
+                            frames_per_buffer=self.chunk,
                             input=True)
 
-            frames = []  # Initialize array to store frames
+        self.frames = []  # Initialize array to store frames
+        
+        print('Recording')
+        return(self.record_audio(b))
+    
 
-
-            # Store data in chunks for 3 seconds i.e. recording
-            for i in range(0, int(fs / chunk * seconds)):
-                data = stream.read(chunk)
-                frames.append(data)
+    def record_audio(self, b):
+        '''
+        takes recordings as specified by the user
+        calls save_file, which saves the audio data as a .wav file
+        '''
+        # Store data in chunks
+        for i in range(0, int(self.fs / self.chunk * int(self.custom_seconds))):
+            data = self.stream.read(self.chunk)
+            self.frames.append(data)
 
         # Stop and close the stream
-            stream.stop_stream()
-            stream.close()
-            # Terminate the PortAudio interface
-            p.terminate()
-            print('Finished recording ' + str(b))
+        self.stream.stop_stream()
+        self.stream.close()
 
-            # Save the recorded data as a WAV file
-            wf = wave.open(filename, 'wb')
-            wf.setnchannels(channels)
-            wf.setsampwidth(p.get_sample_size(sample_format))
-            wf.setframerate(fs)
-            wf.writeframes(b''.join(frames))
-            wf.close()
+        # Terminate the PortAudio interface
+        self.p.terminate()
 
-            # sound = AudioSegment.from_wav(filename)
-            # play(sound)
-            return filename
+        print('Finished recording ' + str(b))
+        return(self.save_file(b))
 
-    else:
-        print("Incorrect key. Run program again.")
+    def save_file(self, b):
+        '''
+        saves the audio data as a .wav file
+        '''
+        # Save the recorded data as a WAV file
+        wf = wave.open(self.filename, 'wb')
+        wf.setnchannels(self.channels)
+        wf.setsampwidth(self.p.get_sample_size(self.sample_format))
+        wf.setframerate(self.fs)
+        wf.writeframes(b''.join(self.frames))
+        wf.close()
+        
+        print('file ' + self.filename + ' saved.')
+        return self.filename
+
+
+if __name__ == '__main__':
+    recording = get_audio()
+    recording.prompt_user()
