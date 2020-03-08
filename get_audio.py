@@ -4,7 +4,7 @@ CSC450 SP2020 GROUP 4
 Missouri State University
 '''
 
-##################################### imports ###################################
+# ***************************** imports *****************************
 import pyaudio
 import wave
 from pydub import AudioSegment
@@ -12,7 +12,7 @@ from pydub.playback import play
 import random
 import time
 
-################################### class get_audio ######################################
+# ***************************** class get_audio *****************************
 class get_audio():
 
     def prompt_user(self):
@@ -114,7 +114,7 @@ class get_audio():
         return self.filename
 
 
-################################### main ######################################
+# ***************************** main *****************************
 if __name__ == '__main__':
     recording = get_audio()
     recording.prompt_user()

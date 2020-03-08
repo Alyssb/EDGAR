@@ -7,7 +7,7 @@ creates, stores, and returns a spectrogram for a given audio file
 currently called by EDGAR_demo.py
 '''
 
-################################### imports ######################################
+# ***************************** imports *****************************
 # You will need to pip install all of these things
 import librosa
 import librosa.display
@@ -15,7 +15,7 @@ from numpy import max, dstack, save
 import matplotlib.pyplot as plt
 import time
 
-################################### class melSpectrogram ######################################
+# ***************************** class melSpectrogram *****************************
 class melSpectrogram:
 
     def __init__(self, source_filename):
@@ -61,7 +61,7 @@ class melSpectrogram:
         save(filename, contents)
         print("file " + filename + ".npy saved")
 
-################################### main ######################################
+# ***************************** main *****************************
 def main():
     print("main function of get_melspectrogram.py")
 

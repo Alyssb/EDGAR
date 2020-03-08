@@ -1,12 +1,19 @@
 #! /usr/bin/env python
+'''
+CSC450 SP 2020 Group 4
+03/08/2020
+a whole mess
+
+currently called by get_melspectrogram.py
+'''
 
 import sys
 from aubio import source, pvoc, mfcc
 from numpy import vstack, zeros, diff
-from numpy import save, load, set_printoptions #Cory's mess
-import time #file naming scheme - Cory
+from numpy import save, load, set_printoptions
+import time                                     # file naming scheme
 
-
+# ***************************** imports *****************************
 def get_MFCC(source_filename,samplerate, win_s, hop_s, mode):
     n_filters = 40              # must be 40 for mfcc
     n_coeffs = 13
