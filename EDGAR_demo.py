@@ -22,21 +22,35 @@ from os.path import exists
 
 ################################### demo ######################################
 def runDemo():
-    recording = get_audio()
-    input_name = recording.prompt_user()
-    print("Audio file: " + input_name[0] + " created")
+    '''
+    runs the demo
+    files currently used:
+        get_audio.py
+        get_melspectrogram.py
+        get_mfcc.py
+
+    input_name : array of filenames
+    '''
+    recording = get_audio()                 # creates an instance of get_audio.py
+    input_names = recording.prompt_user()    # creates .wav files and returns an array of names
+    
     #get_MFCC(input_name, 0, 512, 128, "delta")
     #get_spectrogram(input_name, 0)
-    melSpectrogram_nparray = get_MelSpectrogram(input_name[0])
-    print(melSpectrogram_nparray)
-    print("shape of array (should be 40, 1067, 3): ", melSpectrogram_nparray.shape)
-    print("size of array (should be 3): ", melSpectrogram_nparray.ndim)
-    deleteFile(input_name)
+    
+    for i in range(len(input_names)):
+        print("Audio file: " + input_names[i] + " created")
+
+        melSpectrogram_nparray = get_MelSpectrogram(input_names[i])  # creates a mel spectrogram for a given file
+        print(melSpectrogram_nparray)                               # prints the array
+        print("shape of array (should be 40, 1067, 3): ", 
+                melSpectrogram_nparray.shape)
+        print("size of array (should be 3): ", melSpectrogram_nparray.ndim)
+        deleteFile(input_names[i])  # deletes original audio file to protect privacy
 
 def deleteFile(input_name):
-    if(exists(input_name[0])):
-        remove(input_name[0])
-        print("file " + str(input_name[0]) + " deleted")
+    if(exists(input_name)):
+        remove(input_name)
+        print("file " + str(input_name) + " deleted")
     else:
         print("file error")
 
