@@ -5,8 +5,9 @@ Currently called by EDGAR_demo.py
 
 import librosa
 import librosa.display
-from numpy import max, dstack
+from numpy import max, dstack, save
 import matplotlib.pyplot as plt
+import time
 
 
 def get_MelSpectrogram(source_filename, samplerate=16000):
@@ -26,18 +27,27 @@ def get_MelSpectrogram(source_filename, samplerate=16000):
 
 
     #Plotting the Mel Spectrogram
-    plt.figure(figsize=(10, 4))
-    librosa.display.specshow(S_dB, x_axis='time',
-                             y_axis='mel', sr=samplerate,
-                             fmax=8000)
-    plt.colorbar(format='%+2.0f dB')
-    plt.title('Mel-frequency spectrogram')
-    plt.tight_layout()
-    plt.show()
+    # plt.figure(figsize=(10, 4))
+    # librosa.display.specshow(S_dB, x_axis='time',
+    #                          y_axis='mel', sr=samplerate,
+    #                          fmax=8000)
+    # plt.colorbar(format='%+2.0f dB')
+    # plt.title('Mel-frequency spectrogram')
+    # plt.tight_layout()
+    # plt.show()
+    saveFile(output)
     return output
 
-def main():
-    return get_MelSpectrogram("C:\\Users\\alyss\\Documents\\EDGAR\\live_audio\\Output1582996270.wav")
+def saveFile(contents):
+    unique_num = int(time.time())
+    filename = 'numpy_output\\Output' + str(unique_num)
+    save(filename, contents)
+    print(filename + ".npy saved")
 
-if __name__ == '__main__':
-    main()
+
+
+# def main():
+#     return get_MelSpectrogram("C:\\Users\\alyss\\Documents\\EDGAR\\live_audio\\Output1582996270.wav")
+
+# if __name__ == '__main__':
+#     main()
