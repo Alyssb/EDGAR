@@ -8,6 +8,7 @@ MUST be run from EDGAR directory.
 test cases:
     That it works
     Deletes audio file
+        doesn't actually do that, we should make it
     Creates .npy file
     Shape of Array
     Size of Array
