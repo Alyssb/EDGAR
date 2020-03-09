@@ -22,17 +22,17 @@ from get_audio import get_audio
 def runDemo():
 
     recording = get_audio()                 # creates an instance of get_audio.py
-    input_names = recording.prompt_user()    # creates .wav files and returns an array of names
+    input_names = recording.prompt_user()   # creates .wav files and returns an array of names
     
     #get_MFCC(input_names, 0, 512, 128, "delta")
     #get_spectrogram(input_names, 0)
     
     for i in range(len(input_names)):
-        print("Audio file: " + input_names[i] + " created")         # prints after the files are created
+        print("Audio file: " + input_names[i] + " created")     # prints after the files are created
         
         mSpec = melSpectrogram(input_names[i])
-        melSpectrogram_nparray = mSpec.get_MelSpectrogram() # creates a mel spectrogram for a given file
-        print(melSpectrogram_nparray)                               # prints the array
+        melSpectrogram_nparray = mSpec.get_MelSpectrogram()     # creates a mel spectrogram for a given file
+        print(melSpectrogram_nparray)                           # prints the array
         print("shape of array (should be 40, 1067, 3): ", 
                 melSpectrogram_nparray.shape)
         print("size of array (should be 3): ", melSpectrogram_nparray.ndim)
