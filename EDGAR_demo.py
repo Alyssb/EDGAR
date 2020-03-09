@@ -18,11 +18,6 @@ from get_spectrogram import get_spectrogram
 from get_melspectrogram import melSpectrogram
 from get_audio import get_audio
 
-# imports for deleting audio file
-from os import remove
-from os.path import exists
-
-
 # ***************************** demo *****************************
 def runDemo():
 
@@ -41,14 +36,8 @@ def runDemo():
         print("shape of array (should be 40, 1067, 3): ", 
                 melSpectrogram_nparray.shape)
         print("size of array (should be 3): ", melSpectrogram_nparray.ndim)
-        deleteFile(input_names[i])  # deletes original audio file to protect privacy
+        mSpec.deleteFile()  # deletes original audio file to protect privacy
 
-def deleteFile(input_name):
-    if(exists(input_name)):
-        remove(input_name)
-        print("file " + str(input_name) + " deleted")
-    else:
-        print("file error")
 
 # ***************************** main *****************************
 def main():

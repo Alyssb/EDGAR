@@ -15,6 +15,10 @@ from numpy import max, dstack, save
 import matplotlib.pyplot as plt
 import time
 
+# imports for deleting audio file
+from os import remove
+from os.path import exists
+
 # ***************************** class melSpectrogram *****************************
 class melSpectrogram:
 
@@ -88,6 +92,13 @@ class melSpectrogram:
 
         # print confirmation that the file was saved
         print("file " + filename + ".npy saved")
+
+    def deleteFile(self):
+        if(exists(self.source_filename)):
+            remove(self.source_filename)
+            print("file " + str(self.source_filename) + " deleted")
+        else:
+            print("file error")
 
 # ***************************** main *****************************
 def main():
