@@ -27,9 +27,6 @@ def make_melspec():
     melspec = get_melspectrogram.melSpectrogram(filename)
     return(melspec)
 
-def test_displaySpectrogram():
-    melspec = make_melspec()
-
 def test_deleteFile():
     print("not yet implemented")
 
@@ -44,9 +41,13 @@ def test_arraySize():
     # will not pass if padToLongest does not work
     print("not yet implemented")
 
-def main():
+def test_displaySpectrogram():
     melspec = make_melspec()
-    print(melspec)
+    melspec.get_MelSpectrogram()
+    melspec.displaySpectrogram()
+    
+def main():
+    test_displaySpectrogram()
 
 if __name__ == '__main__':
     main()
