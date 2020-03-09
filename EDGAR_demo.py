@@ -3,6 +3,8 @@ CSC450 SP2020 Group 4
 03/08/2020
 
 Currently configured for demo 2 on 03/12/2020
+
+MUST be run from EDGAR directory.
 '''
 
 # import path to file directory and change it to where out inputs are located

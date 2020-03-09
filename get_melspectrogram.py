@@ -68,7 +68,6 @@ class melSpectrogram:
         self.ms_delta_dB_out = librosa.util.fix_length(self.ms_delta_dB, 1067, axis=1)
         self.ms_delta2_dB_out = librosa.util.fix_length(self.ms_delta2_dB, 1067, axis=1)
 
-        print("not yet implemented")
 
     def displaySpectrogram(self):
         # Plotting the Mel Spectrogram
@@ -86,7 +85,7 @@ class melSpectrogram:
         unique_num = int(time.time())
         filename = 'numpy_output\\Output' + str(unique_num)
         save(filename, contents)
-        
+
         # print confirmation that the file was saved
         print("file " + filename + ".npy saved")
 

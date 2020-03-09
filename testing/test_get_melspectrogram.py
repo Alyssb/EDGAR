@@ -17,10 +17,15 @@ sys.path.insert(1, "C:\\Users\\alyss\\Documents\\EDGAR\\")
 
 import get_melspectrogram
 
+filename = "testing\\withSpeech3sec.wav"
+
 def default_test():
+    melspec = get_melspectrogram.melSpectrogram(filename)
+    melspec.get_MelSpectrogram()
     print("bruh moment.")
 
 def main():
+    
     default_test()
 
 if __name__ == '__main__':
