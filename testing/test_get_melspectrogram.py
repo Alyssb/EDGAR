@@ -6,12 +6,11 @@ MUST be run from EDGAR directory.
 '''
 '''
 test cases:
-    That it works
-    Can delete audio file
-    Creates .npy file
+    displaySpectrogram works
+    saveFile works
+    deleteFile works
     Shape of Array
     Size of Array
-    umm idk what else
 '''
 import sys
 from os.path import exists
@@ -28,8 +27,24 @@ def default_test():
     melspec.get_MelSpectrogram()
     print("it works")
 
+def test_displaySpectrogram():
+    print("not yet implemented")
+
+def test_deleteFile():
+    print("not yet implemented")
+
+def test_saveFile():
+    print("not yet implemented")
+
+def test_arrayShape():
+    # will not pass if padToLongest does not work
+    print("not yet implemented")
+
+def test_arraySize():
+    # will not pass if padToLongest does not work
+    print("not yet implemented")
+
 def main():
-    
     default_test()
 
 if __name__ == '__main__':
