@@ -82,9 +82,12 @@ class melSpectrogram:
         plt.show()
 
     def saveFile(self, contents):
+        # use current time to calculate a unique number
         unique_num = int(time.time())
         filename = 'numpy_output\\Output' + str(unique_num)
         save(filename, contents)
+        
+        # print confirmation that the file was saved
         print("file " + filename + ".npy saved")
 
 # ***************************** main *****************************
