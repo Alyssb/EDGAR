@@ -56,7 +56,7 @@ class melSpectrogram:
         
         # CAN ONLY PLOT ONE FIGURE IN A PYTHON SCRIPT. 
         # uncomment only if there will be only one audio file and you want it displayed
-        # self.displaySpectrogram()
+        #self.displaySpectrogram()
 
         # Saves 3D numpy output array to a file
         self.saveFile(self.output)

@@ -11,7 +11,6 @@ test cases:
     Creates .npy file
     Shape of Array
     Size of Array
-    Array is saved 
     umm idk what else
 '''
 import sys
@@ -27,7 +26,7 @@ filename = "testing\\withSpeech3sec.wav"
 def default_test():
     melspec = get_melspectrogram.melSpectrogram(filename)
     melspec.get_MelSpectrogram()
-    print("bruh moment.")
+    print("it works")
 
 def main():
     
