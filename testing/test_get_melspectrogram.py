@@ -16,19 +16,19 @@ import sys
 from os.path import exists
 
 # adds string to path for the running of this file
+# HARDCODED change for your directory
 sys.path.insert(1, "C:\\Users\\alyss\\Documents\\EDGAR\\")
 
 import get_melspectrogram
 
 filename = "testing\\withSpeech3sec.wav"
 
-def default_test():
+def make_melspec():
     melspec = get_melspectrogram.melSpectrogram(filename)
-    melspec.get_MelSpectrogram()
-    print("it works")
+    return(melspec)
 
 def test_displaySpectrogram():
-    print("not yet implemented")
+    melspec = make_melspec()
 
 def test_deleteFile():
     print("not yet implemented")
@@ -45,7 +45,8 @@ def test_arraySize():
     print("not yet implemented")
 
 def main():
-    default_test()
+    melspec = make_melspec()
+    print(melspec)
 
 if __name__ == '__main__':
     main()

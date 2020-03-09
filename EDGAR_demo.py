@@ -37,7 +37,7 @@ def runDemo():
                 melSpectrogram_nparray.shape)
         print("size of array (should be 3): ", melSpectrogram_nparray.ndim)
         mSpec.deleteFile()  # deletes original audio file to protect privacy
-
+        mSpec.saveFile()    # Saves 3D numpy output array to a file
 
 # ***************************** main *****************************
 def main():
@@ -45,4 +45,3 @@ def main():
 
 if __name__ == "__main__":
     main()
-

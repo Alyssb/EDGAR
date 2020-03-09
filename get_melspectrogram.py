@@ -62,8 +62,6 @@ class melSpectrogram:
         # uncomment only if there will be only one audio file and you want it displayed
         #self.displaySpectrogram()
 
-        # Saves 3D numpy output array to a file
-        self.saveFile(self.output)
         return(self.output)
 
     def padToLongest(self):
@@ -71,7 +69,6 @@ class melSpectrogram:
         self.S_dB_out = librosa.util.fix_length(self.S_dB, 1067, axis=1)
         self.ms_delta_dB_out = librosa.util.fix_length(self.ms_delta_dB, 1067, axis=1)
         self.ms_delta2_dB_out = librosa.util.fix_length(self.ms_delta2_dB, 1067, axis=1)
-
 
     def displaySpectrogram(self):
         # Plotting the Mel Spectrogram
@@ -84,11 +81,11 @@ class melSpectrogram:
         plt.tight_layout()
         plt.show()
 
-    def saveFile(self, contents):
+    def saveFile(self):
         # use current time to calculate a unique number
         unique_num = int(time.time())
         filename = 'numpy_output\\Output' + str(unique_num)
-        save(filename, contents)
+        save(filename, self.output)
 
         # print confirmation that the file was saved
         print("file " + filename + ".npy saved")
