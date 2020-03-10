@@ -3,9 +3,8 @@ Stephen Carr
 CSC450 SP2020 GROUP 4
 Missouri State University
 '''
-'''
-we should probably modularize this a bit
-'''
+
+# ***************************** imports *****************************
 import pyaudio
 import wave
 from pydub import AudioSegment
@@ -13,6 +12,7 @@ from pydub.playback import play
 import random
 import time
 
+# ***************************** class get_audio *****************************
 class get_audio():
 
     def prompt_user(self):
@@ -27,15 +27,26 @@ class get_audio():
 
         self.custom_seconds = input("how many seconds do you want to record? ")
         self.num_recordings = input("How many recordings of that length would you like? ")
+        try:
+            int(self.custom_seconds)
+            int(self.num_recordings)
+            return(self.initiate_record())
+        except:
+            print("please input an integer number")
+            
+
+    def initiate_record(self):
         start = input("type and enter 'r' to begin recording. ")
 
+        filenames = []
         # if r or R typed
         if start == 'r' or start == 'R':
             for b in range(int(self.num_recordings)):
-                self.setup_record(b)
+                filenames.append(self.setup_record(b))
         else:
             print("Incorrect key. Run program again.")
 
+        return filenames
 
     def setup_record(self, b):
         '''
@@ -64,7 +75,7 @@ class get_audio():
         self.frames = []  # Initialize array to store frames
         
         print('Recording')
-        self.record_audio(b)
+        return(self.record_audio(b))
     
 
     def record_audio(self, b):
@@ -85,7 +96,7 @@ class get_audio():
         self.p.terminate()
 
         print('Finished recording ' + str(b))
-        self.save_file(b)
+        return(self.save_file(b))
 
     def save_file(self, b):
         '''
@@ -103,6 +114,7 @@ class get_audio():
         return self.filename
 
 
+# ***************************** main *****************************
 if __name__ == '__main__':
     recording = get_audio()
     recording.prompt_user()
