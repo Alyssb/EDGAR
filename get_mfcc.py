@@ -119,7 +119,8 @@ def main():
 
     samplerate = 0
 
-    get_MFCC(source_filename, samplerate, win_s, hop_s, mode)
+    get_mfcc = get_MFCC(source_filename, samplerate, win_s, hop_s, mode)
+    get_mfcc.get_MFCC()
 
 if __name__ == '__main__':
     main()
