@@ -44,6 +44,7 @@ def test_deleteFile_exists():
         print("test_deleteFile_exists passed")
 
 def test_deleteFile_notExists():
+    # I don't want to do this, I'll do this later
     print("not yet implemented")
 
 def test_saveFile():
@@ -51,7 +52,10 @@ def test_saveFile():
 
 def test_arrayShape():
     # will not pass if padToLongest does not work
-    print("not yet implemented")
+    melspec = make_melspec()
+    npArray = melspec.get_MelSpectrogram()
+    temp = (40, 1067, 3)
+    assert npArray == temp
 
 def test_arraySize():
     # will not pass if padToLongest does not work
@@ -64,6 +68,7 @@ def test_displaySpectrogram():
 
 def main():
     test_deleteFile_exists()
+    test_arrayShape()
 
 if __name__ == '__main__':
     main()
