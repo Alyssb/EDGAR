@@ -7,7 +7,7 @@ Function that gathers test/train data amd trains the model
 
 FILEPATH MUST BE CHANGED
 '''
-FILEPATH = "C:\\Users\\zackj\\450\\"
+FILEPATH = "/Users/stephencarr/Desktop/metrics_stretched/"
 
 
 def main():
@@ -35,7 +35,7 @@ def trainModel():
     rng = default_rng(11)
     test_index = rng.choice(10039, size=1000, replace=False)
     for i in range(0, 10039):
-        spectrogram = np.load(FILEPATH + "metrics_stretched\\{}.npy".format(i),
+        spectrogram = np.load(FILEPATH + "/{}.npy".format(i),
                               allow_pickle=False)
         if i in test_index:
             test_data.append(spectrogram)
