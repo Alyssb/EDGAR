@@ -21,6 +21,7 @@ import numpy as np
 # spectrogram = np.load("C:\\Users\\zackj\\450\\metrics\\metrics\\0.npy",
 #                       allow_pickle=False)
 # print(spectrogram.shape)
+# quicketid
 
 x_dim = 40
 y_dim = 1074
