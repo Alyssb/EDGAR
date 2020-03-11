@@ -15,6 +15,8 @@ from get_mfcc import get_MFCC
 from get_spectrogram import get_spectrogram
 from get_melspectrogram import melSpectrogram
 from get_audio import get_audio
+from run_model import runModel
+from output import response
 
 # imports for deleting audio file
 from os import remove
@@ -39,6 +41,8 @@ def runDemo():
         print("shape of array (should be 40, 1067, 3): ", 
                 melSpectrogram_nparray.shape)
         print("size of array (should be 3): ", melSpectrogram_nparray.ndim)
+        result = runModel(melSpectrogram_nparray)
+        response(result)
         deleteFile(input_names[i])  # deletes original audio file to protect privacy
 
 def deleteFile(input_name):

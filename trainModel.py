@@ -9,7 +9,7 @@ Function that gathers test/train data amd trains the model
 FILEPATH MUST BE CHANGED
 '''
 
-FILEPATH = "/Users/mjelinek/Documents/GitHub/EDGAR/"
+FILEPATH = "C:\\Users\\PremiumHamsters\\Documents\\EDGAR\\"
 
 
 
@@ -40,7 +40,7 @@ def trainModel():
 
     test_index = rng.choice(7532, size=1000, replace=False)
     for i in range(0, 7532):
-        spectrogram = np.load(FILEPATH + "metrics_stretched_no_xxx/{}.npy".format(i),
+        spectrogram = np.load(FILEPATH + "metrics_stretched_no_xxx\\{}.npy".format(i),
 
                               allow_pickle=False)
         if i in test_index:
@@ -54,7 +54,7 @@ def trainModel():
 
     # turning labels into integers
     label_dict = {'ang': 0, 'dis': 1, 'exc': 2, 'fea': 3, 'fru': 4,
-                  'hap': 5, 'neu': 6, 'oth': 7, 'sad': 8, 'sur': 9, 'xxx': 10}
+                  'hap': 5, 'neu': 6, 'oth': 7, 'sad': 8, 'sur': 9} #, 'xxx': 10
     new_train_labels = []
     new_test_labels = []
     for label in train_labels:
@@ -73,7 +73,7 @@ def trainModel():
     leakyRelu_1 = tf.keras.layers.LeakyReLU()
 
     # Argument is dimensionality of output, one for each class
-    dense_layer = tf.keras.layers.Dense(11)
+    dense_layer = tf.keras.layers.Dense(10) #11
 
     full_model = tf.keras.Sequential([
         traditionalCNN_model,
@@ -94,7 +94,7 @@ def trainModel():
 
     print('\nTest loss:', test_loss)
     print('\nTest accuracy:', test_acc)
-    full_model.save('model/my_model')
+    full_model.save('model\\my_model')
 
 
 

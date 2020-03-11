@@ -7,3 +7,6 @@ EDGAR/recording_audio/Output/
 /venv/
 /*.xml
 
+metrics_stretched_no_xxx/
+numpy_output/
+__pycache__/
