@@ -1,13 +1,17 @@
 from numpy.random import default_rng
 import tensorflow as tf
 import numpy as np
+
 '''
 Function that gathers test/train data amd trains the model
 
 
 FILEPATH MUST BE CHANGED
 '''
-FILEPATH = "/Users/stephencarr/Desktop/metrics_stretched/"
+
+FILEPATH = "/Users/mjelinek/Documents/GitHub/EDGAR/"
+
+
 
 
 def main():
@@ -28,14 +32,16 @@ def trainModel():
     test_data = []
     train_labels = []
     test_labels = []
-    labels = np.load(FILEPATH + "label_list_stretched.npy",
+    labels = np.load(FILEPATH + "label_list_stretched_no_xxx.npy",
                      allow_pickle=False)
 
     # This method of generation allows with/without replacement
     rng = default_rng(11)
-    test_index = rng.choice(10039, size=1000, replace=False)
-    for i in range(0, 10039):
-        spectrogram = np.load(FILEPATH + "/{}.npy".format(i),
+
+    test_index = rng.choice(7532, size=1000, replace=False)
+    for i in range(0, 7532):
+        spectrogram = np.load(FILEPATH + "metrics_stretched_no_xxx/{}.npy".format(i),
+
                               allow_pickle=False)
         if i in test_index:
             test_data.append(spectrogram)
@@ -81,13 +87,18 @@ def trainModel():
                        loss=tf.keras.losses.SparseCategoricalCrossentropy(),
                        metrics=['accuracy'])
 
-    full_model.fit(train_data, new_train_labels, epochs=10)
+    full_model.fit(train_data, new_train_labels, epochs=5)
 
     test_loss, test_acc = full_model.evaluate(
         test_data,  new_test_labels, verbose=2)
 
     print('\nTest loss:', test_loss)
     print('\nTest accuracy:', test_acc)
+    full_model.save('model/my_model')
+
+
+
+
 
 
 if __name__ == "__main__":
