@@ -8,7 +8,10 @@ Function that gathers test/train data amd trains the model
 
 FILEPATH MUST BE CHANGED
 '''
+
 FILEPATH = "/Users/mjelinek/Documents/GitHub/EDGAR/"
+
+
 
 
 def main():
@@ -34,9 +37,11 @@ def trainModel():
 
     # This method of generation allows with/without replacement
     rng = default_rng(11)
+
     test_index = rng.choice(7532, size=1000, replace=False)
     for i in range(0, 7532):
         spectrogram = np.load(FILEPATH + "metrics_stretched_no_xxx/{}.npy".format(i),
+
                               allow_pickle=False)
         if i in test_index:
             test_data.append(spectrogram)
