@@ -84,18 +84,18 @@ class melSpectrogram:
     def saveFile(self):
         # use current time to calculate a unique number
         unique_num = int(time.time())
-        filename = 'numpy_output\\Output' + str(unique_num)
-        save(filename, self.output)
+        self.filename = 'numpy_output\\Output' + str(unique_num)
+        save(self.filename, self.output)
 
         # print confirmation that the file was saved
-        print("file " + filename + ".npy saved")
+        print("file " + self.filename + ".npy saved")
 
     def deleteFile(self):
         if(exists(self.source_filename)):
             remove(self.source_filename)
             print("file " + str(self.source_filename) + " deleted")
         else:
-            print("file error")
+            print("FILE ERROR: cannot remove file")
 
 # ***************************** main *****************************
 def main():
