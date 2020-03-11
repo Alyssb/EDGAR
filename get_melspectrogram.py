@@ -15,6 +15,10 @@ from numpy import max, dstack, save
 import matplotlib.pyplot as plt
 import time
 
+# imports for deleting audio file
+from os import remove
+from os.path import exists
+
 # ***************************** class melSpectrogram *****************************
 class melSpectrogram:
 
@@ -43,31 +47,28 @@ class melSpectrogram:
         # Convert a power spectrogram (amplitude squared) to decibel (dB) units
         self.S_dB = librosa.power_to_db(S, ref=max)
 
-        # Pads the numpy array "S_dB" with zeroes to make it the length needed (1067 rows)
-        # This makes the numpy arrays the same size as the longest wav file used for training
-        S_dB_out = librosa.util.fix_length(self.S_dB, 1067, axis=1)
+        # Convert a power spectrogram (amplitude squared) to decibel (dB) units
+        self.ms_delta_dB = librosa.power_to_db(ms_delta, ref=max)
 
         # Convert a power spectrogram (amplitude squared) to decibel (dB) units
-        ms_delta_dB = librosa.power_to_db(ms_delta, ref=max)
+        self.ms_delta2_dB = librosa.power_to_db(ms_delta2, ref=max)
 
-        # Pads the numpy array "ms_delta_dB" with zeroes to make it the length needed (1067 rows)
-        ms_delta_dB_out = librosa.util.fix_length(ms_delta_dB, 1067, axis=1)
-
-        # Convert a power spectrogram (amplitude squared) to decibel (dB) units
-        ms_delta2_dB = librosa.power_to_db(ms_delta2, ref=max)
-
-        # Pads the numpy array "ms_delta2_dB" with zeroes to make it the length needed (1067 rows)
-        ms_delta2_dB_out = librosa.util.fix_length(ms_delta2_dB, 1067, axis=1)
+        self.padToLongest()
 
         #stacks the arrays depth wise to make a 3D numpy array
-        self.output = dstack((S_dB_out, ms_delta_dB_out, ms_delta2_dB_out))
+        self.output = dstack((self.S_dB_out, self.ms_delta_dB_out, self.ms_delta2_dB_out))
         
-        # CAN ONLY PLOT ONE FIGURE IN A PYTHON SCRIPT. uncomment only if there will be only one audio file
-        # self.displaySpectrogram()
+        # CAN ONLY PLOT ONE FIGURE IN A PYTHON SCRIPT. 
+        # uncomment only if there will be only one audio file and you want it displayed
+        #self.displaySpectrogram()
 
-        # Saves 3D numpy output array to a file
-        self.saveFile(self.output)
         return(self.output)
+
+    def padToLongest(self):
+        # pads numpy arrays with zeroes to fit longest wav file used for training (1067) rows
+        self.S_dB_out = librosa.util.fix_length(self.S_dB, 1067, axis=1)
+        self.ms_delta_dB_out = librosa.util.fix_length(self.ms_delta_dB, 1067, axis=1)
+        self.ms_delta2_dB_out = librosa.util.fix_length(self.ms_delta2_dB, 1067, axis=1)
 
     def displaySpectrogram(self):
         # Plotting the Mel Spectrogram
@@ -80,11 +81,21 @@ class melSpectrogram:
         plt.tight_layout()
         plt.show()
 
-    def saveFile(self, contents):
+    def saveFile(self):
+        # use current time to calculate a unique number
         unique_num = int(time.time())
-        filename = 'numpy_output\\Output' + str(unique_num)
-        save(filename, contents)
-        print("file " + filename + ".npy saved")
+        self.filename = 'numpy_output\\Output' + str(unique_num)
+        save(self.filename, self.output)
+
+        # print confirmation that the file was saved
+        print("file " + self.filename + ".npy saved")
+
+    def deleteFile(self):
+        if(exists(self.source_filename)):
+            remove(self.source_filename)
+            print("file " + str(self.source_filename) + " deleted")
+        else:
+            print("FILE ERROR: cannot remove file")
 
 # ***************************** main *****************************
 def main():

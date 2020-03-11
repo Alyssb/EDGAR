@@ -15,8 +15,10 @@ import subprocess
 from time import sleep
 from os import system
 
+# adds string to path for the running of this file
 sys.path.insert(1, 'C:\\Users\\alyss\\Documents\\EDGAR\\')
 
+# found because directory is now in path
 import get_audio
 
 def default_test():

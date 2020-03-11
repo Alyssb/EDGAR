@@ -1,6 +1,6 @@
 '''
 Stephen Carr
-CSC450 SP2020 GROUP 4
+CSC450 SP2020 Group 4
 Missouri State University
 '''
 
