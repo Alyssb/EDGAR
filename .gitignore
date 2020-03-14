@@ -7,3 +7,4 @@ EDGAR/recording_audio/Output/
 file_list_stretched_no_xxx.npy
 label_list_stretched_no_xxx.npy
 /metrics_stretched_no_xxx/
+*.xml
