@@ -4,3 +4,6 @@ EDGAR/recording_audio/Output/
 /.vscode/
 /CSC450/data/
 /CSC450/data/ALL
+file_list_stretched_no_xxx.npy
+label_list_stretched_no_xxx.npy
+/metrics_stretched_no_xxx/
