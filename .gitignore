@@ -8,3 +8,5 @@ file_list_stretched_no_xxx.npy
 label_list_stretched_no_xxx.npy
 /metrics_stretched_no_xxx/
 *.xml
+/numpy_output/*
+/__pycache__/
