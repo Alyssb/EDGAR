@@ -10,3 +10,4 @@ label_list_stretched_no_xxx.npy
 *.xml
 /numpy_output/*
 /__pycache__/
+/model/
