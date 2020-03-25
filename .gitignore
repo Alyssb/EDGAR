@@ -11,3 +11,5 @@ label_list_stretched_no_xxx.npy
 /numpy_output/*
 /__pycache__/
 /model/
+/functions/__pycache__/
+/unused/__pycache__/
