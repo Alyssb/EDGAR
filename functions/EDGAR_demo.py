@@ -8,6 +8,7 @@ MUST be run from EDGAR directory.
 # import path to file directory and change it to where out inputs are located
 import sys
 sys.path.append('./CSC450/recording_audio/')
+sys.path.insert(1, './unused/')
 
 # ***************************** imports *****************************
 # import modules we have created
