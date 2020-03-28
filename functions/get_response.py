@@ -28,7 +28,7 @@ def get_response(emo_num):  # emo_num can be removed once the get_classification
     # classification = get_classification() <--- This would be how the responder gets the classification
     classification = emo_num  # set to number 1 till get_classification() created
 
-    responseFilePath = "/Users/stephencarr/EDGAR/response_image/" #CHANGE FILE PATH
+    responseFilePath = "C:\\Users\\alyss\\Documents\\EDGAR\\response_image" #CHANGE FILE PATH
 
     emotion = set_emotion(classification)
 
