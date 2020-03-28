@@ -9,6 +9,8 @@ import cv2
 import PIL.Image, PIL.ImageTk
 
 class get_response:
+    # takes an integer value 1-5
+    # will get input from get_classification.py once implemented
     def __init__(self, emo_num): # delete emo_num once get_classification is implemented
         responseFilePath = "C:\\Users\\alyss\\Documents\\EDGAR\\response_image\\" # CHANGE FILE PATH
         # self.classification = get_classification() #<--- uncomment and delete next line once get_classification is implemented
@@ -54,12 +56,8 @@ class get_response:
         # Run the window loop
         window.mainloop()
 
-# This will call all 5 response. Close image to get next image to display - only needed for testing purposes
-get_response(1)
-get_response(2)
-get_response(3)
-get_response(4)
-get_response(5)
-
 def main():
     print("Main function of get_response.py")
+
+if __name__ == "__main__":
+    main()
