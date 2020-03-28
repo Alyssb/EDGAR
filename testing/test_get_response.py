@@ -13,9 +13,12 @@ test cases:
     neutral
     invalid  input
 '''
+import sys
+sys.path.insert(1, "C:\\Users\\alyss\\Documents\\EDGAR\\functions\\")
 
 def test_happy():
-    print("not yet implemented")
+    classification = 1
+    
 
 def test_fear():
     print("not yet implemented")
