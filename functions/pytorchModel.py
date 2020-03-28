@@ -64,6 +64,7 @@ img_shape = (x_dim, y_dim, z_dim)
 # new_train_labels = np.array(new_train_labels)
 # new_test_labels = np.array(new_test_labels)
 
+
 # ******************** Pytorch example begins **********************
 # https://pytorch.org/tutorials/beginner/transfer_learning_tutorial.html
 data_transforms = {
