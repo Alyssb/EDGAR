@@ -1,5 +1,9 @@
-#Stephen Carr
-# Function to display response to emotion detected
+'''
+CSC450 SP 2020 Group 4
+03/28/2020
+Function to display response to emotion detected
+'''
+
 import tkinter
 import cv2
 import PIL.Image, PIL.ImageTk
@@ -28,12 +32,12 @@ def get_response(emo_num):  # emo_num can be removed once the get_classification
     # classification = get_classification() <--- This would be how the responder gets the classification
     classification = emo_num  # set to number 1 till get_classification() created
 
-    responseFilePath = "C:\\Users\\alyss\\Documents\\EDGAR\\response_image" #CHANGE FILE PATH
+    responseFilePath = "C:\\Users\\alyss\\Documents\\EDGAR\\response_image\\" #CHANGE FILE PATH
 
     emotion = set_emotion(classification)
 
     # Load an image using OpenCV
-    cv_img = cv2.cvtColor(cv2.imread(responseFilePath+ emotion), cv2.COLOR_BGR2RGB)
+    cv_img = cv2.cvtColor(cv2.imread(responseFilePath + emotion), cv2.COLOR_BGR2RGB)
 
     # Get the image dimensions (OpenCV stores image data as NumPy ndarray)
     height, width, no_channels = cv_img.shape
