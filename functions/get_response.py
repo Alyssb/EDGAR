@@ -8,9 +8,9 @@ import tkinter
 import cv2
 import PIL.Image, PIL.ImageTk
 
-class get_response.py:
+class get_response:
     def __init__(self, emo_num): # delete emo_num once get_classification is implemented
-
+        responseFilePath = "C:\\Users\\alyss\\Documents\\EDGAR\\response_image\\" # CHANGE FILE PATH
         # self.classification = get_classification() #<--- uncomment and delete next line once get_classification is implemented
         self.classification = emo_num
 
@@ -29,15 +29,11 @@ class get_response.py:
         else:
             print(self.emo, " is not a valid classification.")
 
-
-    def print_response(self):
-
+    def display_response(self):
         window = tkinter.Tk()
         window.title("Emotion Detected")
 
-        responseFilePath = "C:\\Users\\alyss\\Documents\\EDGAR\\response_image\\" #CHANGE FILE PATH
-
-        set_emotion(classification)
+        self.set_emotion(self.classification)
 
         # Load an image using OpenCV
         cv_img = cv2.cvtColor(cv2.imread(responseFilePath + emotion), cv2.COLOR_BGR2RGB)
