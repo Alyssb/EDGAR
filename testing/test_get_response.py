@@ -16,24 +16,38 @@ test cases:
 import sys
 sys.path.insert(1, "C:\\Users\\alyss\\Documents\\EDGAR\\functions\\")
 
+import get_response
+
 def test_happy():
     classification = 1
+    responseObject = get_response.get_response(classification)
+    responseObject.get_image()
     
 
 def test_fear():
-    print("not yet implemented")
+    classification = 2
+    responseObject = get_response.get_response(classification)
+    responseObject.get_image()
 
 def test_angry():
-    print("not yet implemented")
+    classification = 3
+    responseObject = get_response.get_response(classification)
+    responseObject.get_image()
 
 def test_sad():
-    print("not yet implemented")
+    classification = 4
+    responseObject = get_response.get_response(classification)
+    responseObject.get_image()
 
 def test_neutral():
-    print("not yet implemented")
+    classification = 5
+    responseObject = get_response.get_response(classification)
+    responseObject.get_image()
 
 def test_invalid():
-    print("not yet implemented")
+    classification = 0
+    responseObject = get_response.get_response(classification)
+    responseObject.get_image()
 
 def main():
     test_happy()

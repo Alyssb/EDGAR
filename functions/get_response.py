@@ -11,10 +11,11 @@ import PIL.Image, PIL.ImageTk
 class get_response:
     # takes an integer value 1-5
     # will get input from get_classification.py once implemented
-    def __init__(self, emo_num): # delete emo_num once get_classification is implemented
-        responseFilePath = "C:\\Users\\alyss\\Documents\\EDGAR\\response_image\\" # CHANGE FILE PATH
-        # self.classification = get_classification() #<--- uncomment and delete next line once get_classification is implemented
+    def __init__(self, emo_num):
+        self.responseFilePath = "C:\\Users\\alyss\\Documents\\EDGAR\\response_image\\" # CHANGE FILE PATH
         self.classification = emo_num
+        # self.classification = get_classification() #<--- uncomment and delete next line once get_classification is implemented
+
 
     # set the filename for the proper image file
     def set_emotion(self):
@@ -29,32 +30,37 @@ class get_response:
         elif self.classification == 5:
             self.response = "neutral.jpeg"
         else:
-            print(self.emo, " is not a valid classification.")
+            print(self.classification, " is not a valid classification.")
 
-    def display_response(self):
-        window = tkinter.Tk()
-        window.title("Emotion Detected")
+    def get_image(self):
+        self.window = tkinter.Tk()
+        self.window.title("Emotion Detected")
 
-        self.set_emotion(self.classification)
+        self.set_emotion()
 
         # Load an image using OpenCV
-        cv_img = cv2.cvtColor(cv2.imread(responseFilePath + emotion), cv2.COLOR_BGR2RGB)
+        try:
+            self.cv_img = cv2.cvtColor(cv2.imread(self.responseFilePath + self.response), cv2.COLOR_BGR2RGB)
+            self.display_response()
+        except:
+            print("invalid filepath")
 
+    def display_response(self):
         # Get the image dimensions (OpenCV stores image data as NumPy ndarray)
-        height, width, no_channels = cv_img.shape
+        height, width, no_channels = self.cv_img.shape
 
         # Create a canvas that can fit the above image
-        canvas = tkinter.Canvas(window, width = width, height = height)
+        canvas = tkinter.Canvas(self.window, width = width, height = height)
         canvas.pack()
 
         # Use PIL (Pillow) to convert the NumPy ndarray to a PhotoImage
-        photo = PIL.ImageTk.PhotoImage(image = PIL.Image.fromarray(cv_img))
+        photo = PIL.ImageTk.PhotoImage(image = PIL.Image.fromarray(self.cv_img))
 
         # Add a PhotoImage to the Canvas
         canvas.create_image(0, 0, image=photo, anchor=tkinter.NW)
 
         # Run the window loop
-        window.mainloop()
+        self.window.mainloop()
 
 def main():
     print("Main function of get_response.py")
