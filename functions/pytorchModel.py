@@ -51,22 +51,13 @@ img_shape = (x_dim, y_dim, z_dim)
 # exit()
 
 
-# **************** Maybe unneeded? ***********************
-# turning labels into integers
-# label_dict = {'ang': 0, 'dis': 1, 'exc': 2, 'fea': 3, 'fru': 4,
-#               'hap': 5, 'neu': 6, 'oth': 7, 'sad': 8, 'sur': 9, 'xxx': 10}
-# new_train_labels = []
-# new_test_labels = []
-# for label in train_labels:
-#     new_train_labels.append(label_dict[label])
-# for label in test_labels:
-#     new_test_labels.append(label_dict[label])
-# new_train_labels = np.array(new_train_labels)
-# new_test_labels = np.array(new_test_labels)
-
-
 # ******************** Pytorch example begins **********************
 # https://pytorch.org/tutorials/beginner/transfer_learning_tutorial.html
+
+def loadNumpyFile(pathname):
+    return np.load(pathname, allow_pickle=False)
+
+
 data_transforms = {
     'train': transforms.Compose([
         # transforms.RandomResizedCrop(224),
@@ -82,111 +73,118 @@ data_transforms = {
     ]),
 }
 
-# @TODO this will have to be changed based on where your data is
 data_dir = os.getcwd() + "\\mine\\model_training\\organized_metrics"
-print(data_dir)
-image_datasets = {x: datasets.ImageFolder(os.path.join(data_dir, x),
-                                          data_transforms[x])
+
+image_datasets = {x: datasets.DatasetFolder(os.path.join(data_dir, x), loadNumpyFile,
+                                            transform=data_transforms[x], extensions=("npy"))
                   for x in ['train', 'val']}
 dataloaders = {x: torch.utils.data.DataLoader(image_datasets[x], batch_size=4,
                                               shuffle=True, num_workers=4)
                for x in ['train', 'val']}
 dataset_sizes = {x: len(image_datasets[x]) for x in ['train', 'val']}
 class_names = image_datasets['train'].classes
-print(dataset_sizes)
-print(image_datasets["train"][1])
 
 
-# device = torch.device("cuda:0" if torch.cuda.is_available() else "cpu")
+device = torch.device("cuda:0" if torch.cuda.is_available() else "cpu")
 
 
-# def train_model(model, criterion, optimizer, scheduler, num_epochs=25):
-#     since = time.time()
+def train_model(model, criterion, optimizer, scheduler, num_epochs=25):
+    since = time.time()
 
-#     best_model_wts = copy.deepcopy(model.state_dict())
-#     best_acc = 0.0
+    best_model_wts = copy.deepcopy(model.state_dict())
+    best_acc = 0.0
 
-#     for epoch in range(num_epochs):
-#         print('Epoch {}/{}'.format(epoch, num_epochs - 1))
-#         print('-' * 10)
+    for epoch in range(num_epochs):
+        print('Epoch {}/{}'.format(epoch, num_epochs - 1))
+        print('-' * 10)
 
-#         # Each epoch has a training and validation phase
-#         for phase in ['train', 'val']:
-#             if phase == 'train':
-#                 model.train()  # Set model to training mode
-#             else:
-#                 model.eval()   # Set model to evaluate mode
+        # Each epoch has a training and validation phase
+        for phase in ['train', 'val']:
+            if phase == 'train':
+                model.train()  # Set model to training mode
+            else:
+                model.eval()   # Set model to evaluate mode
 
-#             running_loss = 0.0
-#             running_corrects = 0
+            running_loss = 0.0
+            running_corrects = 0
 
-#             # Iterate over data.
-#             for inputs, labels in dataloaders[phase]:
-#                 inputs = inputs.to(device)
-#                 labels = labels.to(device)
+            # Iterate over data.
+            for inputs, labels in dataloaders[phase]:
+                inputs = inputs.to(device)
+                labels = labels.to(device)
 
-#                 # zero the parameter gradients
-#                 optimizer.zero_grad()
+                # zero the parameter gradients
+                optimizer.zero_grad()
 
-#                 # forward
-#                 # track history if only in train
-#                 with torch.set_grad_enabled(phase == 'train'):
-#                     outputs = model(inputs)
-#                     _, preds = torch.max(outputs, 1)
-#                     loss = criterion(outputs, labels)
+                # forward
+                # track history if only in train
+                with torch.set_grad_enabled(phase == 'train'):
+                    outputs = model(inputs)
+                    _, preds = torch.max(outputs, 1)
+                    print(outputs, labels)
+                    loss = criterion(outputs, labels)
 
-#                     # backward + optimize only if in training phase
-#                     if phase == 'train':
-#                         loss.backward()
-#                         optimizer.step()
+                    # backward + optimize only if in training phase
+                    if phase == 'train':
+                        loss.backward()
+                        optimizer.step()
 
-#                 # statistics
-#                 running_loss += loss.item() * inputs.size(0)
-#                 running_corrects += torch.sum(preds == labels.data)
-#             if phase == 'train':
-#                 scheduler.step()
+                # statistics
+                running_loss += loss.item() * inputs.size(0)
+                running_corrects += torch.sum(preds == labels.data)
+            if phase == 'train':
+                scheduler.step()
 
-#             epoch_loss = running_loss / dataset_sizes[phase]
-#             epoch_acc = running_corrects.double() / dataset_sizes[phase]
+            epoch_loss = running_loss / dataset_sizes[phase]
+            epoch_acc = running_corrects.double() / dataset_sizes[phase]
 
-#             print('{} Loss: {:.4f} Acc: {:.4f}'.format(
-#                 phase, epoch_loss, epoch_acc))
+            print('{} Loss: {:.4f} Acc: {:.4f}'.format(
+                phase, epoch_loss, epoch_acc))
 
-#             # deep copy the model
-#             if phase == 'val' and epoch_acc > best_acc:
-#                 best_acc = epoch_acc
-#                 best_model_wts = copy.deepcopy(model.state_dict())
+            # deep copy the model
+            if phase == 'val' and epoch_acc > best_acc:
+                best_acc = epoch_acc
+                best_model_wts = copy.deepcopy(model.state_dict())
 
-#         print()
+        print()
 
-#     time_elapsed = time.time() - since
-#     print('Training complete in {:.0f}m {:.0f}s'.format(
-#         time_elapsed // 60, time_elapsed % 60))
-#     print('Best val Acc: {:4f}'.format(best_acc))
+    time_elapsed = time.time() - since
+    print('Training complete in {:.0f}m {:.0f}s'.format(
+        time_elapsed // 60, time_elapsed % 60))
+    print('Best val Acc: {:4f}'.format(best_acc))
 
-#     # load best model weights
-#     model.load_state_dict(best_model_wts)
-#     return model
+    # load best model weights
+    model.load_state_dict(best_model_wts)
+    return model
 
 
-# model_conv = torchvision.models.resnet18(pretrained=True)
-# for param in model_conv.parameters():
-#     param.requires_grad = False
+if __name__ == '__main__':
+    # Initailize model with pretrained resnet18 model.
+    model_conv = torchvision.models.resnet18(pretrained=True)
+    # "Freeze" the weights on the pretrained model.
+    for param in model_conv.parameters():
+        param.requires_grad = False
 
-# # Parameters of newly constructed modules have requires_grad=True by default
-# num_ftrs = model_conv.fc.in_features
-# model_conv.fc = nn.Linear(num_ftrs, 2)
+    # Parameters of newly constructed modules have requires_grad=True by default
+    num_ftrs = model_conv.fc.in_features
+    # Adding layers on the end of the pretrained model.
+    # These layers will be the only layers trained while the model is running
+    model_conv.fc = nn.Linear(num_ftrs, 10)
 
-# model_conv = model_conv.to(device)
+    # Sending the model to the device it will be trained on
+    model_conv = model_conv.to(device)
 
-# criterion = nn.CrossEntropyLoss()
+    # Initalizing the loss criteria from which weights will be adjusted
+    criterion = nn.CrossEntropyLoss()
 
-# # Observe that only parameters of final layer are being optimized as
-# # opposed to before.
-# optimizer_conv = optim.SGD(model_conv.fc.parameters(), lr=0.001, momentum=0.9)
+    # Initalizing optimizer
+    optimizer_conv = optim.SGD(
+        model_conv.fc.parameters(), lr=0.001, momentum=0.9)
 
-# # Decay LR by a factor of 0.1 every 7 epochs
-# exp_lr_scheduler = lr_scheduler.StepLR(optimizer_conv, step_size=7, gamma=0.1)
+    # Decay LR by a factor of 0.1 every 7 epochs
+    exp_lr_scheduler = lr_scheduler.StepLR(
+        optimizer_conv, step_size=7, gamma=0.1)
 
-# model_conv = train_model(model_conv, criterion, optimizer_conv,
-#                          exp_lr_scheduler, num_epochs=25)
+    # Train the model.
+    model_conv = train_model(model_conv, criterion, optimizer_conv,
+                             exp_lr_scheduler, num_epochs=25)
