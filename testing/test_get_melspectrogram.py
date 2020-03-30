@@ -24,7 +24,7 @@ import subprocess
 
 # adds string to path for the running of this file
 # HARDCODED change for your directory
-sys.path.insert(1, "C:\\Users\\alyss\\Documents\\EDGAR\\")
+sys.path.insert(1, "C:\\Users\\alyss\\Documents\\EDGAR\\functions\\")
 
 import get_melspectrogram
 
