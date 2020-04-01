@@ -9,7 +9,7 @@ Function that gathers test/train data amd trains the model
 FILEPATH MUST BE CHANGED
 '''
 
-FILEPATH = "C:\\Users\\alyss\\Documents\\EDGAR\\"
+FILEPATH = "C:\\Users\\PremiumHamsters\Documents\\EDGAR\\"
 
 
 
