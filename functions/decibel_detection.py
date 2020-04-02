@@ -16,14 +16,16 @@ chunk = 1024
 sample_format = pyaudio.paInt16
 channels = 1
 fs = 44100
+frames = []
 
 while temp:
     unique_num = int(time.time())
     final_time = unique_num + 3
     tempnum = unique_num + 9
     print(unique_num)
+    print(final_time)
 
-    filename = 'live_audio/Output' + str(temp) + '.wav'
+    filename = 'live_audio/Output' + str(unique_num) + '.wav'
 
     p = pyaudio.PyAudio()
 
@@ -33,19 +35,23 @@ while temp:
                     frames_per_buffer=chunk,
                     input=True)
 
-    frames = []
+
 
     data = stream.read(chunk)
     frames.append(data)
 
-    if time.time() < final_time:
+    print(time.time())
+    if final_time < time.time():
         wf = wave.open(filename, 'wb')
         wf.setnchannels(channels)
         wf.setsampwidth(p.get_sample_size(sample_format))
         wf.setframerate(fs)
-        wf.writeframes(join(frames))
+        b = 1
+        wf.writeframes(b''.join(frames))
+        #print(b''.join(frames))
         wf.close()
         p.terminate()
+        print(filename + " saved")
         temp = False
 
 # def main():
