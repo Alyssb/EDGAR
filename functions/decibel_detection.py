@@ -6,6 +6,9 @@ right now im just using this for getting audio continuously
 '''
 
 import pyaudio
+import wave
+from pydub import AudioSegment
+from pydub.playback import play
 import time
 
 temp = True
