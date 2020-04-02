@@ -20,9 +20,9 @@ import os
 import copy
 
 plt.ion()
-
-FILEPATH = "C:\\Users\\zackj\\450\\mine\\model_building\\organized_metrics\\"
-
+#C:\\Users\\PremiumHamsters\\Documents\EDGAR\mine\model_training\metrics_stretched_no_xxx
+#FILEPATH = "C:\\Users\\PremiumHamsters\\EDGAR\\mine\\model_building\\organized_metrics\\"
+FILEPATH = "C:\\Users\\PremiumHamsters\\Documents\\EDGAR\\mine\\model_training\\organized_metrics\\"
 x_dim = 40
 y_dim = 1067
 z_dim = 3
@@ -35,20 +35,22 @@ img_shape = (x_dim, y_dim, z_dim)
 # ********* WARNING, this takes a while but only needs to run once *************
 # Separating 750 random images for validation
 # This method of generation allows with/without replacement
-# rng = default_rng(11)
-# test_index = rng.choice(7531, size=750, replace=False)
-# for i in range(0, 7531):
-#     print(i)
-#     spectrogram = np.load(FILEPATH + "\\mine\\model_training\\metrics_stretched_no_xxx\\{}.npy".format(i),
-#                           allow_pickle=False)
-#     this_label = labels[i]
-#     if i in test_index:
-#         test_val = "val"
-#     else:
-#         test_val = "train"
-#     np.save(FILEPATH + "\\mine\\model_training\\organized_metrics\\{}\\{}\\{}.npy".format(
-#         test_val, this_label, i), spectrogram)
-# exit()
+##print("yes doing this first")
+##rng = default_rng(11)
+##test_index = rng.choice(7531, size=750, replace=False)
+##labels = np.load(FILEPATH + "\\label_list_stretched_no_xxx.npy")
+##for i in range(0, 7531):
+##     print(i)
+##     spectrogram = np.load(FILEPATH + "\\mine\\model_training\\metrics_stretched_no_xxx\\{}.npy".format(i),
+##                           allow_pickle=False)
+##     this_label = labels[i]
+##     if i in test_index:
+##         test_val = "val"
+##     else:
+##         test_val = "train"
+##     np.save(FILEPATH + "\\mine\\model_training\\organized_metrics\\{}\\{}\\{}.npy".format(
+##         test_val, this_label, i), spectrogram)
+##exit()
 
 
 # ******************** Pytorch example begins **********************
@@ -73,7 +75,8 @@ data_transforms = {
     ]),
 }
 
-data_dir = os.getcwd() + "\\mine\\model_training\\organized_metrics"
+#data_dir = os.getcwd() + "\\mine\\model_training\\organized_metrics"
+data_dir = FILEPATH
 
 image_datasets = {x: datasets.DatasetFolder(os.path.join(data_dir, x), loadNumpyFile,
                                             transform=data_transforms[x], extensions=("npy"))
@@ -84,7 +87,7 @@ dataloaders = {x: torch.utils.data.DataLoader(image_datasets[x], batch_size=4,
 dataset_sizes = {x: len(image_datasets[x]) for x in ['train', 'val']}
 class_names = image_datasets['train'].classes
 
-
+#print(torch.cuda.is_available())
 device = torch.device("cuda:0" if torch.cuda.is_available() else "cpu")
 
 
@@ -121,7 +124,7 @@ def train_model(model, criterion, optimizer, scheduler, num_epochs=25):
                 with torch.set_grad_enabled(phase == 'train'):
                     outputs = model(inputs)
                     _, preds = torch.max(outputs, 1)
-                    print(outputs, labels)
+                    #print(outputs, labels)
                     loss = criterion(outputs, labels)
 
                     # backward + optimize only if in training phase
@@ -187,4 +190,34 @@ if __name__ == '__main__':
 
     # Train the model.
     model_conv = train_model(model_conv, criterion, optimizer_conv,
-                             exp_lr_scheduler, num_epochs=25)
+                             exp_lr_scheduler, num_epochs=99)
+
+    torch.save(model_conv.state_dict(), "testmodelsavestate.pt")
+
+    torch.save(model_conv, "testmodelsavewhole.pt")
+
+    #print(model_conv)
+
+##
+##    loadmodel = torchvision.models.resnet18(pretrained=True)
+##    # "Freeze" the weights on the pretrained model.
+##    for param in loadmodel.parameters():
+##        param.requires_grad = False
+##
+##    # Parameters of newly constructed modules have requires_grad=True by default
+##    num_ftrs = loadmodel.fc.in_features
+##    # Adding layers on the end of the pretrained model.
+##    # These layers will be the only layers trained while the model is running
+##    loadmodel.fc = nn.Linear(num_ftrs, 10)
+##
+##    # Sending the model to the device it will be trained on
+##    loadmodel = loadmodel.to(device)
+    #loadmodel = torchvision.models.resnet18(pretrained=True)
+    
+    #loadmodel.load_state_dict(torch.load("testmodelsavestate.pt"))
+    #loadmodel.eval()
+    #print(loadmodel.eval())
+    #model_conv.load_
+
+    model = torch.load("testmodelsavewhole.pt")
+    model.eval()
