@@ -16,7 +16,7 @@ fs = 44100
 
 while temp:
     unique_num = int(time.time())
-    final_time = unique_num + (60*15)
+    final_time = unique_num + 3
     print(unique_num)
 
     filename = 'live_audio/Output' + str(temp) + '.wav'
@@ -31,9 +31,17 @@ while temp:
 
     frames = []
 
+    data = stream.read(chunk)
+    frames.append(data)
 
-
-    temp = False
+    if time.time() < final_time:
+        wf = wave.open(filename, 'wb')
+        wf.setnchannels(channels)
+        wf.setsampwidth(p.get_sample_size(sample_format))
+        wf.setfreamerate(fs)
+        wf.writeframes(join(frames))
+        wf.close()
+        temp = False
 
 # def main():
 #     print("hello world")
