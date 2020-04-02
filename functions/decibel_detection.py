@@ -22,7 +22,15 @@ tempnum = unique_num + 9
 final_time = unique_num + 3
 frames = []
 
+def update_loop(final_time):
+    frames = []
+    unique_num = int(time.time())
+    final_time += 3
+
+
 while time.time() < tempnum:
+    print("current time ", time.time())
+    print(final_time)
     filename = 'live_audio/Output' + str(unique_num) + '.wav'
 
     p = pyaudio.PyAudio()
@@ -46,17 +54,13 @@ while time.time() < tempnum:
     #print(b''.join(frames))
     wf.close()
     p.terminate()
-    print(filename + " saved")
+    print(filename + " saved\n")
 
-    update_loop()
-
-    temp = False
-
-
-def update_loop():
     frames = []
     unique_num = int(time.time())
-    final_time = int(time.time()) + 3
+    final_time += 3
+
+    temp = False
 
 # def main():
 #     print("hello world")
