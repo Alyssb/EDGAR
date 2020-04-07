@@ -24,7 +24,7 @@ plt.ion()
 #FILEPATH = "C:\\Users\\PremiumHamsters\\EDGAR\\mine\\model_building\\organized_metrics\\"
 FILEPATH = "C:\\Users\\PremiumHamsters\\Documents\\EDGAR\\mine\\model_training\\organized_metrics\\"
 x_dim = 40
-y_dim = 1067
+y_dim = 224
 z_dim = 3
 channel_dim = 1
 batch_size = 32
@@ -190,7 +190,7 @@ if __name__ == '__main__':
 
     # Train the model.
     model_conv = train_model(model_conv, criterion, optimizer_conv,
-                             exp_lr_scheduler, num_epochs=99)
+                             exp_lr_scheduler, num_epochs=30)
 
     torch.save(model_conv.state_dict(), "testmodelsavestate.pt")
 
@@ -221,3 +221,5 @@ if __name__ == '__main__':
 
     model = torch.load("testmodelsavewhole.pt")
     model.eval()
+
+    exit()
