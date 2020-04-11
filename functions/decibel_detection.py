@@ -142,7 +142,7 @@ class do_record():
         data (frame):   the value of the current chunk
     '''
     def record_3sec(self):
-        while(time.time() < (self.unique_num + 3)):
+        while(time.time() < (self.unique_num + 4)):
             data = self.stream.read(CHUNK)
             self.frames.append(data)
         self.write_to_file()
