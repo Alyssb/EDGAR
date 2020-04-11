@@ -3,6 +3,8 @@ CSC450 SP2020 Group 4
 03/08/2020
 Currently configured for demo 2 on 03/12/2020
 MUST be run from EDGAR directory.
+
+DOES NOT WORK because padding has changed from tensorflow.
 '''
 
 # import path to file directory and change it to where out inputs are located
@@ -15,15 +17,17 @@ sys.path.insert(1, './unused/')
 from get_mfcc import get_MFCC
 from get_spectrogram import get_spectrogram
 from get_melspectrogram import melSpectrogram
-from get_audio import get_audio
+#from get_audio import get_audio
+from decibel_detection import do_record
 from run_model import runModel
 from output import response
 
 # ***************************** demo *****************************
 def runDemo():
 
-    recording = get_audio()                 # creates an instance of get_audio.py
-    input_names = recording.prompt_user()   # creates .wav files and returns an array of names
+    recording = do_record()                 # creates an instance of do_record
+    recording.setup_record()
+    input_names = recording.check_dB()   # creates .wav files and returns an array of names
     
     #get_MFCC(input_names, 0, 512, 128, "delta")
     #get_spectrogram(input_names, 0)
