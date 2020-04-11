@@ -102,7 +102,8 @@ class do_record:
 
 
 def main():
-    print("hello world")
+    record_instance = do_record
+    
 
 if __name__ == "__main__":
     main()
