@@ -2,37 +2,46 @@
 CSC450 Team 4
 Detects the decibel level and activates EDGAR if 60dB is exceeded
 '''
-
-import wave
+# ***************************** imports *****************************
+# general imports
 import time
 from struct import unpack
 from math import pow
 from keyboard import is_pressed
-# import os     # os.getcwd() to get current directory
 
+# audio imports
+import wave
 import pyaudio
 from pydub import AudioSegment
 from pydub.playback import play
 
-# global variables
+# ***************************** global variables *****************************
 # for recording
-CHUNK = 1024
-FORMAT = pyaudio.paInt16
-CHANNELS = 1
-FS = 44100
+CHUNK = 1024                    # record in chunks of 1024 samples
+FORMAT = pyaudio.paInt16        # 16 bits per sample
+CHANNELS = 1                    # only using one channel
+FS = 44100                      # record at 44100 samples per second
 
 # for RMS calculation
-SHORT_NORMALIZE = (1.0/32768.0)
-SWIDTH = 2
-# sets threshold in RMS: 317rms is equal to 60dB
-THRESHOLD = 150 # turned it down b/c roommate is asleep
+SHORT_NORMALIZE = (1.0/32768.0) # factor for normalizing samples in a chunk
+SWIDTH = 2                      # factor for shorts per frame (?)
+THRESHOLD = 150                 # sets threshold in RMS: 317rms is equal to 60dB
 
+# ***************************** class do_record *****************************
 class do_record():
-    def setup_record(self):
-        self.rec = []
+    def __init__(self):
+        print("EDGAR has started.")
 
+    # sets up a fresh recording
+    def setup_record(self):
+        '''
+        self.frames[]:      array for storing frames during recording
+
+        '''
+        self.frames = []
         self.p = pyaudio.PyAudio()
 
+        # sets up a recording stream
         self.stream = self.p.open(format=FORMAT, 
                     channels=CHANNELS,
                     rate=FS,
@@ -77,7 +86,7 @@ class do_record():
     def record_3sec(self):
         while(time.time() < self.final_time):
             data = self.stream.read(CHUNK)
-            self.rec.append(data)
+            self.frames.append(data)
         # self.write_to_file()
 
     def write_to_file(self):
@@ -86,14 +95,15 @@ class do_record():
         wf.setsampwidth(self.p.get_sample_size(FORMAT))
         wf.setframerate(FS)
         # I really don't know what the b on this line does
-        wf.writeframes(b''.join(self.rec))
+        wf.writeframes(b''.join(self.frames))
 
         wf.close()
         self.p.terminate()
         print(self.filename + " saved\n")
 
+
+# ***************************** main *****************************
 def main():
-    print("EDGAR has started.")
     record_instance = do_record()
     record_instance.setup_record()
     record_instance.check_dB()
