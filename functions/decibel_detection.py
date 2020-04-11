@@ -102,8 +102,10 @@ class do_record:
 
 
 def main():
-    record_instance = do_record
-    
+    record_instance = do_record()
+    record_instance.setup_record()
+    record_instance.record_3sec()
+    record_instance.write_to_file()
 
 if __name__ == "__main__":
     main()
