@@ -31,7 +31,7 @@ FS = 44100                      # record at 44100 samples per second
 # for RMS calculation
 SHORT_NORMALIZE = (1.0/32768.0) # factor for normalizing samples in a chunk
 SWIDTH = 2                      # factor for shorts per frame (?)
-THRESHOLD = 150                 # sets threshold in RMS: 317rms is equal to 60dB
+THRESHOLD = 100                 # sets threshold in RMS: 317rms is equal to 60dB
 
 # for demo
 FILES = []
@@ -95,11 +95,14 @@ class do_record():
                     with sr.Microphone() as source: # use the default microphone as the audio source
                         print("listening...")              
                         audio = r.record(source, duration = 1)
+                        print(audio)
 
                     try:
-                        if len(r.recognize_google(audio)) > 0:
-                            print("found speech audio!")
-                            results = True
+                        temp = r.recognize_google(audio)
+                        print(temp)
+                        # if len(r.recognize_google(audio)) > 0:
+                        #     print("found speech audio!")
+                        #     results = True
                     except LookupError:
                         print("could not understand")
                         results = False
