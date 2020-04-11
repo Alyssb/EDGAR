@@ -62,45 +62,6 @@ class do_record:
         self.p.terminate()
         print(self.filename + " saved\n")
 
-    # may not need this in class format
-    def update_loop(self):
-        self.frames = []
-        self.unique_num = int(time.time())
-        self.final_time += 3
-
-# while time.time() < tempnum: # just to run it 3 times, dummy
-#     print("current time ", time.time())
-#     print(final_time)
-#     filename = 'live_audio/Output' + str(unique_num) + '.wav'
-
-#     p = pyaudio.PyAudio()
-
-#     stream = p.open(format=sample_format, 
-#                     channels=channels,
-#                     rate=fs,
-#                     frames_per_buffer=chunk,
-#                     input=True)
-
-#     while time.time() < final_time:
-#         data = stream.read(chunk)
-#         frames.append(data)
-
-#     wf = wave.open(filename, 'wb')
-#     wf.setnchannels(channels)
-#     wf.setsampwidth(p.get_sample_size(sample_format))
-#     wf.setframerate(fs)
-#     b = ''
-#     wf.writeframes(b''.join(frames))
-#     #print(b''.join(frames))
-#     wf.close()
-#     p.terminate()
-#     print(filename + " saved\n")
-
-#     frames = []
-#     unique_num = int(time.time())
-#     final_time += 3
-
-
 def main():
     record_instance = do_record()
     record_instance.setup_record()
