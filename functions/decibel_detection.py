@@ -1,3 +1,4 @@
+#! /usr/bin/env python
 '''
 CSC450 SP2020 Group 4
 Missouri State University
