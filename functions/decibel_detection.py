@@ -26,59 +26,83 @@ FS = 44100
 class do_record:
 
     def __init__(self):
-        self.temp = True
-
         self.unique_num = int(time.time())
-        self.tempnum = unique_num + 9
         self.final_time = unique_num + 3
-        self.frames = []
+        self.rec = []
 
     def setup_record(self):
         print("current time ", time.time())
-        print(final_time)
+        print(self.final_time)
+        self.filename = 'live_audio/Output' + str(self.unique_num) + '.wav'
 
+        self.p = pyaudio.pyAudio()
+
+        self.stream = self.p.open(format=FORMAT, 
+                    channels=CHANNELS,
+                    rate=FS,
+                    frames_per_buffer=CHUNK,
+                    input=True,
+                    output=True)
+
+    def record_3sec(self):
+        while(time.time() < self.final_time):
+            data = stream.read(CHUNK)
+            self.rec.append(data)
+
+    def write_to_file(self):
+        wf = wave.open(self.filename, 'wb')
+        wf.setnchannels(CHANNELS)
+        wf.setsampwidth(self.p.get_sample_size(FORMAT))
+        wf.setframerate(FS)
+        # b = ''
+        # I really don't know what the b on this line does
+        wf.writeframes(b''.join(self.rec))
+
+        wf.close()
+        self.p.terminate()
+        print(self.filename + " saved\n")
+
+    # may not need this in class format
     def update_loop(self):
         self.frames = []
         self.unique_num = int(time.time())
         self.final_time += 3
 
+# while time.time() < tempnum: # just to run it 3 times, dummy
+#     print("current time ", time.time())
+#     print(final_time)
+#     filename = 'live_audio/Output' + str(unique_num) + '.wav'
 
-while time.time() < tempnum:
-    print("current time ", time.time())
-    print(final_time)
-    filename = 'live_audio/Output' + str(unique_num) + '.wav'
+#     p = pyaudio.PyAudio()
 
-    p = pyaudio.PyAudio()
+#     stream = p.open(format=sample_format, 
+#                     channels=channels,
+#                     rate=fs,
+#                     frames_per_buffer=chunk,
+#                     input=True)
 
-    stream = p.open(format=sample_format, 
-                    channels=channels,
-                    rate=fs,
-                    frames_per_buffer=chunk,
-                    input=True)
+#     while time.time() < final_time:
+#         data = stream.read(chunk)
+#         frames.append(data)
 
-    while time.time() < final_time:
-        data = stream.read(chunk)
-        frames.append(data)
+#     wf = wave.open(filename, 'wb')
+#     wf.setnchannels(channels)
+#     wf.setsampwidth(p.get_sample_size(sample_format))
+#     wf.setframerate(fs)
+#     b = ''
+#     wf.writeframes(b''.join(frames))
+#     #print(b''.join(frames))
+#     wf.close()
+#     p.terminate()
+#     print(filename + " saved\n")
 
-    wf = wave.open(filename, 'wb')
-    wf.setnchannels(channels)
-    wf.setsampwidth(p.get_sample_size(sample_format))
-    wf.setframerate(fs)
-    b = ''
-    wf.writeframes(b''.join(frames))
-    #print(b''.join(frames))
-    wf.close()
-    p.terminate()
-    print(filename + " saved\n")
+#     frames = []
+#     unique_num = int(time.time())
+#     final_time += 3
 
-    frames = []
-    unique_num = int(time.time())
-    final_time += 3
 
-    temp = False
+def main():
+    print("hello world")
 
-# def main():
-#     print("hello world")
-
-# if __name__ == "__main__":
-#     main()
+if __name__ == "__main__":
+    main()
