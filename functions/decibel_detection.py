@@ -16,26 +16,27 @@ import pyaudio
 from pydub import AudioSegment
 from pydub.playback import play
 
-temp = True
-chunk = 1024
-sample_format = pyaudio.paInt16
-channels = 1
-fs = 44100
-
-unique_num = int(time.time())
-tempnum = unique_num + 9
-final_time = unique_num + 3
-frames = []
+# global variables (caps)
+CHUNK = 1024
+FORMAT = pyaudio.paInt16
+CHANNELS = 1
+RATE = 16000
+FS = 44100
 
 class doRecord:
 
     def __init__(self):
         self.temp = True
 
-def update_loop(final_time):
-    frames = []
-    unique_num = int(time.time())
-    final_time += 3
+        self.unique_num = int(time.time())
+        self.tempnum = unique_num + 9
+        self.final_time = unique_num + 3
+        self.frames = []
+
+    def update_loop(self):
+        self.frames = []
+        self.unique_num = int(time.time())
+        self.final_time += 3
 
 
 while time.time() < tempnum:
