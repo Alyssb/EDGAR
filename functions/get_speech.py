@@ -56,7 +56,8 @@ class SpeechRecorder:
         while current <= end:
 
             data = self.stream.read(chunk)
-            if self.rms(data) >= Threshold: end = time.time() + TIMEOUT_LENGTH
+            if self.rms(data) >= Threshold: 
+                end = time.time() + TIMEOUT_LENGTH
 
             current = time.time()
             rec.append(data)
@@ -88,5 +89,6 @@ class SpeechRecorder:
 
 a = SpeechRecorder()
 
-# a will listen and record as long as someone is speaking higher than the threshold
+# a will listen and record as long as someone
+# is speaking higher than the threshold
 a.listen()

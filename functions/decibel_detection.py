@@ -6,13 +6,15 @@ right now im just using this for getting audio continuously
 Combining it with get_speech.py, by stephen
 '''
 
-import pyaudio
 import math
 import struct
 import wave
+import os
+import time
+
+import pyaudio
 from pydub import AudioSegment
 from pydub.playback import play
-import time
 
 temp = True
 chunk = 1024
@@ -24,6 +26,11 @@ unique_num = int(time.time())
 tempnum = unique_num + 9
 final_time = unique_num + 3
 frames = []
+
+class doRecord:
+
+    def __init__(self):
+        self.temp = True
 
 def update_loop(final_time):
     frames = []
