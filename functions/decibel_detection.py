@@ -28,15 +28,19 @@ class doRecord:
     def __init__(self):
         self.temp = True
 
-        self.unique_num = int(time.time())
-        self.tempnum = unique_num + 9
-        self.final_time = unique_num + 3
+        self.uniqueNum = int(time.time())
+        self.tempnum = uniqueNum + 9
+        self.finalTime = uniqueNum + 3
         self.frames = []
+
+    def setup_record(self):
+        print("current time ", time.time())
+        print(finalTime)
 
     def update_loop(self):
         self.frames = []
-        self.unique_num = int(time.time())
-        self.final_time += 3
+        self.uniqueNum = int(time.time())
+        self.finalTime += 3
 
 
 while time.time() < tempnum:
