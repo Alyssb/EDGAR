@@ -32,6 +32,8 @@ SHORT_NORMALIZE = (1.0/32768.0) # factor for normalizing samples in a chunk
 SWIDTH = 2                      # factor for shorts per frame (?)
 THRESHOLD = 150                 # sets threshold in RMS: 317rms is equal to 60dB
 
+# for demo
+FILES = []
 # ********************************** class do_record **********************************
 class do_record():
     def __init__(self):
@@ -95,6 +97,7 @@ class do_record():
                     
                     print("preparing to resume listening. press \'Q\' to quit")
                     self.setup_record()     # sets up a new recording and clears self.frames
+        return FILES    # for demo only
     
     '''
     function: rms
@@ -163,6 +166,7 @@ class do_record():
         wf.close()
         self.p.terminate()
         print(self.filename + " saved\n")
+        FILES.append(self.filename) # for demo only
 
 
 # ********************************** main **********************************
