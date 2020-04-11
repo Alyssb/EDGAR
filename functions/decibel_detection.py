@@ -27,18 +27,11 @@ FS = 44100
 SWIDTH = 2
 
 # sets threshold in RMS: 317rms is equal to 60dB
-THRESHOLD = 317
+THRESHOLD = 150 # turned it down b/c roommate is asleep
 
 class do_record():
-    def __init__(self):
-        self.unique_num = int(time.time())
-        self.final_time = self.unique_num + 3
-        self.rec = []
-
     def setup_record(self):
-        print("current time ", time.time())
-        print(self.final_time)
-        self.filename = 'live_audio/Output' + str(self.unique_num) + '.wav'
+        self.rec = []
 
         self.p = pyaudio.PyAudio()
 
@@ -47,7 +40,8 @@ class do_record():
                     rate=FS,
                     frames_per_buffer=CHUNK,
                     input=True,
-                    output=True)    
+                    output=True)  
+        print('EDGAR is ready')  
                     
     def check_dB(self):
         print('listening... press \'Q\' to quit')
@@ -58,10 +52,14 @@ class do_record():
             else:
                 input = self.stream.read(CHUNK) # input is a frame (chunk)
                 rms_val = self.rms(input)
+
                 if rms_val > THRESHOLD:
+                    print("sound detected. initiating record at time", time.time(), "\n")
                     self.unique_num = int(time.time())
+                    self.filename = 'live_audio/Output' + str(self.unique_num) + '.wav'
                     self.final_time = self.unique_num + 3
                     self.record_3sec()
+                    print("preparing to resume listening. press \'Q\' to quit")
                     self.setup_record()
 
     # calculates RMS of current frame
