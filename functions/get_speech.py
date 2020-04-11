@@ -77,8 +77,6 @@ class SpeechRecorder:
         print('Saved as: {}'.format(filename))
         print('Returning to listening')
 
-
-
     def listen(self):
         print('Listening for speech')
         while True:
