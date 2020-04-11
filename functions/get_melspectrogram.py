@@ -57,7 +57,6 @@ class melSpectrogram:
 
         #stacks the arrays depth wise to make a 3D numpy array
         self.output = dstack((self.S_dB_out, self.ms_delta_dB_out, self.ms_delta2_dB_out))
-        #self.output = dstack((self.S_dB, self.ms_delta_dB, self.ms_delta2_dB))
         
         # CAN ONLY PLOT ONE FIGURE IN A PYTHON SCRIPT. 
         # uncomment only if there will be only one audio file and you want it displayed
@@ -67,10 +66,9 @@ class melSpectrogram:
 
     def padToLongest(self):
         # pads numpy arrays with zeroes to fit longest wav file used for training (1067) rows
-        pad_trim = 224
-        self.S_dB_out = librosa.util.fix_length(self.S_dB, pad_trim, axis=1)
-        self.ms_delta_dB_out = librosa.util.fix_length(self.ms_delta_dB, pad_trim, axis=1)
-        self.ms_delta2_dB_out = librosa.util.fix_length(self.ms_delta2_dB, pad_trim, axis=1)
+        self.S_dB_out = librosa.util.fix_length(self.S_dB, 1067, axis=1)
+        self.ms_delta_dB_out = librosa.util.fix_length(self.ms_delta_dB, 1067, axis=1)
+        self.ms_delta2_dB_out = librosa.util.fix_length(self.ms_delta2_dB, 1067, axis=1)
 
     def displaySpectrogram(self):
         # Plotting the Mel Spectrogram
@@ -81,7 +79,7 @@ class melSpectrogram:
         plt.colorbar(format='%+2.0f dB')
         plt.title('Mel-frequency spectrogram')
         plt.tight_layout()
-        plt.show(block=False)
+        plt.show()
 
     def saveFile(self):
         # use current time to calculate a unique number

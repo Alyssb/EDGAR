@@ -108,7 +108,6 @@ class get_audio():
         wf.setsampwidth(self.p.get_sample_size(self.sample_format))
         wf.setframerate(self.fs)
         wf.writeframes(b''.join(self.frames))
-        print(b''.join(self.frames))
         wf.close()
         
         print('file ' + self.filename + ' saved.')

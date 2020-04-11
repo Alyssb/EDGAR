@@ -1,70 +1,61 @@
-'''
-CSC450 SP 2020 Group 4
-03/28/2020
-Function to display response to emotion detected
-'''
-
+#Stephen Carr
+# Function to display response to emotion detected
 import tkinter
 import cv2
 import PIL.Image, PIL.ImageTk
 
-class get_response:
-    # takes an integer value 1-5
-    # will get input from get_classification.py once implemented
-    def __init__(self, emo_num):
-        self.responseFilePath = "C:\\Users\\alyss\\Documents\\EDGAR\\response_image\\" # CHANGE FILE PATH
-        self.classification = emo_num
-        # self.classification = get_classification() #<--- uncomment and delete next line once get_classification is implemented
+# set the response that will call the correct image for the emotion displayed
+def set_emotion(emo):
+    if emo == 1:
+        response = "happy.jpeg"
+    if emo == 2:
+        response = "fear.jpeg"
+    if emo == 3:
+        response = "mad.jpeg"
+    if emo == 4:
+        response = "sad.jpeg"
+    if emo == 5:
+        response = "neutral.jpeg"
 
-    # gets the image and then displays it. Kind of spaghetti rn
-    def get_image(self):
-        self.window = tkinter.Tk()
-        self.window.title("Emotion Detected")
+    return response
 
-        self.set_emotion()
 
-        # Load an image using OpenCV
-        try:
-            self.cv_img = cv2.cvtColor(cv2.imread(self.responseFilePath + self.response), cv2.COLOR_BGR2RGB)
-            self.display_response()
-        except:
-            print("invalid filepath")
+def get_response(emo_num):  # emo_num can be removed once the get_classification function has been written
 
-    # set the filename for the proper image file
-    def set_emotion(self):
-        if self.classification == 1:
-            self.response = "happy.jpeg"
-        elif self.classification == 2:
-            self.response = "fear.jpeg"
-        elif self.classification == 3:
-            self.response = "mad.jpeg"
-        elif self.classification == 4:
-            self.response = "sad.jpeg"
-        elif self.classification == 5:
-            self.response = "neutral.jpeg"
-        else:
-            print(self.classification, " is not a valid classification.")
+    window = tkinter.Tk()
+    window.title("Emotion Detected")
 
-    # displays the image
-    def display_response(self):
-        # Get the image dimensions (OpenCV stores image data as NumPy ndarray)
-        height, width, no_channels = self.cv_img.shape
+    # classification = get_classification() <--- This would be how the responder gets the classification
+    classification = emo_num  # set to number 1 till get_classification() created
 
-        # Create a canvas that can fit the above image
-        canvas = tkinter.Canvas(self.window, width = width, height = height)
-        canvas.pack()
+    responseFilePath = "/Users/stephencarr/EDGAR/response_image/" #CHANGE FILE PATH
 
-        # Use PIL (Pillow) to convert the NumPy ndarray to a PhotoImage
-        photo = PIL.ImageTk.PhotoImage(image = PIL.Image.fromarray(self.cv_img))
+    emotion = set_emotion(classification)
 
-        # Add a PhotoImage to the Canvas
-        canvas.create_image(0, 0, image=photo, anchor=tkinter.NW)
+    # Load an image using OpenCV
+    cv_img = cv2.cvtColor(cv2.imread(responseFilePath+ emotion), cv2.COLOR_BGR2RGB)
 
-        # Run the window loop
-        self.window.mainloop()
+    # Get the image dimensions (OpenCV stores image data as NumPy ndarray)
+    height, width, no_channels = cv_img.shape
 
-def main():
-    print("Main function of get_response.py")
+    # Create a canvas that can fit the above image
+    canvas = tkinter.Canvas(window, width = width, height = height)
+    canvas.pack()
 
-if __name__ == "__main__":
-    main()
+    # Use PIL (Pillow) to convert the NumPy ndarray to a PhotoImage
+    photo = PIL.ImageTk.PhotoImage(image = PIL.Image.fromarray(cv_img))
+
+    # Add a PhotoImage to the Canvas
+    canvas.create_image(0, 0, image=photo, anchor=tkinter.NW)
+
+    # Run the window loop
+    window.mainloop()
+
+# This will call all 5 response. Close image to get next image to display - only needed for testing purposes
+
+
+get_response(1)
+get_response(2)
+get_response(3)
+get_response(4)
+get_response(5)
