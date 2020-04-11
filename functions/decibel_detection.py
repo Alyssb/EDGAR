@@ -15,14 +15,15 @@ from pydub import AudioSegment
 from pydub.playback import play
 
 # global variables
-SHORT_NORMALIZE = (1.0/32768.0)
+# for recording
 CHUNK = 1024
 FORMAT = pyaudio.paInt16
 CHANNELS = 1
-RATE = 16000
 FS = 44100
-SWIDTH = 2
 
+# for RMS calculation
+SHORT_NORMALIZE = (1.0/32768.0)
+SWIDTH = 2
 # sets threshold in RMS: 317rms is equal to 60dB
 THRESHOLD = 150 # turned it down b/c roommate is asleep
 
