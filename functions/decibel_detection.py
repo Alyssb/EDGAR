@@ -27,7 +27,7 @@ class do_record:
 
     def __init__(self):
         self.unique_num = int(time.time())
-        self.final_time = unique_num + 3
+        self.final_time = self.unique_num + 3
         self.rec = []
 
     def setup_record(self):
@@ -35,7 +35,7 @@ class do_record:
         print(self.final_time)
         self.filename = 'live_audio/Output' + str(self.unique_num) + '.wav'
 
-        self.p = pyaudio.pyAudio()
+        self.p = pyaudio.PyAudio()
 
         self.stream = self.p.open(format=FORMAT, 
                     channels=CHANNELS,
@@ -46,7 +46,7 @@ class do_record:
 
     def record_3sec(self):
         while(time.time() < self.final_time):
-            data = stream.read(CHUNK)
+            data = self.stream.read(CHUNK)
             self.rec.append(data)
 
     def write_to_file(self):
