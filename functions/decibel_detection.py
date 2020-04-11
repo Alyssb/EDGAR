@@ -6,7 +6,7 @@ Detects and creates a recording if the decibel level of 60dB is exceeded
 Exits if 'Q' is pressed while listening
 MUST be run from EDGAR directory
 '''
-# ***************************** imports *****************************
+# ********************************** imports **********************************
 # general imports
 import time
 from struct import unpack
@@ -19,7 +19,7 @@ import pyaudio
 from pydub import AudioSegment
 from pydub.playback import play
 
-# ***************************** global variables *****************************
+# ********************************** global variables **********************************
 # for recording
 CHUNK = 1024                    # record in chunks of 1024 samples
 FORMAT = pyaudio.paInt16        # 16 bits per sample
@@ -31,7 +31,7 @@ SHORT_NORMALIZE = (1.0/32768.0) # factor for normalizing samples in a chunk
 SWIDTH = 2                      # factor for shorts per frame (?)
 THRESHOLD = 150                 # sets threshold in RMS: 317rms is equal to 60dB
 
-# ***************************** class do_record *****************************
+# ********************************** class do_record **********************************
 class do_record():
     def __init__(self):
         print("EDGAR has started.")
@@ -164,7 +164,7 @@ class do_record():
         print(self.filename + " saved\n")
 
 
-# ***************************** main *****************************
+# ********************************** main **********************************
 def main():
     # executes the do_record class
     record_instance = do_record()
