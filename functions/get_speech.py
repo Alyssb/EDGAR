@@ -19,7 +19,8 @@ swidth = 2
 TIMEOUT_LENGTH = 5
 
 # Pathfile where recording is saved to
-f_name_directory = r'/Users/stephencarr/EDGAR/live_audio'
+# f_name_directory = r'/Users/stephencarr/EDGAR/live_audio'
+f_name_directory = r'C:\\Users\\alyss\\Documents\\EDGAR\\live_audio'
 
 class SpeechRecorder:
 

@@ -3,9 +3,12 @@ CSC450 Team 4
 Detects the decibel level and activates EDGAR if 60dB is exceeded
 
 right now im just using this for getting audio continuously
+Combining it with get_speech.py, by stephen
 '''
 
 import pyaudio
+import math
+import struct
 import wave
 from pydub import AudioSegment
 from pydub.playback import play
