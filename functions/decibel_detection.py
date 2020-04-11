@@ -2,6 +2,7 @@
 '''
 CSC450 SP2020 Group 4
 Missouri State University
+
 Detects and creates a recording if the decibel level of 60dB is exceeded
 Exits if 'Q' is pressed while listening
 MUST be run from EDGAR directory
@@ -18,6 +19,7 @@ import wave
 import pyaudio
 from pydub import AudioSegment
 from pydub.playback import play
+import speech_recognition as sr
 
 # ********************************** global variables **********************************
 # for recording
@@ -40,9 +42,11 @@ class do_record():
 
     '''
     function: setup_record
+
     sets up a fresh recording stream
     prints system is ready
     must be executed before check_dB
+
     class variables:
         frames (array):             array for storing frames during recording
         p (PyAudio):                instance of PyAudio
@@ -53,26 +57,28 @@ class do_record():
         self.p = pyaudio.PyAudio()
 
         # sets up a recording stream
-        self.stream = self.p.open(format=FORMAT, 
-                    channels=CHANNELS,
-                    rate=FS,
-                    frames_per_buffer=CHUNK,
-                    input=True,
-                    output=True)  
-        print('EDGAR is ready')  
+        self.stream = self.p.open(format=FORMAT,
+                                  channels=CHANNELS,
+                                  rate=FS,
+                                  frames_per_buffer=CHUNK,
+                                  input=True,
+                                  output=True)
+        print('EDGAR is ready')
 
     '''
     function: check_dB
+
     if current decibel level above THRESHOLD, make a recording
     if key 'Q' is pressed, exit
+
     class variables:
         unique_num (int):   current time in seconds
         filename (string):  name of file to store recording in
-    
+
     local variables:
         input (frame):      the current audio chunk
         rms_val (float):    the rms value of input
-    '''       
+    '''
     def check_dB(self):
         print('listening... press \'Q\' to quit')
         while True:
@@ -80,28 +86,45 @@ class do_record():
                 print('EDGAR has exited successfully')
                 break
             else:
-                input = self.stream.read(CHUNK) # input is a frame (chunk)
+                input = self.stream.read(CHUNK, exception_on_overflow = False) # input is a frame (chunk)
                 rms_val = self.rms(input)
 
                 if rms_val > THRESHOLD:
-                    print("sound detected. initiating record at time", time.time(), "\n")
-                    
-                    self.unique_num = int(time.time())
-                    self.filename = 'live_audio/Output' + str(self.unique_num) + '.wav'
-                    self.record_3sec()
-                    
-                    print("preparing to resume listening. press \'Q\' to quit")
-                    self.setup_record()     # sets up a new recording and clears self.frames
+                    print("threshold exceeded")
+                    r = sr.Recognizer()
+                    with sr.Microphone() as source: # use the default microphone as the audio source
+                        print("listening...")              
+                        audio = r.record(source, duration = 1)
+
+                    try:
+                        if len(r.recognize(audio)) > 0:
+                            print("found speech audio!")
+                            results = True
+                    except LookupError:
+                        print("could not understand")
+                        results = False
+                    if results == True:
+                        print("sound detected. initiating record at time", time.time(), "\n")
+
+                        self.unique_num = int(time.time())
+                        self.filename = 'live_audio/' + str(self.unique_num) + '.wav'
+                        self.record_3sec()
+
+                        print("preparing to resume listening. press \'Q\' to quit")
+                        self.setup_record()     # sets up a new recording and clears self.frames
         return FILES    # for demo only
-    
+
     '''
     function: rms
+
     calculates RMS (root-mean-square) of current frame
+
     parameters:
         frame (frame): the current chunk
-    
+
     returns:
         rms (float):    calculated RMS value for frame
+
     local variables:
         count (float):          length of frame divided by short width (SWIDTH)
         format (string):        format string for frame (short int)
@@ -109,7 +132,7 @@ class do_record():
         sample (tuple element): an iteration through shorts
         n (float):              sample times short int normalization factor (SHORT_NORMALIZE)
         sum_squares (float):    sum of n * n for for shorts
-        rms (float):            represents calculated RMS for frame   
+        rms (float):            represents calculated RMS for frame
     '''
     def rms(self, frame):
         count = len(frame) / SWIDTH
@@ -126,20 +149,24 @@ class do_record():
 
     '''
     function: record_3sec
+
     appends all frames to frames for 3 seconds
     calls write_to_file()
+
     local variables:
         data (frame):   the value of the current chunk
     '''
     def record_3sec(self):
         while(time.time() < (self.unique_num + 4)):
-            data = self.stream.read(CHUNK)
+            data = self.stream.read(CHUNK, exception_on_overflow = False)
             self.frames.append(data)
         self.write_to_file()
 
     '''
     function: write_to_file
+
     saves recorded audio as a WAV file
+
     local variables:
         wf (wave object):   filename opened as an empty wave object
     '''
