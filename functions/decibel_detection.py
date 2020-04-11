@@ -23,24 +23,24 @@ CHANNELS = 1
 RATE = 16000
 FS = 44100
 
-class doRecord:
+class do_record:
 
     def __init__(self):
         self.temp = True
 
-        self.uniqueNum = int(time.time())
-        self.tempnum = uniqueNum + 9
-        self.finalTime = uniqueNum + 3
+        self.unique_num = int(time.time())
+        self.tempnum = unique_num + 9
+        self.final_time = unique_num + 3
         self.frames = []
 
     def setup_record(self):
         print("current time ", time.time())
-        print(finalTime)
+        print(final_time)
 
     def update_loop(self):
         self.frames = []
-        self.uniqueNum = int(time.time())
-        self.finalTime += 3
+        self.unique_num = int(time.time())
+        self.final_time += 3
 
 
 while time.time() < tempnum:
