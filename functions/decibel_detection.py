@@ -97,7 +97,7 @@ class do_record():
                         audio = r.record(source, duration = 1)
 
                     try:
-                        if len(r.recognize(audio)) > 0:
+                        if len(r.recognize_google(audio)) > 0:
                             print("found speech audio!")
                             results = True
                     except LookupError:
