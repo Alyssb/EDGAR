@@ -1,17 +1,14 @@
 '''
 CSC450 Team 4
 Detects the decibel level and activates EDGAR if 60dB is exceeded
-
-right now im just using this for getting audio continuously
-Combining it with get_speech.py, by stephen
 '''
 
-import math
-import struct
 import wave
-import os
 import time
-import keyboard
+from struct import unpack
+from math import pow
+from keyboard import is_pressed
+# import os     # os.getcwd() to get current directory
 
 import pyaudio
 from pydub import AudioSegment
@@ -46,7 +43,7 @@ class do_record():
     def check_dB(self):
         print('listening... press \'Q\' to quit')
         while True:
-            if keyboard.is_pressed('q'):
+            if is_pressed('q'):
                 print('EDGAR has exited successfully')
                 break
             else:
@@ -66,13 +63,13 @@ class do_record():
     def rms(self, frame):
         count = len(frame) / SWIDTH
         format = "%dh" % (count)
-        shorts = struct.unpack(format, frame)
+        shorts = unpack(format, frame)
         sum_squares = 0.0
 
         for sample in shorts:
             n = sample * SHORT_NORMALIZE
             sum_squares += n * n
-        rms = math.pow(sum_squares / count, 0.5)
+        rms = pow(sum_squares / count, 0.5)
 
         return rms * 1000
 
@@ -80,7 +77,7 @@ class do_record():
         while(time.time() < self.final_time):
             data = self.stream.read(CHUNK)
             self.rec.append(data)
-        self.write_to_file()
+        # self.write_to_file()
 
     def write_to_file(self):
         wf = wave.open(self.filename, 'wb')
