@@ -19,7 +19,8 @@ swidth = 2
 TIMEOUT_LENGTH = 5
 
 # Pathfile where recording is saved to
-f_name_directory = r'/Users/stephencarr/EDGAR/live_audio'
+# f_name_directory = r'/Users/stephencarr/EDGAR/live_audio'
+f_name_directory = r'C:\\Users\\alyss\\Documents\\EDGAR\\live_audio'
 
 class SpeechRecorder:
 
@@ -55,7 +56,8 @@ class SpeechRecorder:
         while current <= end:
 
             data = self.stream.read(chunk)
-            if self.rms(data) >= Threshold: end = time.time() + TIMEOUT_LENGTH
+            if self.rms(data) >= Threshold: 
+                end = time.time() + TIMEOUT_LENGTH
 
             current = time.time()
             rec.append(data)
@@ -75,8 +77,6 @@ class SpeechRecorder:
         print('Saved as: {}'.format(filename))
         print('Returning to listening')
 
-
-
     def listen(self):
         print('Listening for speech')
         while True:
@@ -87,5 +87,6 @@ class SpeechRecorder:
 
 a = SpeechRecorder()
 
-# a will listen and record as long as someone is speaking higher than the threshold
+# a will listen and record as long as someone
+# is speaking higher than the threshold
 a.listen()
