@@ -54,7 +54,7 @@ def loadModel(metrics):
     output = model(metrics)
 
     prediction = int(torch.argmax(output))
-    print("this be the prediction ",prediction)
+    #print("this be the prediction ",prediction)
     
     
     return prediction
