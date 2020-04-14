@@ -18,9 +18,9 @@ response(int): prints string to console as output, no return
 
 
 def response(result):
-    true_label = ['anger', 'disgust', 'excited', 'fear', 'frustrated',
-                  'happy', 'neutral', 'other', 'sad', 'surprised']#, 'xxx' , 'all'
-    #true_label = ['anger', 'fear', 'happy', 'neutral', 'sad'] #just the 5
+    #true_label = ['anger', 'disgust', 'excited', 'fear', 'frustrated',
+                  #'happy', 'neutral', 'other', 'sad', 'surprised']#, 'xxx' , 'all'
+    true_label = ['anger', 'fear', 'happy', 'neutral', 'sad'] #just the 5
     
     if result < len(true_label):
         print("\nThe model has determined that you just spoke in the emotion of:", true_label[result])
