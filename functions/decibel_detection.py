@@ -2,7 +2,6 @@
 '''
 CSC450 SP2020 Group 4
 Missouri State University
-
 Detects and creates a recording if the decibel level of 60dB is exceeded
 Exits if 'Q' is pressed while listening
 MUST be run from EDGAR directory
@@ -31,7 +30,7 @@ FS = 44100                      # record at 44100 samples per second
 # for RMS calculation
 SHORT_NORMALIZE = (1.0/32768.0) # factor for normalizing samples in a chunk
 SWIDTH = 2                      # factor for shorts per frame (?)
-THRESHOLD = 50                 # sets threshold in RMS: 317rms is equal to 60dB
+THRESHOLD = 100                 # sets threshold in RMS: 317rms is equal to 60dB
 
 # for demo
 FILES = []
@@ -42,11 +41,9 @@ class do_record():
 
     '''
     function: setup_record
-
     sets up a fresh recording stream
     prints system is ready
     must be executed before check_dB
-
     class variables:
         frames (array):             array for storing frames during recording
         p (PyAudio):                instance of PyAudio
@@ -67,14 +64,11 @@ class do_record():
 
     '''
     function: check_dB
-
     if current decibel level above THRESHOLD, make a recording
     if key 'Q' is pressed, exit
-
     class variables:
         unique_num (int):   current time in seconds
         filename (string):  name of file to store recording in
-
     local variables:
         input (frame):      the current audio chunk
         rms_val (float):    the rms value of input
@@ -83,22 +77,28 @@ class do_record():
         print('listening... press \'Q\' to quit')
         while True:
             if is_pressed('q'):
-                print('EDGAR has exited successfully')
+                print('\nEDGAR has exited successfully')
                 break
             else:
                 input = self.stream.read(CHUNK, exception_on_overflow = False) # input is a frame (chunk)
                 rms_val = self.rms(input)
 
                 if rms_val > THRESHOLD:
+                    print("threshold exceeded")
                     r = sr.Recognizer()
-                    with sr.Microphone() as source:                # use the default microphone as the audio source
-                        audio = r.listen(source)
+                    with sr.Microphone() as source: # use the default microphone as the audio source
+                        # print("listening...")
+                        audio = r.listen(source, phrase_time_limit=0.99)
 
                     try:
-                        if len(r.recognize(audio)) > 0:
+                        if len(r.recognize_google(audio)) > 0:
+                            print("Speech has been detected.")
                             results = True
-                    except LookupError:
+                    except sr.UnknownValueError:
+                        print("Could not understand. Speak again or press 'Q' to quit.")
                         results = False
+                        self.setup_record()
+
                     if results == True:
                         print("sound detected. initiating record at time", time.time(), "\n")
 
@@ -112,15 +112,11 @@ class do_record():
 
     '''
     function: rms
-
     calculates RMS (root-mean-square) of current frame
-
     parameters:
         frame (frame): the current chunk
-
     returns:
         rms (float):    calculated RMS value for frame
-
     local variables:
         count (float):          length of frame divided by short width (SWIDTH)
         format (string):        format string for frame (short int)
@@ -145,24 +141,20 @@ class do_record():
 
     '''
     function: record_3sec
-
     appends all frames to frames for 3 seconds
     calls write_to_file()
-
     local variables:
         data (frame):   the value of the current chunk
     '''
     def record_3sec(self):
-        while(time.time() < (self.unique_num + 4)):
+        while(time.time() < (self.unique_num + 3)):
             data = self.stream.read(CHUNK, exception_on_overflow = False)
             self.frames.append(data)
         self.write_to_file()
 
     '''
     function: write_to_file
-
     saves recorded audio as a WAV file
-
     local variables:
         wf (wave object):   filename opened as an empty wave object
     '''
