@@ -11,8 +11,10 @@ currently called by EDGAR_demo.py
 # You will need to pip install all of these things
 import librosa
 import librosa.display
-from numpy import max, dstack, save
+from numpy import max, dstack, save, frombuffer
 import matplotlib.pyplot as plt
+from matplotlib.figure import Figure
+from matplotlib.backends.backend_agg import FigureCanvasAgg as FigureCanvas
 import time
 
 # imports for deleting audio file
@@ -60,7 +62,7 @@ class melSpectrogram:
         
         # CAN ONLY PLOT ONE FIGURE IN A PYTHON SCRIPT. 
         # uncomment only if there will be only one audio file and you want it displayed
-        #self.displaySpectrogram()
+        self.saveSpectrogram()
 
         return(self.output)
 
@@ -81,6 +83,20 @@ class melSpectrogram:
         plt.tight_layout()
         plt.show()
 
+    def saveSpectrogram(self):
+        # Save spectrogram as rgb numpy array
+        fig = Figure()
+        canvas = FigureCanvas(fig)
+        ax = fig.gca()
+
+        ax.text(0.0, 0.0, "Test", fontsize=45)
+        ax.axis('off')
+
+        canvas.draw()  # draw the canvas, cache the renderer
+
+        image = frombuffer(canvas.tostring_rgb(), dtype='uint8')
+        self.saveFile()
+
     def saveFile(self):
         # use current time to calculate a unique number
         unique_num = int(time.time())
@@ -100,6 +116,15 @@ class melSpectrogram:
 # ***************************** main *****************************
 def main():
     print("main function of get_melspectrogram.py")
+    mSpec = melSpectrogram("Ses02M_script01_1_F026.wav")
+    melSpectrogram_nparray = mSpec.get_MelSpectrogram()  # creates a mel spectrogram for a given file
+    # print(melSpectrogram_nparray)                           # prints the array
+    print("shape of array (should be 40, 1067, 3): ",
+          melSpectrogram_nparray.shape)
+    print("size of array (should be 3): ", melSpectrogram_nparray.ndim)
+    mSpec.saveSpectrogram()
+    mSpec.saveFile()  # Saves 3D numpy output array to a file
+
 
 if __name__ == '__main__':
     main()
