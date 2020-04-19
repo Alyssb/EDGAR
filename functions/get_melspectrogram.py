@@ -41,30 +41,30 @@ class melSpectrogram:
         S = librosa.feature.melspectrogram(y, self.sr, n_mels=40, n_fft=512, fmin=300, fmax=8000)
 
         # Creates numpy array of the delta of the Mel Spectrogram, will be same dimensions as S above
-        ms_delta = librosa.feature.delta(S)
+        #ms_delta = librosa.feature.delta(S)
 
         # Creates numpy array of the delta delta of the Mel Spectrogram, will be same dimensions as S above
-        ms_delta2 = librosa.feature.delta(S, order=2)
+        #ms_delta2 = librosa.feature.delta(S, order=2)
 
         # Convert a power spectrogram (amplitude squared) to decibel (dB) units
         self.S_dB = librosa.power_to_db(S, ref=max)
 
         # Convert a power spectrogram (amplitude squared) to decibel (dB) units
-        self.ms_delta_dB = librosa.power_to_db(ms_delta, ref=max)
+        #self.ms_delta_dB = librosa.power_to_db(ms_delta, ref=max)
 
         # Convert a power spectrogram (amplitude squared) to decibel (dB) units
-        self.ms_delta2_dB = librosa.power_to_db(ms_delta2, ref=max)
+        #self.ms_delta2_dB = librosa.power_to_db(ms_delta2, ref=max)
 
-        self.padToLongest()
+        #self.padToLongest()
 
         #stacks the arrays depth wise to make a 3D numpy array
-        self.output = dstack((self.S_dB_out, self.ms_delta_dB_out, self.ms_delta2_dB_out))
+        #self.output = dstack((self.S_dB_out, self.ms_delta_dB_out, self.ms_delta2_dB_out))
         
         # CAN ONLY PLOT ONE FIGURE IN A PYTHON SCRIPT. 
         # uncomment only if there will be only one audio file and you want it displayed
         self.saveSpectrogram()
 
-        return(self.output)
+        return(self.saveSpectrogram())
 
     def padToLongest(self):
         # pads numpy arrays with zeroes to fit longest wav file used for training (1067) rows
@@ -100,13 +100,13 @@ class melSpectrogram:
         print("shape of image2 (should be 40, 1067, 3): ",
               image2.shape)
 
-        self.saveFile()
+        return image2
 
     def saveFile(self):
         # use current time to calculate a unique number
         unique_num = int(time.time())
         self.filename = '/Users/Momma/PycharmProjects/EDGAR/numpy_output/Output' + str(unique_num)
-        save(self.filename, self.output)
+        save(self.filename, self)
 
         # print confirmation that the file was saved
         print("file " + self.filename + ".npy saved")
