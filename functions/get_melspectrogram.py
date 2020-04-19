@@ -86,21 +86,26 @@ class melSpectrogram:
     def saveSpectrogram(self):
         # Save spectrogram as rgb numpy array
         fig = Figure()
+        fig.tight_layout(pad=0)
         canvas = FigureCanvas(fig)
-        ax = fig.gca()
 
-        ax.text(0.0, 0.0, "Test", fontsize=45)
+        ax = fig.gca()
         ax.axis('off')
+        ax.margins(0)
 
         canvas.draw()  # draw the canvas, cache the renderer
 
         image = frombuffer(canvas.tostring_rgb(), dtype='uint8')
+        image2 = image.reshape(fig.canvas.get_width_height()[::-1]+(3,))
+        print("shape of image2 (should be 40, 1067, 3): ",
+              image2.shape)
+
         self.saveFile()
 
     def saveFile(self):
         # use current time to calculate a unique number
         unique_num = int(time.time())
-        self.filename = 'numpy_output\\Output' + str(unique_num)
+        self.filename = '/Users/Momma/PycharmProjects/EDGAR/numpy_output/Output' + str(unique_num)
         save(self.filename, self.output)
 
         # print confirmation that the file was saved
@@ -116,14 +121,14 @@ class melSpectrogram:
 # ***************************** main *****************************
 def main():
     print("main function of get_melspectrogram.py")
-    mSpec = melSpectrogram("Ses02M_script01_1_F026.wav")
+    mSpec = melSpectrogram("Ses01F_impro03_F005.wav")
     melSpectrogram_nparray = mSpec.get_MelSpectrogram()  # creates a mel spectrogram for a given file
     # print(melSpectrogram_nparray)                           # prints the array
-    print("shape of array (should be 40, 1067, 3): ",
+    print("shape of array: ",
           melSpectrogram_nparray.shape)
-    print("size of array (should be 3): ", melSpectrogram_nparray.ndim)
+    print("size of array: ", melSpectrogram_nparray.ndim)
     mSpec.saveSpectrogram()
-    mSpec.saveFile()  # Saves 3D numpy output array to a file
+    #mSpec.saveFile()  # Saves 3D numpy output array to a file
 
 
 if __name__ == '__main__':
