@@ -40,26 +40,11 @@ class melSpectrogram:
         # fmax: upper frequency
         S = librosa.feature.melspectrogram(y, self.sr, n_mels=40, n_fft=512, fmin=300, fmax=8000)
 
-        # Creates numpy array of the delta of the Mel Spectrogram, will be same dimensions as S above
-        #ms_delta = librosa.feature.delta(S)
-
-        # Creates numpy array of the delta delta of the Mel Spectrogram, will be same dimensions as S above
-        #ms_delta2 = librosa.feature.delta(S, order=2)
-
         # Convert a power spectrogram (amplitude squared) to decibel (dB) units
         self.S_dB = librosa.power_to_db(S, ref=max)
 
-        # Convert a power spectrogram (amplitude squared) to decibel (dB) units
-        #self.ms_delta_dB = librosa.power_to_db(ms_delta, ref=max)
-
-        # Convert a power spectrogram (amplitude squared) to decibel (dB) units
-        #self.ms_delta2_dB = librosa.power_to_db(ms_delta2, ref=max)
-
         #self.padToLongest()
 
-        #stacks the arrays depth wise to make a 3D numpy array
-        #self.output = dstack((self.S_dB_out, self.ms_delta_dB_out, self.ms_delta2_dB_out))
-        
         # CAN ONLY PLOT ONE FIGURE IN A PYTHON SCRIPT. 
         # uncomment only if there will be only one audio file and you want it displayed
         self.saveSpectrogram()
@@ -95,14 +80,16 @@ class melSpectrogram:
 
         canvas.draw()  # draw the canvas, cache the renderer
 
+        #makes a 1d array of rgb values
         image = frombuffer(canvas.tostring_rgb(), dtype='uint8')
-        image2 = image.reshape(fig.canvas.get_width_height()[::-1]+(3,))
-        print("shape of image2 (should be 40, 1067, 3): ",
-              image2.shape)
 
-        return image2
+        #converts to a 3d array of rgb values
+        formatted_image = image.reshape(fig.canvas.get_width_height()[::-1]+(3,))
+        #print("shape of image2 (should be 40, 1067, 3): ", image2.shape)
 
-    def saveFile(self):
+        return formatted_image
+
+    def saveFile(self, image):
         # use current time to calculate a unique number
         unique_num = int(time.time())
         self.filename = '/Users/Momma/PycharmProjects/EDGAR/numpy_output/Output' + str(unique_num)
@@ -123,12 +110,9 @@ def main():
     print("main function of get_melspectrogram.py")
     mSpec = melSpectrogram("Ses01F_impro03_F005.wav")
     melSpectrogram_nparray = mSpec.get_MelSpectrogram()  # creates a mel spectrogram for a given file
-    # print(melSpectrogram_nparray)                           # prints the array
-    print("shape of array: ",
-          melSpectrogram_nparray.shape)
-    print("size of array: ", melSpectrogram_nparray.ndim)
-    mSpec.saveSpectrogram()
+
     #mSpec.saveFile()  # Saves 3D numpy output array to a file
+    mSpec.saveFile(mSpec.get_MelSpectrogram())
 
 
 if __name__ == '__main__':
