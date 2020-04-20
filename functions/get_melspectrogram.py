@@ -11,17 +11,22 @@ currently called by EDGAR_demo.py
 # You will need to pip install all of these things
 import librosa
 import librosa.display
-from numpy import max, dstack, save, frombuffer
-import matplotlib.pyplot as plt
-from matplotlib.figure import Figure
-from matplotlib.backends.backend_agg import FigureCanvasAgg as FigureCanvas
+from numpy import max, dstack, save, frombuffer, set_printoptions, array, uint8, float64
+import matplotlib
+matplotlib.use('Agg')
+from matplotlib.backends.backend_agg import FigureCanvasAgg as FigureCanvas, FigureCanvasAgg
 import time
+import matplotlib.pyplot as plt
+
 
 # imports for deleting audio file
 from os import remove
 from os.path import exists
 
 # ***************************** class melSpectrogram *****************************
+from scipy import io
+
+
 class melSpectrogram:
 
     def __init__(self, source_filename):
@@ -38,18 +43,19 @@ class melSpectrogram:
         # n_fft: length of the FFT window
         # fmin: lower frequency
         # fmax: upper frequency
-        S = librosa.feature.melspectrogram(y, self.sr, n_mels=40, n_fft=512, fmin=300, fmax=8000)
+        self.S = librosa.feature.melspectrogram(y, self.sr, n_mels=40, n_fft=512, fmin=300, fmax=8000)
 
         # Convert a power spectrogram (amplitude squared) to decibel (dB) units
-        self.S_dB = librosa.power_to_db(S, ref=max)
+        self.S_dB = librosa.power_to_db(self.S, ref=max)
+
+        print("Mel Spectrogram")
+        print(self.S_dB)
 
         #self.padToLongest()
 
         # CAN ONLY PLOT ONE FIGURE IN A PYTHON SCRIPT. 
         # uncomment only if there will be only one audio file and you want it displayed
-        self.saveSpectrogram()
-
-        return(self.saveSpectrogram())
+        #self.saveSpectrogram(melSpectrogram_nparray)
 
     def padToLongest(self):
         # pads numpy arrays with zeroes to fit longest wav file used for training (1067) rows
@@ -70,27 +76,21 @@ class melSpectrogram:
 
     def saveSpectrogram(self):
         # Save spectrogram as rgb numpy array
-        fig = Figure()
-        fig.tight_layout(pad=0)
+        fig = plt.Figure()
         canvas = FigureCanvas(fig)
-
-        ax = fig.gca()
-        ax.axis('off')
-        ax.margins(0)
-
-        canvas.draw()  # draw the canvas, cache the renderer
-
-        #makes a 1d array of rgb values
-        image = frombuffer(canvas.tostring_rgb(), dtype='uint8')
-
-        #converts to a 3d array of rgb values
-        formatted_image = image.reshape(fig.canvas.get_width_height()[::-1]+(3,))
-        #print("shape of image2 (should be 40, 1067, 3): ", image2.shape)
-
-        return formatted_image
+        ax = fig.add_subplot(111)
+        librosa.display.specshow(librosa.amplitude_to_db(self.S_dB, ref=max), ax=ax, y_axis='log', x_axis='time')
+        fig.savefig('spec.png')
+        canvas.draw()
+        data = frombuffer(fig.canvas.tostring_rgb(), dtype=uint8)
+        print("data1")
+        print(data)
+        data = data.reshape(fig.canvas.get_width_height()[::-1] + (3,))
+        print("data2")
+        print(data)
 
     def saveFile(self, image):
-        # use current time to calculate a unique number
+        # use current time to calculate a unique numbe
         unique_num = int(time.time())
         self.filename = '/Users/Momma/PycharmProjects/EDGAR/numpy_output/Output' + str(unique_num)
         save(self.filename, self)
@@ -109,10 +109,12 @@ class melSpectrogram:
 def main():
     print("main function of get_melspectrogram.py")
     mSpec = melSpectrogram("Ses01F_impro03_F005.wav")
-    melSpectrogram_nparray = mSpec.get_MelSpectrogram()  # creates a mel spectrogram for a given file
+    mSpec.get_MelSpectrogram()  # creates a mel spectrogram for a given file
 
+    print("ms from main")
+    print(mSpec.S_dB)
     #mSpec.saveFile()  # Saves 3D numpy output array to a file
-    mSpec.saveFile(mSpec.get_MelSpectrogram())
+    mSpec.saveSpectrogram()
 
 
 if __name__ == '__main__':
