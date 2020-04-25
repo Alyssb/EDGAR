@@ -63,6 +63,7 @@ class melSpectrogram:
         # uncomment only if there will be only one audio file and you want it displayed
         #self.saveSpectrogram(melSpectrogram_nparray)
 
+    ''' unused, I think '''
     def padToLongest(self):
         # pads numpy arrays with zeroes to fit longest wav file used for training (1067) rows
         self.S_dB_out = librosa.util.fix_length(self.S_dB, 1067, axis=1)
@@ -89,11 +90,11 @@ class melSpectrogram:
         fig.savefig('spec.png')
         canvas.draw()
         data = frombuffer(fig.canvas.tostring_rgb(), dtype=uint8)
-        # print("data1")
-        # print(data)
+        print("data1")
+        print(data)
         data = data.reshape(fig.canvas.get_width_height()[::-1] + (3,))
-        # print("data2")
-        # print(data)
+        print("data2")
+        print(data)
 
     def saveFile(self, image):
         # use current time to calculate a unique numbe
