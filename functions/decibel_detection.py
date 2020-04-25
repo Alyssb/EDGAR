@@ -29,21 +29,22 @@ FS = 44100                      # record at 44100 samples per second
 
 # for RMS calculation
 SHORT_NORMALIZE = (1.0/32768.0) # factor for normalizing samples in a chunk
-SWIDTH = 2                      # factor for shorts per frame (?)
+SWIDTH = 2                      # factor for shorts per frame
 THRESHOLD = 100                 # sets threshold in RMS: 317rms is equal to 60dB
 
 # for demo
 FILES = []
 # ********************************** class do_record **********************************
 class do_record():
+    ''' init function '''
     def __init__(self):
         print("EDGAR has started.")
+
 
     '''
     function: setup_record
     sets up a fresh recording stream
-    prints system is ready
-    must be executed before check_dB
+    MUST be executed before check_dB
     class variables:
         frames (array):             array for storing frames during recording
         p (PyAudio):                instance of PyAudio
@@ -60,39 +61,35 @@ class do_record():
                                   frames_per_buffer=CHUNK,
                                   input=True,
                                   output=True)
-        print('EDGAR is ready')
+        print("EDGAR is ready.")
+
 
     '''
     function: check_dB
-    if current decibel level above THRESHOLD, check if audio is speech
+    checks every chunk until 'Q' is pressed
+    calls self.rms()
     if key 'Q' is pressed, exit
     local variables:
         input (frame):      the current audio chunk
-        rms_val (float):    the rms value of input
     '''
     def check_dB(self):
-        print('listening... press \'Q\' to quit')
+        print("Listening... press \'Q\' to quit.")
         while True:
             if is_pressed('q'):
-                print('\nEDGAR has exited successfully')
+                print("\nEDGAR has exited successfully.")
                 break
             else:
                 input = self.stream.read(CHUNK, exception_on_overflow = False) # input is a frame (chunk)
-                rms_val = self.rms(input)
-
-                if rms_val > THRESHOLD:
-                    print("threshold exceeded")
-                    self.get_audio_for_check()
-                    self.setup_record()
+                self.rms(input)
         return FILES    # for demo only
+
 
     '''
     function: rms
     calculates RMS (root-mean-square) of current frame
+    calls check_rms()
     parameters:
         frame (frame): the current chunk
-    returns:
-        rms (float):    calculated RMS value for frame
     local variables:
         count (float):          length of frame divided by short width (SWIDTH)
         format (string):        format string for frame (short int)
@@ -112,8 +109,19 @@ class do_record():
             n = sample * SHORT_NORMALIZE
             sum_squares += n * n
         rms = pow(sum_squares / count, 0.5)
+        self.check_rms(rms)
 
-        return rms * 1000
+    '''
+    function: check_rms
+    checks if rms is greater than THRESHOLD
+    if THRESHOLD is exceeded, calls get_audio_for_check()
+    parameters:
+        rms (float):    calculated RMS for current
+    '''
+    def check_rms(self, rms):
+        if (rms * 1000) > THRESHOLD:
+            print("Threshold exceeded.")
+            self.get_audio_for_check()
 
 
     '''
@@ -128,9 +136,10 @@ class do_record():
     '''   
     def get_audio_for_check(self):
         self.r = sr.Recognizer()
-        with sr.Microphone() as source: # use the default microphone as the audio source
-            self.audio = self.r.listen(source, phrase_time_limit=0.99)    # records for 0.99 seconds to check if audio is speech
+        with sr.Microphone() as source:                                 # use the default microphone as the audio source
+            self.audio = self.r.listen(source, phrase_time_limit=0.99)  # records for 0.99 seconds to check if audio is speech
         self.check_if_speech()
+
 
     '''
     function: check_if_speech
@@ -167,7 +176,7 @@ class do_record():
             data = self.stream.read(CHUNK, exception_on_overflow = False)
             self.frames.append(data)
         self.write_to_file()
-        # self.setup_record()
+        self.setup_record()
 
 
     '''
@@ -181,12 +190,11 @@ class do_record():
         wf.setnchannels(CHANNELS)
         wf.setsampwidth(self.p.get_sample_size(FORMAT))
         wf.setframerate(FS)
-        # I really don't know what the b on this line does
         wf.writeframes(b''.join(self.frames))
 
         wf.close()
         self.p.terminate()
-        print(self.filename + " saved\n")
+        print(self.filename + " saved.\n")
         FILES.append(self.filename) # for demo only
 
 
