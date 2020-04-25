@@ -1,6 +1,16 @@
 EDGAR/recording_audio/Output/
 /live_audio/
-/mfcc_outputs/
+/mfcc-outputs/
 /.vscode/
 /CSC450/data/
 /CSC450/data/ALL
+file_list_stretched_no_xxx.npy
+label_list_stretched_no_xxx.npy
+/metrics_stretched_no_xxx/
+*.xml
+/numpy_output/*
+/__pycache__/
+/model/
+/functions/__pycache__/
+/unused/__pycache__/
+/pytorchTutorial/*
