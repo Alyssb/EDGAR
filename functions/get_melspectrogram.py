@@ -89,13 +89,23 @@ class melSpectrogram:
         canvas (MatPlotLib Canvas Object):  Canvas instance which contains fig
         ax 
     '''
+
+
+    '''
+    function: saveSpectrogram
+    saves spectrogram as a png image
+    local variables:
+        fig (Figure):               figure to be saved
+        canvas (FigureCanvasAgg):   canvas to hold the figure
+        ax
+    '''
     def saveSpectrogram(self):
         fig = plt.Figure()
         canvas = FigureCanvas(fig)
         ax = fig.add_subplot(111)   # I have no idea what this does, pls fill out in comment above fxn ty
-        print(ax)
         librosa.display.specshow(librosa.amplitude_to_db(self.S_dB, ref=max), ax=ax, y_axis='log', x_axis='time')
         fig.savefig('spec.png')
+        self.saveFile(fig)
         # self.deleteFile() # uncomment for final implementation
 
         ''' what does all this stuff do? Is it necessary? '''
@@ -108,15 +118,20 @@ class melSpectrogram:
         # print(data)
 
 
-    ''' unused, I think '''
-    # def saveFile(self, image):
-    #     # use current time to calculate a unique numbe
-    #     unique_num = int(time.time())
-    #     self.filename = 'C:\\Users\\alyss\\Documents\\EDGAR\\mfcc-outputs' + str(unique_num)
-    #     save(self.filename, self)
-
-    #     # print confirmation that the file was saved
-    #     # print("file " + self.filename + ".npy saved")
+    '''
+    function: saveFile
+    saves spectrogram as a npy array
+    class variables:
+        filename (string):  filename to save npy array in
+    local variables:
+        unique_num (int):   current time in seconds, used to create unique filenames
+    '''
+    def saveFile(self, image):
+        unique_num = int(time.time())
+        self.filename = 'mfcc-outputs\\output-' + str(unique_num)
+        # not sure what this line does
+        save(self.filename, self)
+        print("file " + self.filename + ".npy saved")
 
 
     '''
