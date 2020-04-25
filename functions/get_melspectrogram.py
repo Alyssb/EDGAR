@@ -63,6 +63,7 @@ class melSpectrogram:
         # uncomment only if there will be only one audio file and you want it displayed
         #self.saveSpectrogram(melSpectrogram_nparray)
 
+
     ''' unused, I think '''
     def padToLongest(self):
         # pads numpy arrays with zeroes to fit longest wav file used for training (1067) rows
@@ -70,6 +71,8 @@ class melSpectrogram:
         self.ms_delta_dB_out = librosa.util.fix_length(self.ms_delta_dB, 1067, axis=1)
         self.ms_delta2_dB_out = librosa.util.fix_length(self.ms_delta2_dB, 1067, axis=1)
 
+
+    ''' unused, I think '''
     def displaySpectrogram(self):
         # Plotting the Mel Spectrogram
         plt.figure(figsize=(10, 4))
@@ -80,6 +83,7 @@ class melSpectrogram:
         plt.title('Mel-frequency spectrogram')
         plt.tight_layout()
         plt.show()
+
 
     def saveSpectrogram(self):
         # Save spectrogram as rgb numpy array
@@ -96,6 +100,8 @@ class melSpectrogram:
         print("data2")
         print(data)
 
+
+    ''' unused, I think '''
     def saveFile(self, image):
         # use current time to calculate a unique numbe
         unique_num = int(time.time())
@@ -104,6 +110,7 @@ class melSpectrogram:
 
         # print confirmation that the file was saved
         # print("file " + self.filename + ".npy saved")
+
 
     def deleteFile(self):
         if(exists(self.source_filename)):
