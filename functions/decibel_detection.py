@@ -64,11 +64,8 @@ class do_record():
 
     '''
     function: check_dB
-    if current decibel level above THRESHOLD, make a recording
+    if current decibel level above THRESHOLD, check if audio is speech
     if key 'Q' is pressed, exit
-    class variables:
-        unique_num (int):   current time in seconds
-        filename (string):  name of file to store recording in
     local variables:
         input (frame):      the current audio chunk
         rms_val (float):    the rms value of input
@@ -85,29 +82,8 @@ class do_record():
 
                 if rms_val > THRESHOLD:
                     print("threshold exceeded")
-                    r = sr.Recognizer()
-                    with sr.Microphone() as source: # use the default microphone as the audio source
-                        # print("listening...")
-                        audio = r.listen(source, phrase_time_limit=0.99)
-
-                    try:
-                        if len(r.recognize_google(audio)) > 0:
-                            print("Speech has been detected.")
-                            results = True
-                    except sr.UnknownValueError:
-                        print("Could not understand. Speak again or press 'Q' to quit.")
-                        results = False
-                        self.setup_record()
-
-                    if results == True:
-                        print("sound detected. initiating record at time", time.time(), "\n")
-
-                        self.unique_num = int(time.time())
-                        self.filename = 'live_audio/' + str(self.unique_num) + '.wav'
-                        self.record_3sec()
-
-                        print("preparing to resume listening. press \'Q\' to quit")
-                        self.setup_record()     # sets up a new recording and clears self.frames
+                    self.get_audio_for_check()
+                    self.setup_record()
         return FILES    # for demo only
 
     '''
@@ -139,18 +115,60 @@ class do_record():
 
         return rms * 1000
 
+
+    '''
+    function: get_audio_for_check
+    records 1 second of audio to check if it's speech
+    calls check_if_speech()
+    class variables:
+        r (Recognizer Object):      creates an instance of a Recognizer object
+        audio (AudioData Object):   0.99 second AudioData object
+    local variables:
+        data (frame):   the value of the current chunk
+    '''   
+    def get_audio_for_check(self):
+        self.r = sr.Recognizer()
+        with sr.Microphone() as source: # use the default microphone as the audio source
+            self.audio = self.r.listen(source, phrase_time_limit=0.99)    # records for 0.99 seconds to check if audio is speech
+        self.check_if_speech()
+
+    '''
+    function: check_if_speech
+    uses speech_recognition library to determine if audio is speech
+    if speech is detected, calls record_3sec()
+    if speech is not detected, calls setup_record()
+    '''
+    def check_if_speech(self):
+        try:
+            if len(self.r.recognize_google(self.audio)) > 0:
+                print("Speech has been detected.")
+                self.record_3sec()
+        except sr.UnknownValueError:
+            print("Could not understand. Speak again or press 'Q' to quit.")
+            self.setup_record()
+
+
     '''
     function: record_3sec
-    appends all frames to frames for 3 seconds
+    appends all frames to self.frames for 3 seconds
     calls write_to_file()
+    class variables:
+        unique_num (int):   current time in seconds
+        filename (string):  name of file to store recording in
     local variables:
         data (frame):   the value of the current chunk
     '''
     def record_3sec(self):
-        while(time.time() < (self.unique_num + 3)):
+        self.unique_num = int(time.time())
+        self.filename = "live_audio/" + str(self.unique_num) + ".wav"
+
+        temp_time = time.time()
+        while(time.time() < (temp_time + 3)):
             data = self.stream.read(CHUNK, exception_on_overflow = False)
             self.frames.append(data)
         self.write_to_file()
+        # self.setup_record()
+
 
     '''
     function: write_to_file
