@@ -5,7 +5,7 @@ Currently configured for demo 2 on 03/12/2020
 MUST be run from EDGAR directory.
 '''
 
-# import path to file directory and change it to where out inputs are located
+# import path to file directory and change it to where our inputs are located
 import sys
 sys.path.append('./CSC450/recording_audio/')
 sys.path.insert(1, './unused/')

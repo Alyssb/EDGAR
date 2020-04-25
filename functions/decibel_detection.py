@@ -2,9 +2,12 @@
 '''
 CSC450 SP2020 Group 4
 Missouri State University
-Detects and creates a recording if the decibel level of 60dB is exceeded
-Exits if 'Q' is pressed while listening
-MUST be run from EDGAR directory
+
+Passively listens to external audio
+If 60dB is exceeded,
+    Check if input is speech data
+    Record for 3 seconds if speech data is detected
+    Save recording as a WAV file
 '''
 # ********************************** imports **********************************
 # general imports
