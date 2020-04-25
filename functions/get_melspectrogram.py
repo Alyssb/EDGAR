@@ -91,7 +91,7 @@ class melSpectrogram:
     def saveFile(self, image):
         # use current time to calculate a unique numbe
         unique_num = int(time.time())
-        self.filename = '/Users/Momma/PycharmProjects/EDGAR/numpy_output/Output' + str(unique_num)
+        self.filename = 'C:\\Users\\alyss\\Documents\\EDGAR\\mfcc-outputs' + str(unique_num)
         save(self.filename, self)
 
         # print confirmation that the file was saved
@@ -107,7 +107,7 @@ class melSpectrogram:
 # ***************************** main *****************************
 def main():
     print("main function of get_melspectrogram.py")
-    mSpec = melSpectrogram("Ses01F_impro03_F005.wav")
+    mSpec = melSpectrogram("C:\\Users\\alyss\\Documents\\EDGAR\\live_audio\\1587793702.wav")
     mSpec.get_MelSpectrogram()  # creates a mel spectrogram for a given file
 
     print("ms from main")
