@@ -96,6 +96,7 @@ class melSpectrogram:
         print(ax)
         librosa.display.specshow(librosa.amplitude_to_db(self.S_dB, ref=max), ax=ax, y_axis='log', x_axis='time')
         fig.savefig('spec.png')
+        # self.deleteFile() # uncomment for final implementation
 
         ''' what does all this stuff do? Is it necessary? '''
         # canvas.draw()
@@ -118,12 +119,16 @@ class melSpectrogram:
     #     # print("file " + self.filename + ".npy saved")
 
 
+    '''
+    function: deleteFile
+    deletes original audio file
+    '''
     def deleteFile(self):
         if(exists(self.source_filename)):
             remove(self.source_filename)
             print("file " + str(self.source_filename) + " deleted")
         else:
-            print("FILE ERROR: cannot remove file")
+            print("FILE ERROR: cannot find file to remove")
 
 # ***************************** main *****************************
 def main():
