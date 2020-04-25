@@ -57,59 +57,65 @@ class melSpectrogram:
         print("Mel Spectrogram")
         print(self.S_dB)
 
-        # self.padToLongest()
 
-        # CAN ONLY PLOT ONE FIGURE IN A PYTHON SCRIPT. 
-        # uncomment only if there will be only one audio file and you want it displayed
-        #self.saveSpectrogram(melSpectrogram_nparray)
 
 
     ''' unused, I think '''
-    def padToLongest(self):
-        # pads numpy arrays with zeroes to fit longest wav file used for training (1067) rows
-        self.S_dB_out = librosa.util.fix_length(self.S_dB, 1067, axis=1)
-        self.ms_delta_dB_out = librosa.util.fix_length(self.ms_delta_dB, 1067, axis=1)
-        self.ms_delta2_dB_out = librosa.util.fix_length(self.ms_delta2_dB, 1067, axis=1)
+    # def padToLongest(self):
+    #     # pads numpy arrays with zeroes to fit longest wav file used for training (1067) rows
+    #     self.S_dB_out = librosa.util.fix_length(self.S_dB, 1067, axis=1)
+    #     self.ms_delta_dB_out = librosa.util.fix_length(self.ms_delta_dB, 1067, axis=1)
+    #     self.ms_delta2_dB_out = librosa.util.fix_length(self.ms_delta2_dB, 1067, axis=1)
 
 
     ''' unused, I think '''
-    def displaySpectrogram(self):
-        # Plotting the Mel Spectrogram
-        plt.figure(figsize=(10, 4))
-        librosa.display.specshow(self.S_dB, x_axis='time',
-                                 y_axis='mel', sr=self.samplerate,
-                                 fmax=8000)
-        plt.colorbar(format='%+2.0f dB')
-        plt.title('Mel-frequency spectrogram')
-        plt.tight_layout()
-        plt.show()
+    # def displaySpectrogram(self):
+    #     # Plotting the Mel Spectrogram
+    #     plt.figure(figsize=(10, 4))
+    #     librosa.display.specshow(self.S_dB, x_axis='time',
+    #                              y_axis='mel', sr=self.samplerate,
+    #                              fmax=8000)
+    #     plt.colorbar(format='%+2.0f dB')
+    #     plt.title('Mel-frequency spectrogram')
+    #     plt.tight_layout()
+    #     plt.show()
 
 
+    '''
+    function: saveSpectrogram
+    saves a spectrogram as a rgb numpy array
+    local variables:
+        fig (640x480 Figure):               figure to store spectrogram data
+        canvas (MatPlotLib Canvas Object):  Canvas instance which contains fig
+        ax 
+    '''
     def saveSpectrogram(self):
-        # Save spectrogram as rgb numpy array
         fig = plt.Figure()
         canvas = FigureCanvas(fig)
-        ax = fig.add_subplot(111)
+        ax = fig.add_subplot(111)   # I have no idea what this does, pls fill out in comment above fxn ty
+        print(ax)
         librosa.display.specshow(librosa.amplitude_to_db(self.S_dB, ref=max), ax=ax, y_axis='log', x_axis='time')
         fig.savefig('spec.png')
-        canvas.draw()
-        data = frombuffer(fig.canvas.tostring_rgb(), dtype=uint8)
-        print("data1")
-        print(data)
-        data = data.reshape(fig.canvas.get_width_height()[::-1] + (3,))
-        print("data2")
-        print(data)
+
+        ''' what does all this stuff do? Is it necessary? '''
+        # canvas.draw()
+        # data = frombuffer(fig.canvas.tostring_rgb(), dtype=uint8)
+        # print("data1")
+        # print(data)
+        # data = data.reshape(fig.canvas.get_width_height()[::-1] + (3,))
+        # print("data2")
+        # print(data)
 
 
     ''' unused, I think '''
-    def saveFile(self, image):
-        # use current time to calculate a unique numbe
-        unique_num = int(time.time())
-        self.filename = 'C:\\Users\\alyss\\Documents\\EDGAR\\mfcc-outputs' + str(unique_num)
-        save(self.filename, self)
+    # def saveFile(self, image):
+    #     # use current time to calculate a unique numbe
+    #     unique_num = int(time.time())
+    #     self.filename = 'C:\\Users\\alyss\\Documents\\EDGAR\\mfcc-outputs' + str(unique_num)
+    #     save(self.filename, self)
 
-        # print confirmation that the file was saved
-        # print("file " + self.filename + ".npy saved")
+    #     # print confirmation that the file was saved
+    #     # print("file " + self.filename + ".npy saved")
 
 
     def deleteFile(self):
@@ -122,7 +128,7 @@ class melSpectrogram:
 # ***************************** main *****************************
 def main():
     print("main function of get_melspectrogram.py")
-    mSpec = melSpectrogram("C:\\Users\\alyss\\Documents\\EDGAR\\live_audio\\1587793702.wav")
+    mSpec = melSpectrogram("C:\\Users\\alyss\\Documents\\EDGAR\\live_audio\\1587785357.wav")
     mSpec.get_MelSpectrogram()  # creates a mel spectrogram for a given file
 
     print("ms from main")
