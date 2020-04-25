@@ -1,56 +1,63 @@
 #! /usr/bin/env python
 '''
 CSC450 SP 2020 Group 4
-03/08/2020
-creates, stores, and returns a spectrogram for a given audio file
-currently called by EDGAR_demo.py
+Missouri State University
+
+Creates, stores, and returns a spectrogram for a given audio file
 '''
 
 # ***************************** imports *****************************
-# You will need to pip install all of these things
-import librosa
-import librosa.display
+# general imports
 from numpy import max, dstack, save, frombuffer, set_printoptions, array, uint8, float64
 import matplotlib
 matplotlib.use('Agg')
-from matplotlib.backends.backend_agg import FigureCanvasAgg as FigureCanvas, FigureCanvasAgg
-import time
-import matplotlib.pyplot as plt
 
+from matplotlib.backends.backend_agg import FigureCanvasAgg as FigureCanvas, FigureCanvasAgg
+import matplotlib.pyplot as plt
+from scipy import io
+import time
+
+# audio imports
+import librosa
+import librosa.display
 
 # imports for deleting audio file
 from os import remove
 from os.path import exists
 
 # ***************************** class melSpectrogram *****************************
-from scipy import io
 
 
 class melSpectrogram:
-
+    ''' init function '''
     def __init__(self, source_filename):
         self.source_filename = source_filename
         self.samplerate = 16000
 
+
+    '''
+    function: get_MelSpectrogram
+    creates a spectrogram from a WAV file
+    class variables:
+        sr (int):           sample rate
+        S (numpy array):    power spectrogram (amplitude squared)
+        S_dB (numpy array): power spectrogram with decibel units
+    local variables:
+        y (float array):    loaded WAV file
+        n_mels (int):       number of mel-filterbanks used
+        n_fft (int):        length of the FFT window
+        fmin (int):         lower frequency
+        fmax (int):         upper frequency
+    '''
     def get_MelSpectrogram(self):
-        # Loads wav file for analysis, using default samplerate of 16000 if one is not specified
-        y, self.sr = librosa.load(self.source_filename, self.samplerate)
-
-        # Creates numpy array of Mel Spectrogram for wav file with the following parameters:
-        # sr: samplerate
-        # n_mels: the number of mel-filterbanks used
-        # n_fft: length of the FFT window
-        # fmin: lower frequency
-        # fmax: upper frequency
-        self.S = librosa.feature.melspectrogram(y, self.sr, n_mels=40, n_fft=512, fmin=300, fmax=8000)
-
-        # Convert a power spectrogram (amplitude squared) to decibel (dB) units
-        self.S_dB = librosa.power_to_db(self.S, ref=max)
+        y, self.sr = librosa.load(self.source_filename, self.samplerate)                                # Loads wav file for analysis
+        self.S = librosa.feature.melspectrogram(y, self.sr, n_mels=40, n_fft=512, fmin=300, fmax=8000)  # creates numpy array spectrogram
+        self.S_dB = librosa.power_to_db(self.S, ref=max)    # convert power spectrogram to decibel units
 
         print("Mel Spectrogram")
         print(self.S_dB)
 
-        #self.padToLongest()
+        # self.padToLongest()
 
         # CAN ONLY PLOT ONE FIGURE IN A PYTHON SCRIPT. 
         # uncomment only if there will be only one audio file and you want it displayed
@@ -82,11 +89,11 @@ class melSpectrogram:
         fig.savefig('spec.png')
         canvas.draw()
         data = frombuffer(fig.canvas.tostring_rgb(), dtype=uint8)
-        print("data1")
-        print(data)
+        # print("data1")
+        # print(data)
         data = data.reshape(fig.canvas.get_width_height()[::-1] + (3,))
-        print("data2")
-        print(data)
+        # print("data2")
+        # print(data)
 
     def saveFile(self, image):
         # use current time to calculate a unique numbe
@@ -95,7 +102,7 @@ class melSpectrogram:
         save(self.filename, self)
 
         # print confirmation that the file was saved
-        print("file " + self.filename + ".npy saved")
+        # print("file " + self.filename + ".npy saved")
 
     def deleteFile(self):
         if(exists(self.source_filename)):
@@ -112,7 +119,7 @@ def main():
 
     print("ms from main")
     print(mSpec.S_dB)
-    #mSpec.saveFile()  # Saves 3D numpy output array to a file
+    # mSpec.saveFile()  # Saves 3D numpy output array to a file
     mSpec.saveSpectrogram()
 
 
