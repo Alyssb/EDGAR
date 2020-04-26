@@ -48,6 +48,7 @@ SWIDTH = 2                      # factor for shorts per frame
 THRESHOLD = 100                 # sets threshold in RMS: 317rms is equal to 60dB
 
 # for demo
+FILENAME = ""
 FILES = []
 # ********************************** class do_record **********************************
 class do_record():
@@ -184,7 +185,7 @@ class do_record():
     '''
     def record_3sec(self):
         self.unique_num = int(time.time())
-        self.filename = "live_audio/" + str(self.unique_num) + ".wav"
+        FILENAME = "live_audio/" + str(self.unique_num) + ".wav"
 
         temp_time = time.time()
         while(time.time() < (temp_time + 3)):
@@ -201,7 +202,7 @@ class do_record():
         wf (wave object):   filename opened as an empty wave object
     '''
     def write_to_file(self):
-        wf = wave.open(self.filename, 'wb')
+        wf = wave.open(FILENAME, 'wb')
         wf.setnchannels(CHANNELS)
         wf.setsampwidth(self.p.get_sample_size(FORMAT))
         wf.setframerate(FS)
@@ -209,12 +210,17 @@ class do_record():
 
         wf.close()
         self.p.terminate()
-        print(self.filename + " saved.\n")
-        FILES.append(self.filename) # for demo only
+        print(FILENAME + " saved.\n")
+        FILES.append(FILENAME) # for demo only
 
 class next_steps():
-    def __init__():
+    def __init__(self, mSpec):
         print("creating spectrogram")
+        self.mSpec = mSpec
+
+    def run_get_melSpectrogram(self):
+        self.mSpec.get_MelSpectrogram()
+        mSpec.saveSpectrogram()
 
 # ********************************** main **********************************
 def main():
@@ -222,6 +228,9 @@ def main():
     record_instance = do_record()
     record_instance.setup_record()
     record_instance.check_dB()
+
+    mSpec = melSpectrogram(FILENAME)
+    continue_EDGAR = next_steps(mSpec)
 
 if __name__ == "__main__":
     main()
