@@ -4,7 +4,6 @@ Author: Cory &
 Load saved model, run stuff through saved model
 '''
 
-
 #from __future__ import print_function, division
 
 import torch
@@ -15,11 +14,12 @@ import numpy as np
 import os
 import time
 
-device = torch.device("cuda:0" if torch.cuda.is_available() else "cpu")
+device = torch.device("cpu" if not (torch.cuda.is_available()) else "cuda:0")
+#torch.nn.Module.dump_patches = True
 
 def loadModel(metrics):
     
-    model = torch.load("testmodelsavewhole2.pt") #whole model, 4/10- use this not state, state is unstable it seems
+    model = torch.load("testmodelsavewhole2.pt", map_location=device) #whole model, 4/10- use this not state, state is unstable it seems
 #start of state code
 ##    model = torchvision.models.resnet18(pretrained=True)
 ##    # "Freeze" the weights on the pretrained model.
@@ -38,14 +38,12 @@ def loadModel(metrics):
 
     
     model.eval() #internet docs say you gotta do this, so do this. No I don't know why stop asking so many questions
-    
-    #metrics = np.load(metrics)
-
 
     metrics = torch.from_numpy(metrics)
     
     metrics = metrics.unsqueeze(0)
 
+    plt.imshow(metrics[0].permute(0,3,1,2))
     metrics = metrics.permute(0,3,1,2) #0,3,1,2 or 0,3,2,1 0=1,1=40, 2=224, 3=3
     
     metrics = metrics.to(device)

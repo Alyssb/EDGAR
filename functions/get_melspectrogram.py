@@ -29,6 +29,7 @@ from os.path import exists
 
 
 class melSpectrogram:
+
     ''' init function '''
     def __init__(self, source_filename):
         self.source_filename = source_filename
@@ -54,41 +55,21 @@ class melSpectrogram:
         self.S = librosa.feature.melspectrogram(y, self.sr, n_mels=40, n_fft=512, fmin=300, fmax=8000)  # creates numpy array spectrogram
         self.S_dB = librosa.power_to_db(self.S, ref=max)    # convert power spectrogram to decibel units
 
-        print("Mel Spectrogram")
-        print(self.S_dB)
-
-
-
-
-    ''' unused, I think '''
-    # def padToLongest(self):
-    #     # pads numpy arrays with zeroes to fit longest wav file used for training (1067) rows
-    #     self.S_dB_out = librosa.util.fix_length(self.S_dB, 1067, axis=1)
-    #     self.ms_delta_dB_out = librosa.util.fix_length(self.ms_delta_dB, 1067, axis=1)
-    #     self.ms_delta2_dB_out = librosa.util.fix_length(self.ms_delta2_dB, 1067, axis=1)
-
-
-    ''' unused, I think '''
-    # def displaySpectrogram(self):
-    #     # Plotting the Mel Spectrogram
-    #     plt.figure(figsize=(10, 4))
-    #     librosa.display.specshow(self.S_dB, x_axis='time',
-    #                              y_axis='mel', sr=self.samplerate,
-    #                              fmax=8000)
-    #     plt.colorbar(format='%+2.0f dB')
-    #     plt.title('Mel-frequency spectrogram')
-    #     plt.tight_layout()
-    #     plt.show()
-
 
     '''
-    function: saveSpectrogram
-    saves a spectrogram as a rgb numpy array
-    local variables:
-        fig (640x480 Figure):               figure to store spectrogram data
-        canvas (MatPlotLib Canvas Object):  Canvas instance which contains fig
-        ax 
+    function: displaySpectrogram
+    displays the melspectrogram created
+    uses built-in PyPlot functions
     '''
+    def displaySpectrogram(self):
+        plt.figure(figsize=(10, 4))
+        librosa.display.specshow(self.S_dB, x_axis='time',
+                                 y_axis='mel', sr=self.samplerate,
+                                 fmax=8000)
+        plt.colorbar(format='%+2.0f dB')
+        plt.title('Mel-frequency spectrogram')
+        plt.tight_layout()
+        plt.show()
 
 
     '''
@@ -102,13 +83,14 @@ class melSpectrogram:
     def saveSpectrogram(self):
         fig = plt.Figure()
         canvas = FigureCanvas(fig)
-        ax = fig.add_subplot(111)   # I have no idea what this does, pls fill out in comment above fxn ty
+        ax = fig.add_subplot(111)   # I have no idea what this does
         librosa.display.specshow(librosa.amplitude_to_db(self.S_dB, ref=max), ax=ax, y_axis='log', x_axis='time')
         fig.savefig('spec.png')
         self.saveFile(fig)
         # self.deleteFile() # uncomment for final implementation
 
-        ''' what does all this stuff do? Is it necessary? '''
+        ''' what does all this stuff do? Is it necessary?
+            commenting it doesn't seem to affect anything '''
         # canvas.draw()
         # data = frombuffer(fig.canvas.tostring_rgb(), dtype=uint8)
         # print("data1")
@@ -120,7 +102,7 @@ class melSpectrogram:
 
     '''
     function: saveFile
-    saves spectrogram as a npy array
+    saves spectrogram as rgb npy array
     class variables:
         filename (string):  filename to save npy array in
     local variables:
@@ -148,12 +130,14 @@ class melSpectrogram:
 # ***************************** main *****************************
 def main():
     print("main function of get_melspectrogram.py")
-    mSpec = melSpectrogram("C:\\Users\\alyss\\Documents\\EDGAR\\live_audio\\1587785357.wav")
-    mSpec.get_MelSpectrogram()  # creates a mel spectrogram for a given file
 
-    print("ms from main")
-    print(mSpec.S_dB)
-    # mSpec.saveFile()  # Saves 3D numpy output array to a file
+    # create instance of melSpectrogram
+    mSpec = melSpectrogram("live_audio\\1587785357.wav")
+
+    # create melSpectrogram metric from file
+    mSpec.get_MelSpectrogram()
+
+    # save melspectrogram as a 3D numpy array for processing
     mSpec.saveSpectrogram()
 
 
