@@ -8,6 +8,13 @@ If 60dB is exceeded,
     Record for 3 seconds if speech data is detected
     Save recording as a WAV file
 '''
+
+# import path to file directory and change it to where our inputs are located
+import sys
+sys.path.append('./CSC450/recording_audio/')
+sys.path.insert(1, './unused/')
+
+
 # ********************************** imports **********************************
 # general imports
 import time
@@ -21,6 +28,12 @@ import pyaudio
 from pydub import AudioSegment
 from pydub.playback import play
 import speech_recognition as sr
+
+# function imports
+from get_melspectrogram import melSpectrogram
+from run_torch_model import loadModel
+from output import response
+from get_response import get_response
 
 # ********************************** global variables **********************************
 # for recording
@@ -199,6 +212,9 @@ class do_record():
         print(self.filename + " saved.\n")
         FILES.append(self.filename) # for demo only
 
+class next_steps():
+    def __init__():
+        print("creating spectrogram")
 
 # ********************************** main **********************************
 def main():
