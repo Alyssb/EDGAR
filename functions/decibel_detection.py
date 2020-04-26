@@ -49,7 +49,6 @@ THRESHOLD = 100                 # sets threshold in RMS: 317rms is equal to 60dB
 
 # for demo
 FILENAME = ""
-MODEL_RESULT = 0
 FILES = []
 # ********************************** class do_record **********************************
 class do_record():
@@ -224,7 +223,11 @@ class next_steps():
         self.mSpec.saveSpectrogram()
 
     def run_loadModel(self):
-        MODEL_RESULT = loadModel(self.mSpec.data)
+        self.result = loadModel(self.mSpec.data)
+
+    def run_get_response(self):
+        self.image_out = get_response(self.result)
+        self.image_out.get_image()
 
 # ********************************** main **********************************
 def main():
@@ -235,6 +238,9 @@ def main():
 
     mSpec = melSpectrogram(FILENAME)
     continue_EDGAR = next_steps(mSpec)
+    continue_EDGAR.run_get_melSpectrogram()
+    continue_EDGAR.run_loadModel()
+    continue_EDGAR.run_get_response()
 
 if __name__ == "__main__":
     main()
