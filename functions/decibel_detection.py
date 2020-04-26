@@ -9,12 +9,15 @@ If 60dB is exceeded,
     Record for 3 seconds if speech data is detected
     Save recording as a WAV file
 '''
+
+import sys
+sys.path.append('./CSC450/recording_audio/')
+
 # ********************************** imports **********************************
 # general imports
-import time
-from struct import unpack
-from math import pow
+from check_and_record import check_and_record
 from keyboard import is_pressed
+import time
 
 # audio imports
 import wave
@@ -38,11 +41,11 @@ THRESHOLD = 100                 # sets threshold in RMS: 317rms is equal to 60dB
 # for demo
 FILES = []
 # ********************************** class do_record **********************************
-class do_record():
+class EDGAR():
     ''' init function '''
     def __init__(self):
         print("EDGAR has started.")
-
+    
 
     '''
     function: setup_record
@@ -65,28 +68,27 @@ class do_record():
                                   input=True,
                                   output=True)
         print("EDGAR is ready.")
-
-
+    
     '''
-    function: check_dB
+    function: run_EDGAR
     checks every chunk until 'Q' is pressed
-    calls self.rms()
+    calls check_and_record.rms
     if key 'Q' is pressed, exit
     local variables:
         input (frame):      the current audio chunk
     '''
-    def check_dB(self):
+    def run_EDGAR(self):
+        self.setup_record()
         print("Listening... press \'Q\' to quit.")
         while True:
             if is_pressed('q'):
                 print("\nEDGAR has exited successfully.")
                 break
             else:
+                # time.sleep(0.1)
                 input = self.stream.read(CHUNK, exception_on_overflow = False) # input is a frame (chunk)
                 self.rms(input)
-        return FILES    # for demo only
-
-
+    
     '''
     function: rms
     calculates RMS (root-mean-square) of current frame
@@ -124,89 +126,17 @@ class do_record():
     def check_rms(self, rms):
         if (rms * 1000) > THRESHOLD:
             print("Threshold exceeded.")
-            self.get_audio_for_check()
+            record_fn = check_and_record()
+            record_fn.get_audio_for_check()
 
-
-    '''
-    function: get_audio_for_check
-    records 1 second of audio to check if it's speech
-    calls check_if_speech()
-    class variables:
-        r (Recognizer Object):      creates an instance of a Recognizer object
-        audio (AudioData Object):   0.99 second AudioData object
-    local variables:
-        data (frame):   the value of the current chunk
-    '''   
-    def get_audio_for_check(self):
-        self.r = sr.Recognizer()
-        with sr.Microphone() as source:                                 # use the default microphone as the audio source
-            self.audio = self.r.listen(source, phrase_time_limit=0.99)  # records for 0.99 seconds to check if audio is speech
-        self.check_if_speech()
-
-
-    '''
-    function: check_if_speech
-    uses speech_recognition library to determine if audio is speech
-    if speech is detected, calls record_3sec()
-    if speech is not detected, calls setup_record()
-    '''
-    def check_if_speech(self):
-        try:
-            if len(self.r.recognize_google(self.audio)) > 0:
-                print("Speech has been detected.")
-                self.record_3sec()
-        except sr.UnknownValueError:
-            print("Could not understand. Speak again or press 'Q' to quit.")
-            self.setup_record()
-
-
-    '''
-    function: record_3sec
-    appends all frames to self.frames for 3 seconds
-    calls write_to_file()
-    class variables:
-        unique_num (int):   current time in seconds
-        filename (string):  name of file to store recording in
-    local variables:
-        data (frame):   the value of the current chunk
-    '''
-    def record_3sec(self):
-        self.unique_num = int(time.time())
-        self.filename = "live_audio/" + str(self.unique_num) + ".wav"
-
-        temp_time = time.time()
-        while(time.time() < (temp_time + 3)):
-            data = self.stream.read(CHUNK, exception_on_overflow = False)
-            self.frames.append(data)
-        self.write_to_file()
-        self.setup_record()
-
-
-    '''
-    function: write_to_file
-    saves recorded audio as a WAV file
-    local variables:
-        wf (wave object):   filename opened as an empty wave object
-    '''
-    def write_to_file(self):
-        wf = wave.open(self.filename, 'wb')
-        wf.setnchannels(CHANNELS)
-        wf.setsampwidth(self.p.get_sample_size(FORMAT))
-        wf.setframerate(FS)
-        wf.writeframes(b''.join(self.frames))
-
-        wf.close()
-        self.p.terminate()
-        print(self.filename + " saved.\n")
-        FILES.append(self.filename) # for demo only
 
 
 # ********************************** main **********************************
 def main():
-    # executes the do_record class
-    record_instance = do_record()
-    record_instance.setup_record()
-    record_instance.check_dB()
+    print("main function of decibel_detection.py")
+    # executes EDGAR
+    EDGAR_instance = EDGAR()
+    EDGAR_instance.run_EDGAR()
 
 if __name__ == "__main__":
     main()
