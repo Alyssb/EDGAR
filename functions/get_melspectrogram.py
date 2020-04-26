@@ -87,17 +87,11 @@ class melSpectrogram:
         librosa.display.specshow(librosa.amplitude_to_db(self.S_dB, ref=max), ax=ax, y_axis='log', x_axis='time')
         fig.savefig('spec.png')
         self.saveFile(fig)
-        # self.deleteFile() # uncomment for final implementation
 
-        ''' what does all this stuff do? Is it necessary?
-            commenting it doesn't seem to affect anything '''
-        # canvas.draw()
-        # data = frombuffer(fig.canvas.tostring_rgb(), dtype=uint8)
-        # print("data1")
-        # print(data)
-        # data = data.reshape(fig.canvas.get_width_height()[::-1] + (3,))
-        # print("data2")
-        # print(data)
+        canvas.draw()
+        self.data = frombuffer(fig.canvas.tostring_rgb(), dtype=uint8)
+        self.data = self.data.reshape(fig.canvas.get_width_height()[::-1] + (3,))
+        # self.deleteFile() # uncomment for final implementation
 
 
     '''

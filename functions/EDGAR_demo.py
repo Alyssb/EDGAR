@@ -53,7 +53,8 @@ def runDemo():
     #     mSpec.saveFile()    # Saves 3D numpy output array to a file
     mSpec = melSpectrogram("live_audio\\1587785357.wav")
     mSpec.get_MelSpectrogram()     # creates a mel spectrogram for a given file
-    result = loadModel(mSpec.S_dB)
+    mSpec.saveSpectrogram()
+    result = loadModel(mSpec.data)
     response(result)
     image_out = get_response(result)
     image_out.get_image()
