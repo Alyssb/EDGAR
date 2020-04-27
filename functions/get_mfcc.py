@@ -50,6 +50,7 @@ class mfcc:
         fig = plt.Figure()
         canvas = FigureCanvas(fig)
         ax=fig.add_subplot(111)
+        librosa.display.specshow(self.mfccs, ax=ax, x_axis='time')
         canvas.draw()  # draw the canvas, cache the renderer
 
         #makes a 1d array of rgb values
@@ -87,7 +88,7 @@ def main():
     # save mfcc as a 3D numpy array for processing
     mfcc_instance.saveSpectrogram()
 
-    print(mfcc_instance.data)
+    print(mfcc_instance.data.tolist())
 
 if __name__ == '__main__':
     main()
