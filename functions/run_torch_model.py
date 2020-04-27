@@ -54,5 +54,6 @@ def loadModel(metrics):
     return prediction
 
 
+# ********************************** main **********************************
 if __name__ == '__main__':
     print("main function of run_torch_model.py")

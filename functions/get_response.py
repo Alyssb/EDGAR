@@ -1,38 +1,66 @@
 '''
-CSC450 SP 2020 Group 4
-03/28/2020
-Function to display response to emotion detected
+CSC450 SP2020 Group 4
+Missouri State University
+Displays an image based on calculated emotion
 '''
-
+# ********************************** imports **********************************
 import tkinter
 import cv2
 import PIL.Image, PIL.ImageTk
 
+# ********************************** class get_response **********************************
 class get_response:
-    # takes an integer value 1-5
-    # will get input from get_classification.py once implemented
+    '''
+    init function
+    parameters:
+        emo_num (integer 0-4):      classification value of emotion
+    class variables:
+        response_filepath (string): filepath to images, subjective to EDGAR structure
+        classification (int):       classification of emotion
+    '''
     def __init__(self, emo_num):
-        self.responseFilePath = ".\\response_image\\" # CHANGE FILE PATH
+        self.response_filepath = ".\\response_image\\"
         self.classification = emo_num
 
+
+    '''
+    function destroy_image
+    '''
     def destroy_image(self):
         self.window.destroy()
 
-    # gets the image and then displays it. Kind of spaghetti rn
+
+    '''
+    function: get_image
+    displays an image based on value passed into class
+    calls set_emotion and display_response()
+    SHOULD BE SPLIT INTO TWO FUNCTIONS
+    class variables:
+        window (Tk):    instance of tkinter
+        cv_img (image): image loaded using OpenCV
+    '''
     def get_image(self):
         self.window = tkinter.Tk()
         self.window.title("Emotion Detected")
 
+        # set filepath to image location
         self.set_emotion()
-        # Load an image using OpenCV
+
+        # try to oad an image using OpenCV
         try:
             print("image name: " + self.response)
-            self.cv_img = cv2.cvtColor(cv2.imread(self.responseFilePath + self.response), cv2.COLOR_BGR2RGB)
+            self.cv_img = cv2.cvtColor(cv2.imread(self.response_filepath + self.response), cv2.COLOR_BGR2RGB)
             self.display_response()
         except Exception as e:
             print(e)
             print("invalid filepath")
 
+    '''
+    function: set_emotion
+    set filepath to image location
+    class variables:
+        self.response (string): name of image file to be used
+    '''
     # set the filename for the proper image file
     def set_emotion(self):
         if self.classification == 0:
@@ -48,6 +76,19 @@ class get_response:
         else:
             print(self.classification, " is not a valid classification.")
 
+    '''
+    function: display_response
+    displays the image in a tkinter object for 1 second
+    THIS NEEDS TO BE CHANGED BUT IDK HOW
+    NOT FILLING IT OUT RIGHT NOW JUST TO CHANGE IT LATER
+    THIS IS FRUSTRATING AND TKINTER IS BAD
+    local variables:
+        height
+        width
+        no_channels
+        canvas
+        photo
+    '''
     # displays the image
     def display_response(self):
         # Get the image dimensions (OpenCV stores image data as NumPy ndarray)
@@ -66,6 +107,8 @@ class get_response:
         self.window.update()
         self.window.after(1000 ,self.window.destroy())
 
+
+# ********************************** main **********************************
 def main():
     print("Main function of get_response.py")
 
