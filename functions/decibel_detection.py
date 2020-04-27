@@ -185,7 +185,7 @@ class do_record():
     '''
     def record_3sec(self):
         self.unique_num = int(time.time())
-        FILENAME = "live_audio/" + str(self.unique_num) + ".wav"
+        self.filename = "live_audio/" + str(self.unique_num) + ".wav"
 
         temp_time = time.time()
         while(time.time() < (temp_time + 3)):
@@ -202,7 +202,7 @@ class do_record():
         wf (wave object):   filename opened as an empty wave object
     '''
     def write_to_file(self):
-        wf = wave.open(FILENAME, 'wb')
+        wf = wave.open(self.filename, 'wb')
         wf.setnchannels(CHANNELS)
         wf.setsampwidth(self.p.get_sample_size(FORMAT))
         wf.setframerate(FS)
@@ -210,15 +210,24 @@ class do_record():
 
         wf.close()
         self.p.terminate()
-        print(FILENAME + " saved.\n")
-        FILES.append(FILENAME) # for demo only
+        print(self.filename + " saved.\n")
+        FILES.append(self.filename) # for demo only
+
+        self.continue_EDGAR()
+
+    def continue_EDGAR(self):
+        continue_EDGAR = next_steps(self.filename)
+        continue_EDGAR.run_get_melSpectrogram()
+        continue_EDGAR.run_loadModel()
+        continue_EDGAR.run_get_response()
+
 
 class next_steps():
-    def __init__(self, mSpec):
-        print("creating spectrogram")
-        self.mSpec = mSpec
+    def __init__(self, filename):
+        self.filename = filename
 
     def run_get_melSpectrogram(self):
+        self.mSpec = melSpectrogram(self.filename)
         self.mSpec.get_MelSpectrogram()
         self.mSpec.saveSpectrogram()
 
@@ -236,11 +245,6 @@ def main():
     record_instance.setup_record()
     record_instance.check_dB()
 
-    mSpec = melSpectrogram(FILENAME)
-    continue_EDGAR = next_steps(mSpec)
-    continue_EDGAR.run_get_melSpectrogram()
-    continue_EDGAR.run_loadModel()
-    continue_EDGAR.run_get_response()
 
 if __name__ == "__main__":
     main()
