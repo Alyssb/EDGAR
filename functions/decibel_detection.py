@@ -238,6 +238,11 @@ class next_steps():
         self.image_out = get_response(self.result)
         self.image_out.get_image()
 
+    def finish_up(self):
+        self.mSpec.deleteFile()
+        self.mSpec.saveFile()
+        self.image_out.destroy_image()
+
 # ********************************** main **********************************
 def main():
     # executes the do_record class
