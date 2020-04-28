@@ -24,13 +24,6 @@ class get_response:
 
 
     '''
-    function destroy_image
-    '''
-    def destroy_image(self):
-        self.window.destroy()
-
-
-    '''
     function: get_image
     displays an image based on value passed into class
     calls set_emotion and display_response()
@@ -46,7 +39,7 @@ class get_response:
         # set filepath to image location
         self.set_emotion()
 
-        # try to oad an image using OpenCV
+        # try to load an image using OpenCV
         try:
             print("image name: " + self.response)
             self.cv_img = cv2.cvtColor(cv2.imread(self.response_filepath + self.response), cv2.COLOR_BGR2RGB)
@@ -79,33 +72,30 @@ class get_response:
     '''
     function: display_response
     displays the image in a tkinter object for 1 second
-    THIS NEEDS TO BE CHANGED BUT IDK HOW
-    NOT FILLING IT OUT RIGHT NOW JUST TO CHANGE IT LATER
-    THIS IS FRUSTRATING AND TKINTER IS BAD
     local variables:
-        height
-        width
-        no_channels
-        canvas
-        photo
+        height (int):       height of image to be displayed
+        width (int):        width of image to be displayed
+        no_channels (int):  number of channels in image to be displayed
+        canvas (Canvas):    canvas to pack image into
+        photo (PhotoImage): image created
     '''
-    # displays the image
     def display_response(self):
+
         # Get the image dimensions (OpenCV stores image data as NumPy ndarray)
         height, width, no_channels = self.cv_img.shape
+
         # Create a canvas that can fit the above image
         canvas = tkinter.Canvas(self.window, width = width, height = height)
         canvas.pack()
+
         # Use PIL (Pillow) to convert the NumPy ndarray to a PhotoImage
         photo = PIL.ImageTk.PhotoImage(image = PIL.Image.fromarray(self.cv_img))
-        print(photo)
-        print("test5")
+
         # Add a PhotoImage to the Canvas
         canvas.create_image(0, 0, image=photo, anchor=tkinter.NW)
-        # Run the window loop
-        #self.window.mainloop()
+
         self.window.update()
-        self.window.after(1000 ,self.window.destroy())
+        self.window.after(3000 ,self.window.destroy())
 
 
 # ********************************** main **********************************

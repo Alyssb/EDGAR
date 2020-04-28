@@ -27,7 +27,6 @@ from os.path import exists
 
 # ***************************** class melSpectrogram *****************************
 
-
 class melSpectrogram:
 
     ''' init function '''

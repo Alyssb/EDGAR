@@ -241,7 +241,6 @@ class next_steps():
     def finish_up(self):
         self.mSpec.deleteFile()
         self.mSpec.saveFile()
-        self.image_out.destroy_image()
 
 # ********************************** main **********************************
 def main():
