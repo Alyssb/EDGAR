@@ -215,6 +215,11 @@ class do_record():
 
         self.continue_EDGAR()
 
+    '''
+    function: continue_EDGAR
+    entrypoint for the rest of EDGAR
+    calls and uses class next_steps()
+    '''
     def continue_EDGAR(self):
         continue_EDGAR = next_steps(self.filename)
         continue_EDGAR.run_get_melSpectrogram()
@@ -223,24 +228,51 @@ class do_record():
 
 
 class next_steps():
+    ''' init function '''
     def __init__(self, filename):
         self.filename = filename
 
+
+    '''
+    function: run_get_melspectrogram
+    runs get_melspectrogram
+    class variables:
+        mSpec (melSpectrogram): instance of class melSpectrogram
+    '''
     def run_get_melSpectrogram(self):
-        self.mSpec = melSpectrogram(self.filename)
-        self.mSpec.get_MelSpectrogram()
-        self.mSpec.saveSpectrogram()
+        self.mSpec = melSpectrogram(self.filename)  # creates an instance of melSpectrogram
+        self.mSpec.get_MelSpectrogram()             # creates a melspectrogram
+        self.mSpec.saveSpectrogram()                # saves created melspectrogram
 
+
+    '''
+    function: run_loadModel
+    runs loadModel
+    class variables:
+        result (int):   integer representation of emotion classification
+    '''
     def run_loadModel(self):
-        self.result = loadModel(self.mSpec.data)
+        self.result = loadModel(self.mSpec.data)    # runs an instance of loadModel
 
+
+    '''
+    function: run_get_response
+    runs get_response
+    class variables:
+        image_out (get_response):   instance of class get_response
+    '''
     def run_get_response(self):
-        self.image_out = get_response(self.result)
-        self.image_out.get_image()
+        self.image_out = get_response(self.result)  # creates an instance of get_response
+        self.image_out.get_image()                  # displays the image
 
+
+    '''
+    function: finish_up
+    deletes original WAV file
+    last step in EDGAR processing
+    '''
     def finish_up(self):
-        self.mSpec.deleteFile()
-        self.mSpec.saveFile()
+        self.mSpec.deleteFile()                     # deletes original WAV file
 
 # ********************************** main **********************************
 def main():

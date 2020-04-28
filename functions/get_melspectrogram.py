@@ -44,10 +44,6 @@ class melSpectrogram:
         S_dB (numpy array): power spectrogram with decibel units
     local variables:
         y (float array):    loaded WAV file
-        n_mels (int):       number of mel-filterbanks used
-        n_fft (int):        length of the FFT window
-        fmin (int):         lower frequency
-        fmax (int):         upper frequency
     '''
     def get_MelSpectrogram(self):
         y, self.sr = librosa.load(self.source_filename, self.samplerate)                                # Loads wav file for analysis
@@ -77,7 +73,7 @@ class melSpectrogram:
     local variables:
         fig (Figure):               figure to be saved
         canvas (FigureCanvasAgg):   canvas to hold the figure
-        ax
+        ax (int):                   defines the axis to use
     '''
     def saveSpectrogram(self):
         fig = plt.Figure()
@@ -96,6 +92,8 @@ class melSpectrogram:
     '''
     function: saveFile
     saves spectrogram as rgb npy array
+    parameters:
+        image (Figure):     the image to be saved
     class variables:
         filename (string):  filename to save npy array in
     local variables:
@@ -104,7 +102,6 @@ class melSpectrogram:
     def saveFile(self, image):
         unique_num = int(time.time())
         self.filename = 'mfcc-outputs\\output-' + str(unique_num)
-        # not sure what this line does
         save(self.filename, self)
         print("file " + self.filename + ".npy saved")
 
