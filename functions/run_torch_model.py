@@ -27,7 +27,17 @@ def loadModel(metrics):
     '''
     I don't have the energy to modularize this class right now
     it's just going to be like this.
+    parameters:
+        metrics (npy array):            npy array that represents the mfcc of a WAV file
+    returns:
+        preduction (int):               representation of the emotion classified by the model
+    local variables:
+        model (RecursiveScriptModule):  instance of the model testmodelsavewhole4.py
+        metrics (Tensor):               metrics parameter transformed into a tensor
+        output (Tensor):                Tensor that represents output of model
+        prediction (int):               integer representation of largest (most common) value in output
     '''
+
     # load and evaluate model (make function)
     model = torch.load("testmodelsavewhole4.pt", map_location=device)
     model.eval()
