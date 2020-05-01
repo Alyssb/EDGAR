@@ -49,7 +49,6 @@ THRESHOLD = 75                 # sets threshold in RMS: 317rms is equal to 60dB
 
 # for demo
 FILENAME = ""
-FILES = []
 # ********************************** class do_record **********************************
 class do_record():
     ''' init function '''
@@ -58,6 +57,9 @@ class do_record():
 
 
     '''
+    FR.01 EDGAR must record audio data
+    EIR.2 EDGAR shall allow users to input speech via microphone
+
     function: setup_record
     sets up a fresh recording stream
     MUST be executed before check_dB
@@ -81,6 +83,10 @@ class do_record():
 
 
     '''
+    FR.01 EDGAR must record audio data
+    DC.01 EDGAR must not require a wake word to listen
+    DC.03 EDGAR shall not use semantic context to identify emotion
+
     function: check_dB
     checks every chunk until 'Q' is pressed
     calls self.rms()
@@ -97,10 +103,13 @@ class do_record():
             else:
                 input = self.stream.read(CHUNK, exception_on_overflow = False) # input is a frame (chunk)
                 self.rms(input)
-        return FILES    # for demo only
 
 
     '''
+    FR.01 EDGAR must record audio data
+    DC.01 EDGAR must not require a wake word to listen
+    DC.03 EDGAR shall not use semantic context to identify emotion
+
     function: rms
     calculates RMS (root-mean-square) of current frame
     calls check_rms()
@@ -128,6 +137,10 @@ class do_record():
         self.check_rms(rms)
 
     '''
+    FR.01 EDGAR must record audio data
+    DC.01 EDGAR must not require a wake word to listen
+    DC.03 EDGAR shall not use semantic context to identify emotion
+
     function: check_rms
     checks if rms is greater than THRESHOLD
     if THRESHOLD is exceeded, calls get_audio_for_check()
@@ -141,6 +154,11 @@ class do_record():
 
 
     '''
+    FR.01 EDGAR must record audio data
+    DC.01 EDGAR must not require a wake word to listen
+    DC.03 EDGAR shall not use semantic context to identify emotion
+    EIR.2 EDGAR shall allow users to input speech via microphone
+
     function: get_audio_for_check
     records 1 second of audio to check if it's speech
     calls check_if_speech()
@@ -158,6 +176,10 @@ class do_record():
 
 
     '''
+    FR.01 EDGAR must record audio data
+    DC.01 EDGAR must not require a wake word to listen
+    DC.03 EDGAR shall not use semantic context to identify emotion
+
     function: check_if_speech
     uses speech_recognition library to determine if audio is speech
     if speech is detected, calls record_3sec()
@@ -174,6 +196,8 @@ class do_record():
 
 
     '''
+    FR.01 EDGAR must record audio data
+
     function: record_3sec
     appends all frames to self.frames for 3 seconds
     calls write_to_file()
@@ -196,6 +220,8 @@ class do_record():
 
 
     '''
+    NFR.02 EDGAR must convert audio data to WAV format
+
     function: write_to_file
     saves recorded audio as a WAV file
     local variables:
@@ -211,11 +237,13 @@ class do_record():
         wf.close()
         self.p.terminate()
         print(self.filename + " saved.\n")
-        FILES.append(self.filename) # for demo only
-
-        self.continue_EDGAR()
+        
 
     '''
+    NFR.03 EDGAR shall create LMS in less than 1 second
+    NFR.05 EDGAR must classify emotion of speaker in less than 3 seconds
+    NFR.07 EDGAR shall respond with detected emotion in less than 1 second
+
     function: continue_EDGAR
     entrypoint for the rest of EDGAR
     calls and uses class next_steps()
@@ -225,7 +253,6 @@ class do_record():
         continue_EDGAR.run_get_melSpectrogram()
         continue_EDGAR.run_loadModel()
         continue_EDGAR.run_get_response()
-        continue_EDGAR.finish_up()
 
 
 class next_steps():
@@ -235,6 +262,11 @@ class next_steps():
 
 
     '''
+    FR.02 EDGAR shall create a Log-mel spectrograph (LMS)
+    NFR.03 EDGAR shall create LMS in less than 1 second
+    NFR.04 EDGAR must be able to store LMS on host machine
+    LDR.0 EDGAR must not store audio data
+
     function: run_get_melspectrogram
     runs get_melspectrogram
     class variables:
@@ -244,9 +276,14 @@ class next_steps():
         self.mSpec = melSpectrogram(self.filename)  # creates an instance of melSpectrogram
         self.mSpec.get_MelSpectrogram()             # creates a melspectrogram
         self.mSpec.saveSpectrogram()                # saves created melspectrogram
+        self.mSpec.deleteFile()                     # deletes original WAV file
 
 
     '''
+    FR.03 EDGAR must classify the emotion of a speaker
+    NFR.05 EDGAR must be able to classify the emotion of the speaker in less than 3 seconds
+    NFR.06 EDGAR must correctly identify emotion at least 75% of the time
+
     function: run_loadModel
     runs loadModel
     class variables:
@@ -257,6 +294,8 @@ class next_steps():
         print("DETECTED EMOTION: ", self.result)
 
     '''
+    NFR.07 EDGAR shall respond with detected emotion in less than 1 second
+
     function: run_get_response
     runs get_response
     class variables:
@@ -267,20 +306,13 @@ class next_steps():
         self.image_out.get_image()                  # displays the image
 
 
-    '''
-    function: finish_up
-    deletes original WAV file
-    last step in EDGAR processing
-    '''
-    def finish_up(self):
-        self.mSpec.deleteFile()                     # deletes original WAV file
-
 # ********************************** main **********************************
 def main():
     # executes the do_record class
     record_instance = do_record()
     record_instance.setup_record()
     record_instance.check_dB()
+    record_instance.continue_EDGAR()
 
 
 if __name__ == "__main__":
