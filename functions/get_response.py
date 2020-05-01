@@ -95,7 +95,7 @@ class get_response:
         canvas.create_image(0, 0, image=photo, anchor=tkinter.NW)
 
         self.window.update()
-        self.window.after(3000 ,self.window.destroy())
+        self.window.after(3000, self.window.destroy())
 
 
 # ********************************** main **********************************

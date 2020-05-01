@@ -45,7 +45,7 @@ FS = 44100                      # record at 44100 samples per second
 # for RMS calculation
 SHORT_NORMALIZE = (1.0/32768.0) # factor for normalizing samples in a chunk
 SWIDTH = 2                      # factor for shorts per frame
-THRESHOLD = 100                 # sets threshold in RMS: 317rms is equal to 60dB
+THRESHOLD = 75                 # sets threshold in RMS: 317rms is equal to 60dB
 
 # for demo
 FILENAME = ""
@@ -225,6 +225,7 @@ class do_record():
         continue_EDGAR.run_get_melSpectrogram()
         continue_EDGAR.run_loadModel()
         continue_EDGAR.run_get_response()
+        continue_EDGAR.finish_up()
 
 
 class next_steps():
@@ -253,7 +254,7 @@ class next_steps():
     '''
     def run_loadModel(self):
         self.result = loadModel(self.mSpec.data)    # runs an instance of loadModel
-
+        print("DETECTED EMOTION: ", self.result)
 
     '''
     function: run_get_response

@@ -48,7 +48,7 @@ def loadModel(metrics):
     
     # reform tensor into correct shape
     metrics = metrics.unsqueeze(0)
-    metrics = metrics.permute(0,3,1,2) #0,3,1,2 or 0,3,2,1 0=1,1=40, 2=224, 3=3
+    metrics = metrics.permute(0,3,1,2) #0,3,1,2 or 0,3,2,1 0=1,1=40, 2=90, 3=3
     
     # send to device for analysis
     metrics = metrics.to(device)
