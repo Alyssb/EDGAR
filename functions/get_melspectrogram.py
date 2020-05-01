@@ -36,6 +36,10 @@ class melSpectrogram:
 
 
     '''
+    FR.02   EDGAR shall create a log-mel spectrograph (LMS)
+    NFR.03  EDGAR shall create LMS in less than 1 second
+
+
     function: get_MelSpectrogram
     creates a spectrogram from a WAV file
     class variables:
@@ -52,6 +56,10 @@ class melSpectrogram:
 
 
     '''
+    FR.02   EDGAR shall create a log-mel spectrograph (LMS)
+    NFR.03  EDGAR shall create LMS in less than 1 second
+    EIR.1   EDGAR shall be able to show the LMS to the user
+    
     function: displaySpectrogram
     displays the melspectrogram created
     uses built-in PyPlot functions
@@ -68,6 +76,10 @@ class melSpectrogram:
 
 
     '''
+    FR.02   EDGAR shall create a log-mel spectrograph (LMS)
+    NFR.03  EDGAR shall create LMS in less than 1 second
+    NFR.04  EDGAR must be able to store LMS on host machine
+    
     function: saveSpectrogram
     saves spectrogram as a png image
     local variables:
@@ -90,6 +102,10 @@ class melSpectrogram:
 
 
     '''
+    FR.02   EDGAR shall create a log-mel spectrograph (LMS)
+    NFR.03  EDGAR shall create LMS in less than 1 second
+    NFR.04  EDGAR must be able to store LMS on host machine
+
     function: saveFile
     saves spectrogram as rgb npy array
     parameters:
@@ -107,6 +123,7 @@ class melSpectrogram:
 
 
     '''
+    DC.02   EDGDAR must not retain audio files pot-processing
     function: deleteFile
     deletes original audio file
     '''
@@ -122,7 +139,7 @@ def main():
     print("main function of get_melspectrogram.py")
 
     # create instance of melSpectrogram
-    mSpec = melSpectrogram("live_audio\\1587785357.wav")
+    mSpec = melSpectrogram("live_audio\\1587785357.wav")    # will not work without this file
 
     # create melSpectrogram metric from file
     mSpec.get_MelSpectrogram()

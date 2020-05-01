@@ -57,8 +57,8 @@ class do_record():
 
 
     '''
-    FR.01 EDGAR must record audio data
-    EIR.2 EDGAR shall allow users to input speech via microphone
+    FR.01   EDGAR must record audio data
+    EIR.2   EDGAR shall allow users to input speech via microphone
 
     function: setup_record
     sets up a fresh recording stream
@@ -83,9 +83,9 @@ class do_record():
 
 
     '''
-    FR.01 EDGAR must record audio data
-    DC.01 EDGAR must not require a wake word to listen
-    DC.03 EDGAR shall not use semantic context to identify emotion
+    FR.01   EDGAR must record audio data
+    DC.01   EDGAR must not require a wake word to listen
+    DC.03   EDGAR shall not use semantic context to identify emotion
 
     function: check_dB
     checks every chunk until 'Q' is pressed
@@ -106,9 +106,9 @@ class do_record():
 
 
     '''
-    FR.01 EDGAR must record audio data
-    DC.01 EDGAR must not require a wake word to listen
-    DC.03 EDGAR shall not use semantic context to identify emotion
+    FR.01   EDGAR must record audio data
+    DC.01   EDGAR must not require a wake word to listen
+    DC.03   EDGAR shall not use semantic context to identify emotion
 
     function: rms
     calculates RMS (root-mean-square) of current frame
@@ -137,9 +137,9 @@ class do_record():
         self.check_rms(rms)
 
     '''
-    FR.01 EDGAR must record audio data
-    DC.01 EDGAR must not require a wake word to listen
-    DC.03 EDGAR shall not use semantic context to identify emotion
+    FR.01   EDGAR must record audio data
+    DC.01   EDGAR must not require a wake word to listen
+    DC.03   EDGAR shall not use semantic context to identify emotion
 
     function: check_rms
     checks if rms is greater than THRESHOLD
@@ -154,10 +154,10 @@ class do_record():
 
 
     '''
-    FR.01 EDGAR must record audio data
-    DC.01 EDGAR must not require a wake word to listen
-    DC.03 EDGAR shall not use semantic context to identify emotion
-    EIR.2 EDGAR shall allow users to input speech via microphone
+    FR.01   EDGAR must record audio data
+    DC.01   EDGAR must not require a wake word to listen
+    DC.03   EDGAR shall not use semantic context to identify emotion
+    EIR.2   EDGAR shall allow users to input speech via microphone
 
     function: get_audio_for_check
     records 1 second of audio to check if it's speech
@@ -176,9 +176,9 @@ class do_record():
 
 
     '''
-    FR.01 EDGAR must record audio data
-    DC.01 EDGAR must not require a wake word to listen
-    DC.03 EDGAR shall not use semantic context to identify emotion
+    FR.01   EDGAR must record audio data
+    DC.01   EDGAR must not require a wake word to listen
+    DC.03   EDGAR shall not use semantic context to identify emotion
 
     function: check_if_speech
     uses speech_recognition library to determine if audio is speech
@@ -196,7 +196,7 @@ class do_record():
 
 
     '''
-    FR.01 EDGAR must record audio data
+    FR.01   EDGAR must record audio data
 
     function: record_3sec
     appends all frames to self.frames for 3 seconds
@@ -220,7 +220,7 @@ class do_record():
 
 
     '''
-    NFR.02 EDGAR must convert audio data to WAV format
+    NFR.02  EDGAR must convert audio data to WAV format
 
     function: write_to_file
     saves recorded audio as a WAV file
@@ -240,9 +240,9 @@ class do_record():
         
 
     '''
-    NFR.03 EDGAR shall create LMS in less than 1 second
-    NFR.05 EDGAR must classify emotion of speaker in less than 3 seconds
-    NFR.07 EDGAR shall respond with detected emotion in less than 1 second
+    NFR.03  EDGAR shall create LMS in less than 1 second
+    NFR.05  EDGAR must classify emotion of speaker in less than 3 seconds
+    NFR.07  EDGAR shall respond with detected emotion in less than 1 second
 
     function: continue_EDGAR
     entrypoint for the rest of EDGAR
@@ -262,10 +262,10 @@ class next_steps():
 
 
     '''
-    FR.02 EDGAR shall create a Log-mel spectrograph (LMS)
-    NFR.03 EDGAR shall create LMS in less than 1 second
-    NFR.04 EDGAR must be able to store LMS on host machine
-    LDR.0 EDGAR must not store audio data
+    FR.02   EDGAR shall create a Log-mel spectrograph (LMS)
+    NFR.03  EDGAR shall create LMS in less than 1 second
+    NFR.04  EDGAR must be able to store LMS on host machine
+    LDR.1   EDGAR must not store audio data
 
     function: run_get_melspectrogram
     runs get_melspectrogram
@@ -280,9 +280,9 @@ class next_steps():
 
 
     '''
-    FR.03 EDGAR must classify the emotion of a speaker
-    NFR.05 EDGAR must be able to classify the emotion of the speaker in less than 3 seconds
-    NFR.06 EDGAR must correctly identify emotion at least 75% of the time
+    FR.03   EDGAR must classify the emotion of a speaker
+    NFR.05  EDGAR must be able to classify the emotion of the speaker in less than 3 seconds
+    NFR.06  EDGAR must correctly identify emotion at least 75% of the time
 
     function: run_loadModel
     runs loadModel
@@ -294,7 +294,7 @@ class next_steps():
         print("DETECTED EMOTION: ", self.result)
 
     '''
-    NFR.07 EDGAR shall respond with detected emotion in less than 1 second
+    NFR.07  EDGAR shall respond with detected emotion in less than 1 second
 
     function: run_get_response
     runs get_response
