@@ -2,11 +2,27 @@
 '''
 CSC450 SP2020 Group 4
 Missouri State University
+
 Passively listens to external audio
 If 60dB is exceeded,
     Check if input is speech data
     Record for 3 seconds if speech data is detected
     Save recording as a WAV file
+    Execute the rest of the EDGAR program
+
+FUNCTIONAL REQUIREMENTS
+FR.01
+FR.03
+NFR.02
+NFR.03
+NFR.04
+NFR.05
+NFR.06
+NFR.07
+DC.01
+DC.03
+EIR.2
+LDR.1
 '''
 
 # import path to file directory and change it to where our inputs are located

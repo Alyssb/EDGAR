@@ -4,6 +4,14 @@ CSC450 SP 2020 Group 4
 Missouri State University
 
 Creates, stores, and returns a spectrogram for a given audio file
+
+FUNCTIONAL REQUIREMENTS
+FR.02
+NFR.03
+NFR.04
+EIR.1
+DC.02
+LDR.1
 '''
 
 # ***************************** imports *****************************
@@ -124,6 +132,8 @@ class melSpectrogram:
 
     '''
     DC.02   EDGDAR must not retain audio files pot-processing
+    LDR.1   EDGAR must not store audio data
+
     function: deleteFile
     deletes original audio file
     '''

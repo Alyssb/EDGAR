@@ -1,7 +1,12 @@
 '''
 CSC450 SP2020 Group 4
 Missouri State University
+
 Displays an output based on calculated emotion
+
+FUNCTIONAL REQUIREMENTS
+FR.04
+NFR.07
 '''
 # ********************************** imports **********************************
 import cv2
@@ -22,6 +27,9 @@ class get_response:
 
 
     '''
+    FR.04   EDGAR must show classification to the user
+    NFR.07  EDGAR shall respond with detected emotion in less than 1 second
+
     function: get_image
     displays an output based on value passed into class
     calls set_emotion()
@@ -36,6 +44,9 @@ class get_response:
 
 
     '''
+    FR.04   EDGAR must show classification to the user
+    NFR.07  EDGAR shall respond with detected emotion in less than 1 second
+    
     function: set_emotion
     set output to proper emotion
     class variables:
