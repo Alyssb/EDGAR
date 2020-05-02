@@ -23,27 +23,23 @@ class get_response:
 
     '''
     function: get_image
-    displays an image based on value passed into class
-    calls set_emotion and display_response()
-    SHOULD BE SPLIT INTO TWO FUNCTIONS
-    class variables:
-        window (Tk):    instance of tkinter
-        cv_img (image): image loaded using OpenCV
+    displays an output based on value passed into class
+    calls set_emotion()
     '''
-    def get_image(self):
+    def get_output(self):
         self.window.title("Emotion Detected")
 
         # set filepath to image location
         self.set_emotion()
 
-        print("THE DETECTED EMOTION IS:\t" + self.response)
+        print("\nTHE DETECTED EMOTION IS:\t" + self.response)
 
 
     '''
     function: set_emotion
-    set filepath to image location
+    set output to proper emotion
     class variables:
-        self.response (string): name of image file to be used
+        self.response (string): name of emotion to be outputted
     '''
     # set the filename for the proper image file
     def set_emotion(self):
