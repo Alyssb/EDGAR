@@ -65,13 +65,13 @@ data_transforms = {
         # transforms.RandomResizedCrop(224),
         # transforms.RandomHorizontalFlip(),
         transforms.ToTensor(),
-        # transforms.Normalize([0.485, 0.456, 0.406], [0.229, 0.224, 0.225])
+        transforms.Normalize([0.485, 0.456, 0.406], [0.229, 0.224, 0.225])
     ]),
     'val': transforms.Compose([
         # transforms.Resize(256),
         # transforms.CenterCrop(224),
         transforms.ToTensor(),
-        # transforms.Normalize([0.485, 0.456, 0.406], [0.229, 0.224, 0.225])
+        transforms.Normalize([0.485, 0.456, 0.406], [0.229, 0.224, 0.225])
     ]),
 }
 
@@ -163,7 +163,7 @@ def train_model(model, criterion, optimizer, scheduler, num_epochs=25):
 
 if __name__ == '__main__':
     # Initailize model with pretrained resnet18 model.
-    model_conv = torchvision.models.resnet18(pretrained=True)
+    model_conv = torchvision.models.resnet18(pretrained=False, num_classes=5)
     # "Freeze" the weights on the pretrained model.
     for param in model_conv.parameters():
         param.requires_grad = False
@@ -172,7 +172,7 @@ if __name__ == '__main__':
     num_ftrs = model_conv.fc.in_features
     # Adding layers on the end of the pretrained model.
     # These layers will be the only layers trained while the model is running
-    model_conv.fc = nn.Linear(num_ftrs, 10)
+    model_conv.fc = nn.Linear(num_ftrs, 5)
 
     # Sending the model to the device it will be trained on
     model_conv = model_conv.to(device)
@@ -190,36 +190,11 @@ if __name__ == '__main__':
 
     # Train the model.
     model_conv = train_model(model_conv, criterion, optimizer_conv,
-                             exp_lr_scheduler, num_epochs=30)
+                             exp_lr_scheduler, num_epochs=15)
 
-    torch.save(model_conv.state_dict(), "testmodelsavestate.pt")
+    print(model_conv)
 
-    torch.save(model_conv, "testmodelsavewhole.pt")
-
-    #print(model_conv)
-
-##
-##    loadmodel = torchvision.models.resnet18(pretrained=True)
-##    # "Freeze" the weights on the pretrained model.
-##    for param in loadmodel.parameters():
-##        param.requires_grad = False
-##
-##    # Parameters of newly constructed modules have requires_grad=True by default
-##    num_ftrs = loadmodel.fc.in_features
-##    # Adding layers on the end of the pretrained model.
-##    # These layers will be the only layers trained while the model is running
-##    loadmodel.fc = nn.Linear(num_ftrs, 10)
-##
-##    # Sending the model to the device it will be trained on
-##    loadmodel = loadmodel.to(device)
-    #loadmodel = torchvision.models.resnet18(pretrained=True)
-    
-    #loadmodel.load_state_dict(torch.load("testmodelsavestate.pt"))
-    #loadmodel.eval()
-    #print(loadmodel.eval())
-    #model_conv.load_
-
-    model = torch.load("testmodelsavewhole.pt")
-    model.eval()
+    torch.save(model_conv.state_dict(), "modelsavestate2.pt")
+    torch.save(model_conv, "modelsavewhole2.pt")
 
     exit()
