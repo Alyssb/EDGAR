@@ -304,7 +304,7 @@ class next_steps():
     '''
     def run_get_response(self):
         self.image_out = get_response(self.result)  # creates an instance of get_response
-        self.image_out.get_image()                  # displays the image
+        # self.image_out.get_image()                  # displays the image
 
 
 # ********************************** main **********************************
