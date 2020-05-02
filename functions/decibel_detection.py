@@ -237,6 +237,7 @@ class do_record():
         wf.close()
         self.p.terminate()
         print(self.filename + " saved.\n")
+        self.continue_EDGAR()
         
 
     '''
@@ -312,7 +313,6 @@ def main():
     record_instance = do_record()
     record_instance.setup_record()
     record_instance.check_dB()
-    record_instance.continue_EDGAR()
 
 
 if __name__ == "__main__":
