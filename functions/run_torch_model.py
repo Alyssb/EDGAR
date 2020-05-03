@@ -4,6 +4,13 @@ Missouri State University
 
 Loads a saved model
 Runs a spectrogram through loaded model
+
+FUNCTIONAL REQUIREMENTS
+FR.01
+FR.04
+NFR.05
+NFR.06
+DC.03
 '''
 # ********************************** imports **********************************
 # general imports
@@ -54,6 +61,9 @@ class run_model:
 
 
     '''
+    FR.01   EDGAR must classify the emotion of a speaker
+    NFR.05  EDGAR must classify the emotion of the speaker in less than 3 seconds
+
     function load_model
     loads and evaluates model
     class variables:
@@ -68,6 +78,9 @@ class run_model:
 
 
     '''
+    FR.01   EDGAR must classify the emotion of a speaker
+    NFR.05  EDGAR must classify the emotion of the speaker in less than 3 seconds
+    
     function transform_metrics
     transforms metrics into a tensor of the correct shape and format
     class variables:
@@ -83,6 +96,10 @@ class run_model:
 
 
     '''
+    FR.01   EDGAR must classify the emotion of a speaker
+    NFR.05  EDGAR must classify the emotion of the speaker in less than 3 seconds
+    DC.03   EDGAR shall not use semantic context to identify emotion
+    
     function run_model
     runs model on tensor
     class variables:
@@ -102,6 +119,10 @@ class run_model:
         self.output = s(self.output)
 
     '''
+    FR.01   EDGAR must classify the emotion of a speaker
+    NFR.05  EDGAR must classify the emotion of the speaker in less than 3 seconds
+    NFR.06  EDGAR must correctly identify emotion at least 75% of the time
+
     function fine_tune
     applies weights to output to generate a more accurate prediction
     class variables:
@@ -116,6 +137,8 @@ class run_model:
 
 
     '''
+    FR.04   EDGAR must show classification to the user
+
     function print_output
     prints the weights of each emotion in an understandable way
     '''
@@ -136,6 +159,10 @@ class run_model:
 
 
     '''
+    FR.01   EDGAR must classify the emotion of a speaker
+    NFR.05  EDGAR must classify the emotion of the speaker in less than 3 seconds
+    DC.03   EDGAR shall not use semantic context to identify emotion
+    
     function get_prediction
     gets the prediction from the output
     returns:
