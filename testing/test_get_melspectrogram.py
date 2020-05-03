@@ -1,6 +1,6 @@
 '''
 CSC450 SP2020 Group 4
-03/08/2020
+Missouri State University
 
 MUST be run from EDGAR directory.
 '''

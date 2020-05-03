@@ -1,6 +1,6 @@
 '''
 CSC450 SP2020 Group 4
-03/28/2020
+Missouri State University
 
 MUST be run from EDGAR directory.
 '''
@@ -12,6 +12,7 @@ test cases:
     sad
     neutral
     invalid  input
+    runtime
 
 from test suite:
     FR.04-TC.01     system should show classification result in command line

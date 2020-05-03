@@ -35,6 +35,8 @@ from os.path import exists
 
 # ***************************** class melSpectrogram *****************************
 
+warnings.filterwarnings("ignore", category=SourceChangeWarning)
+
 class melSpectrogram:
 
     ''' init function '''
@@ -98,16 +100,14 @@ class melSpectrogram:
     def saveSpectrogram(self):
         fig = plt.Figure()
         canvas = FigureCanvas(fig)
-        ax = fig.add_subplot(111)   # I have no idea what this does
+        ax = fig.add_subplot(111)
         librosa.display.specshow(librosa.amplitude_to_db(self.S_dB, ref=max), ax=ax, y_axis='log', x_axis='time')
         fig.savefig('spec.png')
-        self.saveFile(fig)
 
         canvas.draw()
         self.data = frombuffer(fig.canvas.tostring_rgb(), dtype=uint8)
         self.data = self.data.reshape(fig.canvas.get_width_height()[::-1] + (3,))
-        # self.deleteFile() # uncomment for final implementation
-
+        self.saveFile()
 
     '''
     FR.02   EDGAR shall create a log-mel spectrograph (LMS)
@@ -116,17 +116,15 @@ class melSpectrogram:
 
     function: saveFile
     saves spectrogram as rgb npy array
-    parameters:
-        image (Figure):     the image to be saved
     class variables:
         filename (string):  filename to save npy array in
     local variables:
         unique_num (int):   current time in seconds, used to create unique filenames
     '''
-    def saveFile(self, image):
+    def saveFile(self):
         unique_num = int(time.time())
-        self.filename = 'numpy_output\\output-' + str(unique_num)
-        save(self.filename, self)
+        self.filename = 'numpy_output/output-' + str(unique_num)
+        save(self.filename, self.data)
         print("file " + self.filename + ".npy saved")
 
 

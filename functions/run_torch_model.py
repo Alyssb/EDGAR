@@ -18,6 +18,8 @@ DC.03
 import numpy as np
 import os
 import time
+import warnings
+warnings.filterwarnings("ignore")
 
 # pytorch imports3
 import torch
@@ -51,7 +53,9 @@ class run_model:
         # sets the device to either the available GPU or system CPU
         self.device = torch.device("cpu" if not (torch.cuda.is_available()) else "cuda:0")
 
-        #transform sets the incoming number array into a tensor and normalizes the image based off RGB values as per stated by ResNet's preferred input specifications
+        # transform sets the incoming number array into a tensor 
+        # normalizes the image based off RGB values 
+        # as per stated by ResNet's preferred input specifications
         self.transform = transforms.Compose([
                 transforms.ToTensor(),
                 transforms.Normalize([0.485, 0.456, 0.406], [0.229, 0.224, 0.225])
