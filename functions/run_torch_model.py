@@ -39,7 +39,7 @@ def loadModel(metrics):
     '''
 
     # load and evaluate model (make function)
-    model = torch.load("testmodelsavewhole4.pt", map_location=device)
+    model = torch.load("testmodelsavewhole2.pt", map_location=device)
     model.eval()
 
     # transform passed numpy array into a tensor

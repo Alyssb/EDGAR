@@ -35,8 +35,6 @@ class get_response:
     calls set_emotion()
     '''
     def get_output(self):
-        self.window.title("Emotion Detected")
-
         # set filepath to image location
         self.set_emotion()
 
