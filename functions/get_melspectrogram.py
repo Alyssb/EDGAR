@@ -125,7 +125,7 @@ class melSpectrogram:
     '''
     def saveFile(self, image):
         unique_num = int(time.time())
-        self.filename = 'mfcc-outputs\\output-' + str(unique_num)
+        self.filename = 'numpy_output\\output-' + str(unique_num)
         save(self.filename, self)
         print("file " + self.filename + ".npy saved")
 
