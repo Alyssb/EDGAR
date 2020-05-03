@@ -95,7 +95,7 @@ def test_runtime():
     responseObject = get_response.get_response(classification)
     responseObject.get_output()
 
-    print("TIME ELAPSED: ", (time.time() - current_time))
+    print("TIME ELAPSED: ", round(time.time() - current_time, 3), " seconds")
 
 
 def main():
@@ -105,6 +105,7 @@ def main():
     test_neutral()
     test_sad()
     test_invalid()
+    test_runtime()
 
 if __name__ == "__main__":
     main()
