@@ -305,8 +305,8 @@ class next_steps():
     class variables:
         result (int):   integer representation of emotion classification
     '''
-    def run_loadModel(self):
-        model_object = run_run_model(self.mSpec.data)
+    def run_run_model(self):
+        model_object = run_model(self.mSpec.data)
         model_object.load_model()
         model_object.transform_metrics()
         model_object.run_model()

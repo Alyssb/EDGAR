@@ -19,14 +19,7 @@ from torchvision import transforms
 import torch.optim as optim
 # ********************************** end imports **********************************
 
-# sets the device to either the available GPU or system CPU
-device = torch.device("cpu" if not (torch.cuda.is_available()) else "cuda:0")
 
-#transform sets the incoming number array into a tensor and normalizes the image based off RGB values as per stated by ResNet's preferred input specifications
-transform = transforms.Compose([
-        transforms.ToTensor(),
-        transforms.Normalize([0.485, 0.456, 0.406], [0.229, 0.224, 0.225])
-    ])
 
 '''
 function loadModel
@@ -56,35 +49,44 @@ class run_model:
         self.anger_weight = 0.75
         self.fear_weight = 0.835
         self.happy_weight = 0.8
-        self.neutral_weighht = 0.6
+        self.neutral_weight = 0.6
         self.sad_weight = 0.75 
+
+        # sets the device to either the available GPU or system CPU
+        self.device = torch.device("cpu" if not (torch.cuda.is_available()) else "cuda:0")
+
+        #transform sets the incoming number array into a tensor and normalizes the image based off RGB values as per stated by ResNet's preferred input specifications
+        self.transform = transforms.Compose([
+                transforms.ToTensor(),
+                transforms.Normalize([0.485, 0.456, 0.406], [0.229, 0.224, 0.225])
+            ])
 
     def load_model(self):
         # load and evaluate model (make function)
-        self.model = torch.load("modelsavewhole1.pt", map_location=device)
-        self.model = model.to(device)
+        self.model = torch.load("modelsavewhole1.pt", map_location=self.device)
+        self.model = self.model.to(self.device)
 
         self.model.eval()
         # transform passed numpy array into a tensor
 
     def transform_metrics(self):
-        self.metrics = transform(self.metrics)
+        self.metrics = self.transform(self.metrics)
     
         # reform tensor into correct shape, send to device, and data format
-        metrics = metrics.unsqueeze(0)
-        metrics = metrics.to(device)
-        metrics = metrics.float()
+        self.metrics = self.metrics.unsqueeze(0)
+        self.metrics = self.metrics.to(self.device)
+        self.metrics = self.metrics.float()
 
     def run_model(self):
         # run model on tensor
-        self.output = model(metrics)
+        self.output = self.model(self.metrics)
         #modify output based off Softmax to modify outputs to sum to 1
         m = nn.Softmax(dim=1)
-        self.output = m(output)
+        self.output = m(self.output)
     
         # apply sigmoid
         s = nn.Sigmoid()
-        self.output = s(output)
+        self.output = s(self.output)
 
     '''
     for the purpose of human readability, 
@@ -94,10 +96,10 @@ class run_model:
     def fine_tune(self):
         # original weights:     0.757352941, 0.990686275, 0.870588235, 0.624019608, 0.757352941
         # 'fine-tuned' weights: 0.75, 0.835, 0.80, 0.6, 0.75
-        self.weight = torch.tensor([anger_weight, fear_weight, happy_weight, neutral_weight, sad_weight])
-        self.weight = weight.to(device)
-        self.output = (output*weight)
-        
+        self.weight = torch.tensor([self.anger_weight, self.fear_weight, self.happy_weight, self.neutral_weight, self.sad_weight])
+        self.weight = self.weight.to(self.device)
+        self.output = (self.output*self.weight)
+
         print("WEIGHTS:")
         print("anger\tfear\thappy\tneutral\tsad")
         print(self.output[0], "\t", self.output[1], "\t", self.output[2], "\t", self.output[3], "\t", self.output[4])
