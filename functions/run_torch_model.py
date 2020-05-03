@@ -100,9 +100,21 @@ class run_model:
         self.weight = self.weight.to(self.device)
         self.output = (self.output*self.weight)
 
-        print("".join("WEIGHTS:".center(50)))
-        print("".join("ANGER".ljust(10)), "".join("FEAR".ljust(10)), "".join("HAPPY".ljust(10)), "".join("NEUTRAL".ljust(10)), "".join("SAD".ljust(10)))
-        print(round(self.output[0][0].item(), 3), "\t", round(self.output[0][1].item(), 3), "\t", round(self.output[0][2].item(), 3), "\t", round(self.output[0][3].item(), 3), "\t", round(self.output[0][4].item(), 3))
+
+    def print_output(self):
+        print("\n" + "".join("WEIGHTS:".center(50)))
+
+        print("".join("ANGER".ljust(10)), 
+              "".join("FEAR".ljust(10)), 
+              "".join("HAPPY".ljust(10)), 
+              "".join("NEUTRAL".ljust(10)), 
+              "".join("SAD".ljust(10)))
+
+        print("".join(str(round(self.output[0][0].item(), 3)).ljust(10)), 
+              "".join(str(round(self.output[0][1].item(), 3)).ljust(10)), 
+              "".join(str(round(self.output[0][2].item(), 3)).ljust(10)), 
+              "".join(str(round(self.output[0][3].item(), 3)).ljust(10)), 
+              "".join(str(round(self.output[0][4].item(), 3)).ljust(10)))
 
     def get_prediction(self):
         # get predicted emotion

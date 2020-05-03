@@ -311,8 +311,8 @@ class next_steps():
         model_object.transform_metrics()
         model_object.run_model()
         model_object.fine_tune()
+        model_object.print_output()
         self.result = model_object.get_prediction()
-        print("DETECTED EMOTION: ", self.result)
 
     '''
     NFR.07  EDGAR shall respond with detected emotion in less than 1 second
