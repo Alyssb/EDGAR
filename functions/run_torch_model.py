@@ -69,11 +69,11 @@ def loadModel(metrics, anger_weight=.75, fear_weight=.835, happy_weight=.8, neut
     m = nn.Softmax(dim=1)
     output = m(output)
     
-    #apply sigmoid to 
+    #apply sigmoid
     s = nn.Sigmoid()
     output = s(output)
-    #print(output)
-    #print(output)
+    print(output)
+    print(output)
 
     #for the purpose of human readability, the inference will apply weight to the ouput so that a proper response can be generated
     

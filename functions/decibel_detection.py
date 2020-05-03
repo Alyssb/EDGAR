@@ -95,7 +95,7 @@ class do_record():
                                   frames_per_buffer=CHUNK,
                                   input=True,
                                   output=True)
-        print("EDGAR is ready.")
+        print("EDGAR is ready. Press 'Q' to quit.")
 
 
     '''
@@ -111,7 +111,6 @@ class do_record():
         input (frame):      the current audio chunk
     '''
     def check_dB(self):
-        print("Listening... press \'Q\' to quit.")
         while True:
             if is_pressed('q'):
                 print("\nEDGAR has exited successfully.")
