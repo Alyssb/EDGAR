@@ -27,6 +27,8 @@ sys.path.append('./functions/')
 
 import decibel_detection
 
+import wave
+
 
 def setup_dd():
     dd = decibel_detection.do_record()
@@ -43,6 +45,14 @@ def skip_while():
     dd.setup_record()
     dd.input = dd.stream.read(1024, exception_on_overflow = False)
     return(dd.input)
+
+
+def skip_checks():
+    dd = decibel_detection.do_record()
+    dd.setup_record()
+    dd.cont = False
+    dd.record_3sec()
+    return dd
 
 
 def test_mic_chunk():
@@ -65,9 +75,28 @@ def test_mic_sr():
         print("\n\ttest_mic_sr failed")
 
 
+def test_recording_length():
+    # duration = number frames / framerate
+    # doesn't have to be exactly 3 seconds, just preferred to be around it
+    print("\nRunning test_recording_length\n")
+    dd = skip_checks()
+    filename = dd.filename
+    f = wave.open(filename, 'r')
+    frames = f.getnframes()
+    rate = f.getframerate()
+    f.close()
+    if (frames / rate) >= (0.95 * 3) and (frames / rate) <= (1.05 * 3):
+        print("\n\ttest_recording_length passed")
+    elif (frames / rate) <= (0.95 * 3):
+        print("\n\tRecording too short. test_recording_length failed")
+    elif (frames / rate) <= (1.05 * 3):
+        print("\n\tRecording too long. test_recording_length failed")
+
+
 def main():
     test_mic_chunk()
     test_mic_sr()
+    test_recording_length()
 
 if __name__ == '__main__':
     main()

@@ -65,11 +65,15 @@ THRESHOLD = 60                  # sets threshold in RMS: 317rms is equal to 60dB
 
 # for demo
 FILENAME = ""
+
+# for testing
+CONTINUE = True
 # ********************************** class do_record **********************************
 class do_record():
     ''' init function '''
     def __init__(self):
         print("EDGAR has started.")
+        self.cont = CONTINUE
 
 
     '''
@@ -227,7 +231,7 @@ class do_record():
         self.filename = "live_audio/" + str(self.unique_num) + ".wav"
 
         temp_time = time.time()
-        while(time.time() < (temp_time + 3)):
+        while(time.time() < (temp_time + 2.99)):
             data = self.stream.read(CHUNK, exception_on_overflow = False)
             self.frames.append(data)
         self.write_to_file()
@@ -252,7 +256,8 @@ class do_record():
         wf.close()
         self.p.terminate()
         print(self.filename + " saved.\n")
-        self.continue_EDGAR()
+        if self.cont:
+            self.continue_EDGAR()
         
 
     '''
