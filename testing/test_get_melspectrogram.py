@@ -9,6 +9,7 @@ test cases:
     displaySpectrogram works
     saveFile works
     deleteFile works
+    runtime
 
 from test suite
     FR.02-TC.01     system should create lms from wav files

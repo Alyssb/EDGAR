@@ -6,7 +6,9 @@ MUST be run from EDGAR directory.
 '''
 '''
 test cases:
+    valid output
     runtime
+    
 from test suite
     FR.03-TC.01     system should classify the emotion of a speaker's speech
     NFR.05-TC.01    edgar shall classify emotion of the speaker in less than 3 seconds

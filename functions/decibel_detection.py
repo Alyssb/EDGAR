@@ -116,8 +116,8 @@ class do_record():
                 print("\nEDGAR has exited successfully.")
                 break
             else:
-                input = self.stream.read(CHUNK, exception_on_overflow = False) # input is a frame (chunk)
-                self.rms(input)
+                self.input = self.stream.read(CHUNK, exception_on_overflow = False) # input is a frame (chunk)
+                self.rms(self.input)
 
 
     '''
