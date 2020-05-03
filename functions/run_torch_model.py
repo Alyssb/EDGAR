@@ -176,15 +176,3 @@ class run_model:
 # ********************************** main **********************************
 if __name__ == '__main__':
     print("main function of run_torch_model.py")
-
-    tester = np.load("test.npy")
-    print(loadModel(tester)) #tis a sad one
-        
-    tester = np.load("testhap.npy") #left here for possible copy/paste format to quickly input a single numpy image for input testing
-    print(loadModel(tester))
-    
-    tester = np.load("testfear.npy")
-    print(loadModel(tester))
-    
-    tester = np.load("testsad.npy")
-    print(loadModel(tester))
