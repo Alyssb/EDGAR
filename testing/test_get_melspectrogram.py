@@ -9,8 +9,6 @@ test cases:
     displaySpectrogram works
     saveFile works
     deleteFile works
-    Shape of Array
-    Size of Array
 
 from test suite
     FR.02-TC.01     system should create lms from wav files
@@ -20,8 +18,10 @@ from test suite
     DC.02-TC.01     system must delete audio files after LMS is generated
     LDR.01-TC.01    system should store LMS from WAV files
 '''
+import time
 import sys
 from os.path import exists
+from os import remove
 import numpy.testing as npy_test
 
 # for copying files
@@ -36,11 +36,13 @@ sys.path.append('./functions/')
 
 import get_melspectrogram
 
-filename = "testing/withSpeech3Sec.wav"
+filename = "./testing/testaudio.wav"
 
 
 def make_melspec(audio=filename):
     melspec = get_melspectrogram.melSpectrogram(audio)
+    melspec.get_MelSpectrogram()
+    melspec.saveSpectrogram()
     return (melspec)
 
 
@@ -48,7 +50,7 @@ def test_deleteFile_exists():
     print("\nRunning test_deleteFile_exists")
     # create a file that is a copy of filename
     # and then delete it with get_melspectrogram.py
-    tempname = "testing\\temp.wav"
+    tempname = "./testing/temp.wav"
     shutil.copyfile(filename, tempname)
     melspec = make_melspec(tempname)
     melspec.deleteFile()
@@ -60,15 +62,17 @@ def test_deleteFile_exists():
 
 def test_deleteFile_notExists():
     print("\nRunning test_deleteFile_notExists\n")
-    tempname = "testing\\temp.wav"
+    tempname = "./testing/temp.wav"
+    shutil.copyfile(filename, tempname)
     melspec = make_melspec(tempname)
+    remove(tempname)
     melspec.deleteFile()
     print("\nif output was:\n\tFILE ERROR: cannot remove file\n\tdeleteFile_notExists passed")
+
 
 def test_saveFile():
     print("\nRunning test_saveFile\n")
     melspec = make_melspec(filename)
-    melspec.get_MelSpectrogram()
     melspec.saveFile()
     tempname = melspec.filename
     if (exists(tempname + ".npy")):
@@ -76,31 +80,22 @@ def test_saveFile():
     else:
         print("\tsaveFile failed")
 
-def test_arrayShape():
-    # will not pass if padToLongest does not work
-    print("\nRunning test_arrayShape")
-    melspec = make_melspec()
-    npArray = melspec.get_MelSpectrogram()
-    temp = (40, 1067, 3)
-    if npArray.shape == temp:
-        print("\tarrayShape passed")
 
-
-def test_arraySize():
-    # will not pass if padToLongest does not work
-    print("\nRunning test_arraySize")
+def test_runtime():
+    # executes every function normally executed by EDGAR
+    print("\nRunning test_runtime\n")
+    current_time = time.time()
     melspec = make_melspec()
-    npArray = melspec.get_MelSpectrogram()
-    temp = (40, 1067, 3)
-    if npArray.ndim == len(temp):
-        print("\tarraySize passed")
+    melspec.saveFile()
+    melspec.source_filename = "./testing/temp.wav"
+    melspec.deleteFile()
+    print("TIME ELAPSED: ", round(time.time() - current_time, 3), " seconds")
 
 
 def test_displaySpectrogram():
     # at the end because spectrogram has to be manually exited
     print("\nRunning test_displaySpectrogram")
     melspec = make_melspec()
-    melspec.get_MelSpectrogram()
     melspec.displaySpectrogram()
     print("\tdisplaySpectrogram passed")
 
@@ -109,8 +104,7 @@ def main():
     test_deleteFile_exists()
     test_deleteFile_notExists()
     test_saveFile()
-    test_arrayShape()
-    test_arraySize()
+    test_runtime()
     # test_displaySpectrogram()
 
 

@@ -291,7 +291,8 @@ class next_steps():
     def run_get_melSpectrogram(self):
         self.mSpec = melSpectrogram(self.filename)  # creates an instance of melSpectrogram
         self.mSpec.get_MelSpectrogram()             # creates a melspectrogram
-        self.mSpec.saveSpectrogram()                # saves created melspectrogram
+        self.mSpec.saveSpectrogram()                # improves created melspectrogram
+        self.mSpec.saveFile()                       # saves created melspectrogram
         self.mSpec.deleteFile()                     # deletes original WAV file
 
 

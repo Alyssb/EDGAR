@@ -35,8 +35,6 @@ from os.path import exists
 
 # ***************************** class melSpectrogram *****************************
 
-warnings.filterwarnings("ignore", category=SourceChangeWarning)
-
 class melSpectrogram:
 
     ''' init function '''
@@ -107,7 +105,6 @@ class melSpectrogram:
         canvas.draw()
         self.data = frombuffer(fig.canvas.tostring_rgb(), dtype=uint8)
         self.data = self.data.reshape(fig.canvas.get_width_height()[::-1] + (3,))
-        self.saveFile()
 
     '''
     FR.02   EDGAR shall create a log-mel spectrograph (LMS)
