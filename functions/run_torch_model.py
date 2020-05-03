@@ -20,37 +20,28 @@ import torch.optim as optim
 # ********************************** end imports **********************************
 
 
+# ********************************** class run_model **********************************
 
-'''
-function loadModel
-loads a torch model 
-runs it on the inputted numpy array
-parameters:
-    metrics (npy array):            npy array that represents the mfcc of a WAV file
-optional parameters: (the weights do not need to be positive, sum to 1, or be below 1)
-    anger_weight (float):           float containing weight value for anger output, change per user customization, default of 0.75
-    fear_weight (float):            float containing weight value for fear output, change per user customization, default of 0.835
-    happy_weight (float):           float containing weight value for happy output, change per user customization, default of 0.8
-    neutral_weight (float):         float containing weight value for neutral output, change per user customization, default of 0.6
-    sad_weight (float):             float containing weight value for sad output, change per user customization, default of 0.75
-returns:
-    prediction (int):               representation of the emotion classified by the model
-local variables:
-    model (RecursiveScriptModule):  instance of the model modelsavewhole1.py
-    metrics (Tensor):               metrics parameter transformed into a tensor
-    weight (Tensor):                tensor list of weights of each emotion to balance output
-    output (Tensor):                Tensor that represents output of model
-    prediction (int):               integer representation of largest (most common) value in output
-'''
 class run_model:
 
-    def __init__(self, metrics):
+    '''
+    init function
+    parameters:
+        metrics (npy array):            npy array that represents the mfcc of a WAV file
+    optional parameters: (the weights do not need to be positive, sum to 1, or be below 1)
+        anger_weight (float):           float containing weight value for anger output, change per user customization, default of 0.75
+        fear_weight (float):            float containing weight value for fear output, change per user customization, default of 0.835
+        happy_weight (float):           float containing weight value for happy output, change per user customization, default of 0.8
+        neutral_weight (float):         float containing weight value for neutral output, change per user customization, default of 0.6
+        sad_weight (float):             float containing weight value for sad output, change per user customization, default of 0.75
+    '''
+    def __init__(self, metrics, anger_weight=0.75, fear_weight=0.835, happy_weight=0.8, neutral_weight=0.6, sad_weight=0.75):
         self.metrics = metrics.copy()
-        self.anger_weight = 0.75
-        self.fear_weight = 0.835
-        self.happy_weight = 0.8
-        self.neutral_weight = 0.6
-        self.sad_weight = 0.75 
+        self.anger_weight = anger_weight
+        self.fear_weight = fear_weight
+        self.happy_weight = happy_weight
+        self.neutral_weight = neutral_weight
+        self.sad_weight = sad_weight
 
         # sets the device to either the available GPU or system CPU
         self.device = torch.device("cpu" if not (torch.cuda.is_available()) else "cuda:0")
@@ -61,14 +52,27 @@ class run_model:
                 transforms.Normalize([0.485, 0.456, 0.406], [0.229, 0.224, 0.225])
             ])
 
+
+    '''
+    function load_model
+    loads and evaluates model
+    class variables:
+        model (RecursiveScriptModule):  instance of the model modelsavewhole1.py
+    '''
     def load_model(self):
-        # load and evaluate model (make function)
         self.model = torch.load("modelsavewhole1.pt", map_location=self.device)
         self.model = self.model.to(self.device)
 
-        self.model.eval()
-        # transform passed numpy array into a tensor
+        self.model.eval()   # transform passed numpy array into a tensor
 
+
+
+    '''
+    function transform_metrics
+    transforms metrics into a tensor of the correct shape and format
+    class variables:
+        metrics (Tensor):   metrics parameter transformed into a tensor
+    '''
     def transform_metrics(self):
         self.metrics = self.transform(self.metrics)
     
@@ -77,10 +81,19 @@ class run_model:
         self.metrics = self.metrics.to(self.device)
         self.metrics = self.metrics.float()
 
+
+    '''
+    function run_model
+    runs model on tensor
+    class variables:
+        output (Tensor):    Tensor that represents output of model
+    local variables:
+        m (Softmax):        modifies outputs to sum to 1
+    '''
     def run_model(self):
-        # run model on tensor
         self.output = self.model(self.metrics)
-        #modify output based off Softmax to modify outputs to sum to 1
+
+        # modify output based off Softmax to modify outputs to sum to 1
         m = nn.Softmax(dim=1)
         self.output = m(self.output)
     
@@ -89,9 +102,10 @@ class run_model:
         self.output = s(self.output)
 
     '''
-    for the purpose of human readability, 
-    the inference will apply weight to the output 
-    so that a more accurate response can be generated
+    function fine_tune
+    applies weights to output to generate a more accurate prediction
+    class variables:
+        weight (Tensor):                tensor list of weights of each emotion to balance output
     '''
     def fine_tune(self):
         # original weights:     0.757352941, 0.990686275, 0.870588235, 0.624019608, 0.757352941
@@ -101,6 +115,10 @@ class run_model:
         self.output = (self.output*self.weight)
 
 
+    '''
+    function print_output
+    prints the weights of each emotion in an understandable way
+    '''
     def print_output(self):
         print("\n" + "".join("WEIGHTS:".center(50)))
 
@@ -116,6 +134,13 @@ class run_model:
               "".join(str(round(self.output[0][3].item(), 3)).ljust(10)), 
               "".join(str(round(self.output[0][4].item(), 3)).ljust(10)))
 
+
+    '''
+    function get_prediction
+    gets the prediction from the output
+    returns:
+        prediction (int):   integer representation of largest (most common) value in output
+    '''
     def get_prediction(self):
         # get predicted emotion
         self.prediction = int(torch.argmax(self.output))    

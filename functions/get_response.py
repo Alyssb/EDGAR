@@ -38,7 +38,7 @@ class get_response:
         # set filepath to image location
         self.set_emotion()
 
-        print("\nTHE DETECTED EMOTION IS:\t" + self.response)
+        print("\nTHE DETECTED EMOTION IS:\t" + self.response + "\n")
 
 
     '''
