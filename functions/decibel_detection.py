@@ -61,7 +61,7 @@ FS = 44100                      # record at 44100 samples per second
 # for RMS calculation
 SHORT_NORMALIZE = (1.0/32768.0) # factor for normalizing samples in a chunk
 SWIDTH = 2                      # factor for shorts per frame
-THRESHOLD = 75                 # sets threshold in RMS: 317rms is equal to 60dB
+THRESHOLD = 60                  # sets threshold in RMS: 317rms is equal to 60dB
 
 # for demo
 FILENAME = ""
