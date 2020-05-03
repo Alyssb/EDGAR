@@ -1,3 +1,4 @@
+#! /usr/bin/env python
 '''
 CSC450 SP2020 Group 4 (Cory Jackson)
 Missouri State University
@@ -24,13 +25,10 @@ import torch.nn as nn
 import torchvision
 from torchvision import transforms
 import torch.optim as optim
-# ********************************** end imports **********************************
-
 
 # ********************************** class run_model **********************************
 
 class run_model:
-
     '''
     init function
     parameters:
@@ -76,7 +74,6 @@ class run_model:
         self.model.eval()   # transform passed numpy array into a tensor
 
 
-
     '''
     FR.01   EDGAR must classify the emotion of a speaker
     NFR.05  EDGAR must classify the emotion of the speaker in less than 3 seconds
@@ -106,6 +103,7 @@ class run_model:
         output (Tensor):    Tensor that represents output of model
     local variables:
         m (Softmax):        modifies outputs to sum to 1
+        s (Sigmoid):        sigmoid that can be applied to output
     '''
     def run_model(self):
         self.output = self.model(self.metrics)
