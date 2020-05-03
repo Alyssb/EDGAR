@@ -19,6 +19,7 @@ from test suite:
     EIR.01-TC.01    system should show the classification result to the user
 
 '''
+import time
 import sys
 sys.path.append('./functions/')
 
@@ -85,6 +86,16 @@ def test_invalid():
     responseObject = get_response.get_response(classification)
     responseObject.get_output()
     print("\ttest_invalid passed if output was:\t5 is not a valid classification")
+
+
+def test_runtime():
+    classification = 0
+    current_time = time.time()
+
+    responseObject = get_response.get_response(classification)
+    responseObject.get_output()
+
+    print("TIME ELAPSED: ", (time.time() - current_time))
 
 
 def main():
