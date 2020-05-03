@@ -102,7 +102,7 @@ class run_model:
 
         print("WEIGHTS:")
         print("anger\tfear\thappy\tneutral\tsad")
-        print(self.output[0], "\t", self.output[1], "\t", self.output[2], "\t", self.output[3], "\t", self.output[4])
+        print(self.output[0][0], "\t", self.output[0][1], "\t", self.output[0][2], "\t", self.output[0][3], "\t", self.output[0][4])
 
     def get_prediction(self):
         # get predicted emotion
