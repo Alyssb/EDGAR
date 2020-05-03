@@ -12,6 +12,12 @@ test cases:
     sad
     neutral
     invalid  input
+
+from test suite:
+    FR.04-TC.01 system should show classification result in command line
+    NFR.07-TC.01    edgar should respond with detected emotion in less than 1 second
+    EIR.01-TC.01    system should show the classification result to the user
+    
 '''
 import sys
 sys.path.insert(1, "C:\\Users\\alyss\\Documents\\EDGAR\\functions\\")

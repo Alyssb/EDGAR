@@ -11,6 +11,14 @@ test cases:
     deleteFile works
     Shape of Array
     Size of Array
+
+from test suite
+    FR.02-TC.01     system should create lms from wav files
+    FR.02-TC0.2     system should store LMS created from WAV files
+    NFR.03-TC.01    EDGAR should create lms in less than 1 second
+    NFR.04-TC.01    EDGAR shall store lms on host machine
+    DC.02-TC.01     system must delete audio files after LMS is generated
+    LDR.01-TC.01    system should store LMS from WAV files
 '''
 import sys
 from os.path import exists
