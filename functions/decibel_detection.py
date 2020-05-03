@@ -47,7 +47,7 @@ import speech_recognition as sr
 
 # function imports
 from get_melspectrogram import melSpectrogram
-from run_torch_model import loadModel
+from run_torch_model import run_model
 from output import response
 from get_response import get_response
 
@@ -267,7 +267,7 @@ class do_record():
     def continue_EDGAR(self):
         continue_EDGAR = next_steps(self.filename)
         continue_EDGAR.run_get_melSpectrogram()
-        continue_EDGAR.run_loadModel()
+        continue_EDGAR.run_run_model()
         continue_EDGAR.run_get_response()
 
 
@@ -300,12 +300,13 @@ class next_steps():
     NFR.05  EDGAR must be able to classify the emotion of the speaker in less than 3 seconds
     NFR.06  EDGAR must correctly identify emotion at least 75% of the time
 
-    function: run_loadModel
+    function: run_run_model
     runs loadModel
     class variables:
         result (int):   integer representation of emotion classification
     '''
     def run_loadModel(self):
+        model_object = run_run_model(self.mSpec.data)
         self.result = loadModel(self.mSpec.data)    # runs an instance of loadModel
         print("DETECTED EMOTION: ", self.result)
 
