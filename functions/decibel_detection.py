@@ -307,7 +307,11 @@ class next_steps():
     '''
     def run_loadModel(self):
         model_object = run_run_model(self.mSpec.data)
-        self.result = loadModel(self.mSpec.data)    # runs an instance of loadModel
+        model_object.load_model()
+        model_object.transform_metrics()
+        model_object.run_model()
+        model_object.fine_tune()
+        self.result = model_object.get_prediction()
         print("DETECTED EMOTION: ", self.result)
 
     '''
