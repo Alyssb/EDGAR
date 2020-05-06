@@ -47,7 +47,7 @@ import speech_recognition as sr
 
 # function imports
 from get_melspectrogram import melSpectrogram
-from run_torch_model import loadModel
+from run_torch_model import run_model
 from output import response
 from get_response import get_response
 
@@ -61,15 +61,19 @@ FS = 44100                      # record at 44100 samples per second
 # for RMS calculation
 SHORT_NORMALIZE = (1.0/32768.0) # factor for normalizing samples in a chunk
 SWIDTH = 2                      # factor for shorts per frame
-THRESHOLD = 75                 # sets threshold in RMS: 317rms is equal to 60dB
+THRESHOLD = 60                  # sets threshold in RMS: 317rms is equal to 60dB
 
 # for demo
 FILENAME = ""
+
+# for testing
+CONTINUE = True
 # ********************************** class do_record **********************************
 class do_record():
     ''' init function '''
     def __init__(self):
         print("EDGAR has started.")
+        self.cont = CONTINUE
 
 
     '''
@@ -95,7 +99,7 @@ class do_record():
                                   frames_per_buffer=CHUNK,
                                   input=True,
                                   output=True)
-        print("EDGAR is ready.")
+        print("EDGAR is ready. Press 'Q' to quit.")
 
 
     '''
@@ -111,14 +115,13 @@ class do_record():
         input (frame):      the current audio chunk
     '''
     def check_dB(self):
-        print("Listening... press \'Q\' to quit.")
         while True:
             if is_pressed('q'):
                 print("\nEDGAR has exited successfully.")
                 break
             else:
-                input = self.stream.read(CHUNK, exception_on_overflow = False) # input is a frame (chunk)
-                self.rms(input)
+                self.input = self.stream.read(CHUNK, exception_on_overflow = False) # input is a frame (chunk)
+                self.rms(self.input)
 
 
     '''
@@ -228,7 +231,7 @@ class do_record():
         self.filename = "live_audio/" + str(self.unique_num) + ".wav"
 
         temp_time = time.time()
-        while(time.time() < (temp_time + 3)):
+        while(time.time() < (temp_time + 2.99)):
             data = self.stream.read(CHUNK, exception_on_overflow = False)
             self.frames.append(data)
         self.write_to_file()
@@ -253,7 +256,8 @@ class do_record():
         wf.close()
         self.p.terminate()
         print(self.filename + " saved.\n")
-        self.continue_EDGAR()
+        if self.cont:
+            self.continue_EDGAR()
         
 
     '''
@@ -268,7 +272,7 @@ class do_record():
     def continue_EDGAR(self):
         continue_EDGAR = next_steps(self.filename)
         continue_EDGAR.run_get_melSpectrogram()
-        continue_EDGAR.run_loadModel()
+        continue_EDGAR.run_run_model()
         continue_EDGAR.run_get_response()
 
 
@@ -292,7 +296,8 @@ class next_steps():
     def run_get_melSpectrogram(self):
         self.mSpec = melSpectrogram(self.filename)  # creates an instance of melSpectrogram
         self.mSpec.get_MelSpectrogram()             # creates a melspectrogram
-        self.mSpec.saveSpectrogram()                # saves created melspectrogram
+        self.mSpec.saveSpectrogram()                # improves created melspectrogram
+        self.mSpec.saveFile()                       # saves created melspectrogram
         self.mSpec.deleteFile()                     # deletes original WAV file
 
 
@@ -301,14 +306,19 @@ class next_steps():
     NFR.05  EDGAR must be able to classify the emotion of the speaker in less than 3 seconds
     NFR.06  EDGAR must correctly identify emotion at least 75% of the time
 
-    function: run_loadModel
+    function: run_run_model
     runs loadModel
     class variables:
         result (int):   integer representation of emotion classification
     '''
-    def run_loadModel(self):
-        self.result = loadModel(self.mSpec.data)    # runs an instance of loadModel
-        print("DETECTED EMOTION: ", self.result)
+    def run_run_model(self):
+        model_object = run_model(self.mSpec.data)
+        model_object.load_model()
+        model_object.transform_metrics()
+        model_object.run_model()
+        model_object.fine_tune()
+        model_object.print_output()
+        self.result = model_object.get_prediction()
 
     '''
     NFR.07  EDGAR shall respond with detected emotion in less than 1 second

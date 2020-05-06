@@ -22,7 +22,6 @@ class get_response:
         classification (int):       classification of emotion
     '''
     def __init__(self, emo_num):
-        # self.response_filepath = ".\\response_image\\"
         self.classification = emo_num
 
 
@@ -30,15 +29,14 @@ class get_response:
     FR.04   EDGAR must show classification to the user
     NFR.07  EDGAR shall respond with detected emotion in less than 1 second
 
-    function: get_image
+    function: get_output
     displays an output based on value passed into class
     calls set_emotion()
     '''
     def get_output(self):
         # set filepath to image location
         self.set_emotion()
-
-        print("\nTHE DETECTED EMOTION IS:\t" + self.response)
+        print("\nTHE DETECTED EMOTION IS:\t" + self.response + "\n")
 
 
     '''
@@ -63,6 +61,7 @@ class get_response:
         elif self.classification == 4:
             self.response = "SAD"
         else:
+            self.response = "INVALID"
             print(self.classification, " is not a valid classification.")
 
 
