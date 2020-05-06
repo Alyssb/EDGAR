@@ -115,19 +115,30 @@ def test_write_to_file():
         print("\ttest_write_to_file failed")
 
 
-def total_runtime():
+def test_runtime():
     current_time = time.time()
-    dd = skip_while()
+    dd = skip_checks()
     print("TIME ELAPSED: ", round(time.time() - current_time, 3), " seconds")
+
 
 def test_melspec():
     print("not yet implemented")
 
+
 def test_model():
     print("not yet implemented")
 
+
 def test_response():
     print("not yet implemented")
+
+
+def total_runtime():
+    current_time = time.time()
+    dd = skip_checks()
+    dd.continue_EDGAR()
+    print("TIME ELAPSED: ", round(time.time() - current_time, 3), " seconds")
+
 
 def main():
     test_mic_chunk()
