@@ -22,7 +22,6 @@ matplotlib.use('Agg')
 
 from matplotlib.backends.backend_agg import FigureCanvasAgg as FigureCanvas, FigureCanvasAgg
 import matplotlib.pyplot as plt
-from scipy import io
 import time
 
 # audio imports
