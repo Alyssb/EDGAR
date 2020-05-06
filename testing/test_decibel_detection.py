@@ -23,12 +23,11 @@ from test suite:
     EIR.02-TC.01    system should allow users to input speech via microphone
 '''
 import sys
+import wave
 from os.path import exists
 sys.path.append('./functions/')
 
 import decibel_detection
-
-import wave
 
 
 def setup_dd():
@@ -75,6 +74,7 @@ def test_mic_sr():
     else:
         print("\n\ttest_mic_sr failed")
 
+
 def test_valid_wav():
     print("\nRunning test_valid_wav")
     dd = skip_checks()
@@ -113,6 +113,26 @@ def test_write_to_file():
     else:
         print("\ttest_write_to_file failed")
 
+def test_time_to_record():
+    print("not yet implemented")
+    
+
+
+def test_melspec():
+    print("not yet implemented")
+
+
+def test_model():
+    print("not yet implemented")
+
+
+def test_response():
+    print("not yet implemented")
+
+
+def test_overall_time():
+    print("not yet implemented")
+
 
 def main():
     test_mic_chunk()
@@ -120,6 +140,7 @@ def main():
     test_write_to_file()
     test_valid_wav()
     test_recording_length()
+
 
 if __name__ == '__main__':
     main()
