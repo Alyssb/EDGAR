@@ -23,6 +23,7 @@ from test suite:
     EIR.02-TC.01    system should allow users to input speech via microphone
 '''
 import sys
+import time
 from os.path import exists
 sys.path.append('./functions/')
 
@@ -114,12 +115,27 @@ def test_write_to_file():
         print("\ttest_write_to_file failed")
 
 
+def total_runtime():
+    current_time = time.time()
+    dd = skip_while()
+    print("TIME ELAPSED: ", round(time.time() - current_time, 3), " seconds")
+
+def test_melspec():
+    print("not yet implemented")
+
+def test_model():
+    print("not yet implemented")
+
+def test_response():
+    print("not yet implemented")
+
 def main():
     test_mic_chunk()
     test_mic_sr()
     test_write_to_file()
     test_valid_wav()
     test_recording_length()
+    total_runtime()
 
 if __name__ == '__main__':
     main()
