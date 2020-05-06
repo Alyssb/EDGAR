@@ -1,71 +1,71 @@
 '''
-CSC450 SP 2020 Group 4
-03/28/2020
-Function to display response to emotion detected
-'''
+CSC450 SP2020 Group 4
+Missouri State University
 
-import tkinter
+Displays an output based on calculated emotion
+
+FUNCTIONAL REQUIREMENTS
+FR.04
+NFR.07
+'''
+# ********************************** imports **********************************
 import cv2
 import PIL.Image, PIL.ImageTk
 
+# ********************************** class get_response **********************************
 class get_response:
-    # takes an integer value 1-5
-    # will get input from get_classification.py once implemented
+    '''
+    init function
+    parameters:
+        emo_num (integer 0-4):      classification value of emotion
+    class variables:
+        classification (int):       classification of emotion
+    '''
     def __init__(self, emo_num):
-        self.responseFilePath = "C:\\Users\\PremiumHamsters\\Documents\\EDGAR\\response_image\\" # CHANGE FILE PATH
         self.classification = emo_num
-        # self.classification = get_classification() #<--- uncomment and delete next line once get_classification is implemented
 
-    # gets the image and then displays it. Kind of spaghetti rn
-    def get_image(self):
-        self.window = tkinter.Tk()
-        self.window.title("Emotion Detected")
 
+    '''
+    FR.04   EDGAR must show classification to the user
+    NFR.07  EDGAR shall respond with detected emotion in less than 1 second
+
+    function: get_output
+    displays an output based on value passed into class
+    calls set_emotion()
+    '''
+    def get_output(self):
+        # set filepath to image location
         self.set_emotion()
+        print("\nTHE DETECTED EMOTION IS:\t" + self.response + "\n")
 
-        # Load an image using OpenCV
-        try:
-            self.cv_img = cv2.cvtColor(cv2.imread(self.responseFilePath + self.response), cv2.COLOR_BGR2RGB)
-            self.display_response()
-        except Exception as e:
-            print(e)
-            print("invalid filepath")
 
+    '''
+    FR.04   EDGAR must show classification to the user
+    NFR.07  EDGAR shall respond with detected emotion in less than 1 second
+    
+    function: set_emotion
+    set output to proper emotion
+    class variables:
+        self.response (string): name of emotion to be outputted
+    '''
     # set the filename for the proper image file
     def set_emotion(self):
         if self.classification == 0:
-            self.response = "mad.jpeg"
+            self.response = "ANGER"
         elif self.classification == 1:
-            self.response = "fear.jpeg"
+            self.response = "FEAR"
         elif self.classification == 2:
-            self.response = "happy.jpeg"
+            self.response = "HAPPY"
         elif self.classification == 3:
-            self.response = "neutral.jpeg"
+            self.response = "NEUTRAL"
         elif self.classification == 4:
-            self.response = "sad.jpeg"
+            self.response = "SAD"
         else:
+            self.response = "INVALID"
             print(self.classification, " is not a valid classification.")
 
-    # displays the image
-    def display_response(self):
-        # Get the image dimensions (OpenCV stores image data as NumPy ndarray)
-        height, width, no_channels = self.cv_img.shape
 
-        # Create a canvas that can fit the above image
-        canvas = tkinter.Canvas(self.window, width = width, height = height)
-        canvas.pack()
-
-        # Use PIL (Pillow) to convert the NumPy ndarray to a PhotoImage
-        photo = PIL.ImageTk.PhotoImage(image = PIL.Image.fromarray(self.cv_img))
-
-        # Add a PhotoImage to the Canvas
-        canvas.create_image(0, 0, image=photo, anchor=tkinter.NW)
-
-        # Run the window loop
-        #self.window.mainloop()
-        self.window.update()
-        self.window.after(1000 ,self.window.quit())
-
+# ********************************** main **********************************
 def main():
     print("Main function of get_response.py")
 

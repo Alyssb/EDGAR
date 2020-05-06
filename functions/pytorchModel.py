@@ -20,8 +20,7 @@ import os
 import copy
 
 plt.ion()
-#C:\\Users\\PremiumHamsters\\Documents\EDGAR\mine\model_training\metrics_stretched_no_xxx
-#FILEPATH = "C:\\Users\\PremiumHamsters\\EDGAR\\mine\\model_building\\organized_metrics\\"
+
 FILEPATH = "C:\\Users\\PremiumHamsters\\Documents\\EDGAR\\mine\\model_training\\organized_metrics\\"
 x_dim = 40
 y_dim = 224
@@ -65,18 +64,18 @@ data_transforms = {
         # transforms.RandomResizedCrop(224),
         # transforms.RandomHorizontalFlip(),
         transforms.ToTensor(),
-        # transforms.Normalize([0.485, 0.456, 0.406], [0.229, 0.224, 0.225])
+        transforms.Normalize([0.485, 0.456, 0.406], [0.229, 0.224, 0.225])
     ]),
     'val': transforms.Compose([
         # transforms.Resize(256),
         # transforms.CenterCrop(224),
         transforms.ToTensor(),
-        # transforms.Normalize([0.485, 0.456, 0.406], [0.229, 0.224, 0.225])
+        transforms.Normalize([0.485, 0.456, 0.406], [0.229, 0.224, 0.225])
     ]),
 }
 
 #data_dir = os.getcwd() + "\\mine\\model_training\\organized_metrics"
-data_dir = FILEPATH
+data_dir = FILEPATH #TODO
 
 image_datasets = {x: datasets.DatasetFolder(os.path.join(data_dir, x), loadNumpyFile,
                                             transform=data_transforms[x], extensions=("npy"))
@@ -87,9 +86,7 @@ dataloaders = {x: torch.utils.data.DataLoader(image_datasets[x], batch_size=4,
 dataset_sizes = {x: len(image_datasets[x]) for x in ['train', 'val']}
 class_names = image_datasets['train'].classes
 
-#print(torch.cuda.is_available())
 device = torch.device("cuda:0" if torch.cuda.is_available() else "cpu")
-
 
 def train_model(model, criterion, optimizer, scheduler, num_epochs=25):
     since = time.time()
@@ -124,7 +121,6 @@ def train_model(model, criterion, optimizer, scheduler, num_epochs=25):
                 with torch.set_grad_enabled(phase == 'train'):
                     outputs = model(inputs)
                     _, preds = torch.max(outputs, 1)
-                    #print(outputs, labels)
                     loss = criterion(outputs, labels)
 
                     # backward + optimize only if in training phase
@@ -172,7 +168,7 @@ if __name__ == '__main__':
     num_ftrs = model_conv.fc.in_features
     # Adding layers on the end of the pretrained model.
     # These layers will be the only layers trained while the model is running
-    model_conv.fc = nn.Linear(num_ftrs, 10)
+    model_conv.fc = nn.Linear(num_ftrs, 5)
 
     # Sending the model to the device it will be trained on
     model_conv = model_conv.to(device)
@@ -190,36 +186,9 @@ if __name__ == '__main__':
 
     # Train the model.
     model_conv = train_model(model_conv, criterion, optimizer_conv,
-                             exp_lr_scheduler, num_epochs=30)
+                             exp_lr_scheduler, num_epochs=15)
 
-    torch.save(model_conv.state_dict(), "testmodelsavestate.pt")
-
-    torch.save(model_conv, "testmodelsavewhole.pt")
-
-    #print(model_conv)
-
-##
-##    loadmodel = torchvision.models.resnet18(pretrained=True)
-##    # "Freeze" the weights on the pretrained model.
-##    for param in loadmodel.parameters():
-##        param.requires_grad = False
-##
-##    # Parameters of newly constructed modules have requires_grad=True by default
-##    num_ftrs = loadmodel.fc.in_features
-##    # Adding layers on the end of the pretrained model.
-##    # These layers will be the only layers trained while the model is running
-##    loadmodel.fc = nn.Linear(num_ftrs, 10)
-##
-##    # Sending the model to the device it will be trained on
-##    loadmodel = loadmodel.to(device)
-    #loadmodel = torchvision.models.resnet18(pretrained=True)
-    
-    #loadmodel.load_state_dict(torch.load("testmodelsavestate.pt"))
-    #loadmodel.eval()
-    #print(loadmodel.eval())
-    #model_conv.load_
-
-    model = torch.load("testmodelsavewhole.pt")
-    model.eval()
+    torch.save(model_conv.state_dict(), "modelsavestate2.pt")
+    torch.save(model_conv, "modelsavewhole2.pt")
 
     exit()

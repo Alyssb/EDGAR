@@ -1,0 +1,5 @@
+This folder of the EDGAR project contains third-party licenses, including licenses of third-party licenses for the third-party licenses and similar licenses even if not directly used by EDGAR but could be potentially implemented using previous third-party libraries parameters.
+
+Licensing information for SpeechRecognition can be found within the SpeechRecognition README. https://github.com/Uberi/speech_recognition/blob/master/README.rst#license
+
+SpeechRecognition distributes binaries from FLAC - speech_recognition/flac-win32.exe, speech_recognition/flac-linux-x86, and speech_recognition/flac-mac. These files are GPLv2-licensed and redistributable, as long as the terms of the GPL are satisfied. The FLAC binaries are an aggregate of separate programs, so these GPL restrictions do not apply to the library or your programs that use the library, only to FLAC itself.

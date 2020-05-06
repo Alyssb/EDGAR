@@ -5,7 +5,7 @@ Currently configured for demo 2 on 03/12/2020
 MUST be run from EDGAR directory.
 '''
 
-# import path to file directory and change it to where out inputs are located
+# import path to file directory and change it to where our inputs are located
 import sys
 sys.path.append('./CSC450/recording_audio/')
 sys.path.insert(1, './unused/')
@@ -29,33 +29,35 @@ def runDemo():
     #recording = get_audio()                 # creates an instance of get_audio.py
     #input_names = recording.prompt_user()   # creates .wav files and returns an array of names
 
-    recording = do_record()
-    recording.setup_record()
-    input_names = recording.check_dB()
+    # recording = do_record()
+    # recording.setup_record()
+    # input_names = recording.check_dB()
     since = time.time()
     
     #get_MFCC(input_names, 0, 512, 128, "delta")
     #get_spectrogram(input_names, 0)
     
-    for i in range(len(input_names)):
-        print("Audio file: " + input_names[i] + " created")     # prints after the files are created
+    # for i in range(len(input_names)):
+    #     # print("Audio file: " + input_names[i] + " created")     # prints after the files are created
         
-        mSpec = melSpectrogram(input_names[i])
-        melSpectrogram_nparray = mSpec.get_MelSpectrogram()     # creates a mel spectrogram for a given file
-        #mSpec.displaySpectrogram()
-        #print(melSpectrogram_nparray)                           # prints the array
-        #print("shape of array (should be 40, 1067, 3): ", 
-                #melSpectrogram_nparray.shape)
-        #print("size of array (should be 3): ", melSpectrogram_nparray.ndim)
-        #result = runModel(melSpectrogram_nparray)
-        result = loadModel(melSpectrogram_nparray)
-        response(result)
-        image_out = get_response(result)
-        image_out.get_image()
+    #     # mSpec = melSpectrogram(input_names[i])
+    #     mSpec = melSpectrogram("live_audio\\1587785357.wav")
+    #     mSpec.get_MelSpectrogram()     # creates a mel spectrogram for a given file
+    #     result = loadModel(mSpec.S_dB)
+    #     response(result)
+    #     image_out = get_response(result)
+    #     image_out.get_image()
 
         
-        mSpec.deleteFile()  # deletes original audio file to protect privacy
-        mSpec.saveFile()    # Saves 3D numpy output array to a file
+    #     mSpec.deleteFile()  # deletes original audio file to protect privacy
+    #     mSpec.saveFile()    # Saves 3D numpy output array to a file
+    mSpec = melSpectrogram("live_audio\\1587785357.wav")
+    mSpec.get_MelSpectrogram()     # creates a mel spectrogram for a given file
+    mSpec.saveSpectrogram()
+    result = loadModel(mSpec.data)
+    response(result)
+    image_out = get_response(result)
+    image_out.get_image()
     time_elapsed = time.time() - since
     print('Training complete in {:.0f}m {:.0f}s'.format(
     time_elapsed // 60, time_elapsed % 60))
