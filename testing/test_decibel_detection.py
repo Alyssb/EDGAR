@@ -23,6 +23,7 @@ from test suite:
     EIR.02-TC.01    system should allow users to input speech via microphone
 '''
 import sys
+from os.path import exists
 sys.path.append('./functions/')
 
 import decibel_detection
@@ -77,7 +78,7 @@ def test_mic_sr():
 
 def test_recording_length():
     # duration = number frames / framerate
-    # doesn't have to be exactly 3 seconds, just preferred to be around it
+    # doesn't have to be exactly 3 seconds anymore, just preferred to be around it
     print("\nRunning test_recording_length\n")
     dd = skip_checks()
     filename = dd.filename
@@ -93,10 +94,21 @@ def test_recording_length():
         print("\n\tRecording too long. test_recording_length failed")
 
 
+def test_write_to_file():
+    print("\nRunning test_write_to_file")
+    dd = skip_checks()
+    filename = dd.filename
+    if (exists(filename)):
+        print("\t" + filename + " created")
+        print("\ttest_write_to_file passed")
+    else:
+        print("\ttest_write_to_file failed")
+
 def main():
     test_mic_chunk()
     test_mic_sr()
     test_recording_length()
+    test_write_to_file()
 
 if __name__ == '__main__':
     main()
