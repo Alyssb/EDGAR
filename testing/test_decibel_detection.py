@@ -25,6 +25,7 @@ from test suite:
 import sys
 import time
 from os.path import exists
+import numpy as np
 sys.path.append('./functions/')
 
 import decibel_detection
@@ -76,8 +77,9 @@ def test_mic_sr():
     else:
         print("\n\ttest_mic_sr failed")
 
+
 def test_valid_wav():
-    print("\nRunning test_valid_wav")
+    print("\nRunning test_valid_wav\n")
     dd = skip_checks()
     filename = dd.filename
     if(wave.open(filename)):
@@ -105,7 +107,7 @@ def test_recording_length():
 
 
 def test_write_to_file():
-    print("\nRunning test_write_to_file")
+    print("\nRunning test_write_to_file\n")
     dd = skip_checks()
     filename = dd.filename
     if (exists(filename)):
@@ -116,36 +118,55 @@ def test_write_to_file():
 
 
 def test_runtime():
+    print("\nRunning test_runtime\n")
+    print("\nRunning test_runtime")
     current_time = time.time()
     dd = skip_checks()
     print("TIME ELAPSED: ", round(time.time() - current_time, 3), " seconds")
 
 
 def test_melspec():
-    print("not yet implemented")
+    # WILL DELETE YOUR WAV FILE
+    print("\nRunning test_melspec\n")
+    cont_dd = decibel_detection.next_steps("./testing/testaudio.wav")
+    cont_dd.run_get_melSpectrogram()    
+    print("\tIf no errors, test_melspec passed")
 
 
 def test_model():
-    print("not yet implemented")
+    print("\nRunning test_model\n")
+    cont_dd = decibel_detection.next_steps("./testing/testaudio.wav")
+    cont_dd.run_run_model(np.load("./testing/test_melspec.npy"))
+    print("\tIf no errors, test_model passed")
 
 
 def test_response():
-    print("not yet implemented")
+    print("\nRunning test_response\n")
+    cont_dd = decibel_detection.next_steps("./testing/testaudio.wav")
+    response = 0
+    cont_dd.run_get_response(response)
+    if(cont_dd.out.response == "ANGER"):
+        print("\ttest_resposnse passed")
 
 
 def total_runtime():
+    print("\nRunning total_runtime\n")
     current_time = time.time()
     dd = skip_checks()
     dd.continue_EDGAR()
-    print("TIME ELAPSED: ", round(time.time() - current_time, 3), " seconds")
+    print("TOTAL TIME ELAPSED: ", round(time.time() - current_time, 3), " seconds")
 
 
 def main():
     test_mic_chunk()
     test_mic_sr()
-    test_write_to_file()
     test_valid_wav()
     test_recording_length()
+    test_write_to_file()
+    test_runtime()
+    # test_melspec()    # commented because it deletes the WAV file. It passes.
+    test_model()
+    test_response()
     total_runtime()
 
 if __name__ == '__main__':

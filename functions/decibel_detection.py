@@ -152,8 +152,8 @@ class do_record():
         for sample in shorts:
             n = sample * SHORT_NORMALIZE
             sum_squares += n * n
-        rms = pow(sum_squares / count, 0.5)
-        self.check_rms(rms)
+        rms_val = pow(sum_squares / count, 0.5)
+        self.check_rms(rms_val)
 
     '''
     FR.01   EDGAR must record audio data
@@ -272,8 +272,8 @@ class do_record():
     def continue_EDGAR(self):
         continue_EDGAR = next_steps(self.filename)
         continue_EDGAR.run_get_melSpectrogram()
-        continue_EDGAR.run_run_model()
-        continue_EDGAR.run_get_response()
+        result = continue_EDGAR.run_run_model(continue_EDGAR.mSpec.data)
+        continue_EDGAR.run_get_response(result)
 
 
 class next_steps():
@@ -308,28 +308,35 @@ class next_steps():
 
     function: run_run_model
     runs loadModel
+    parameters:
+        data (Spectrogram): spectrogram created in run_get_melspectrogram
+    returns:
+        result (int):       integer representation of classification
     class variables:
-        result (int):   integer representation of emotion classification
+        result (int):       integer representation of emotion classification
     '''
-    def run_run_model(self):
-        model_object = run_model(self.mSpec.data)
+    def run_run_model(self, data):
+        model_object = run_model(data)
         model_object.load_model()
         model_object.transform_metrics()
         model_object.run_model()
         model_object.fine_tune()
         model_object.print_output()
         self.result = model_object.get_prediction()
+        return(self.result)
 
     '''
     NFR.07  EDGAR shall respond with detected emotion in less than 1 second
 
     function: run_get_response
     runs get_response
+    parameters:
+        result (int):               integer representation of emotion classification
     class variables:
         image_out (get_response):   instance of class get_response
     '''
-    def run_get_response(self):
-        self.out = get_response(self.result)  # creates an instance of get_response
+    def run_get_response(self, result):
+        self.out = get_response(result)  # creates an instance of get_response
         self.out.get_output()                  # displays the image
 
 
