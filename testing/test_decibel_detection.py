@@ -75,6 +75,15 @@ def test_mic_sr():
     else:
         print("\n\ttest_mic_sr failed")
 
+def test_valid_wav():
+    print("\nRunning test_valid_wav")
+    dd = skip_checks()
+    filename = dd.filename
+    if(wave.open(filename)):
+        print("\ttest_valid_wav passed")
+    else:
+        print("\ttest_valid_wav failed")
+
 
 def test_recording_length():
     # duration = number frames / framerate
@@ -104,21 +113,13 @@ def test_write_to_file():
     else:
         print("\ttest_write_to_file failed")
 
-def test_valid_wav():
-    print("\nRunning test_valid_wav")
-    dd = skip_checks()
-    filename = dd.filename
-    if(wave.open(filename)):
-        print("\ttest_valid_wav passed")
-    else:
-        print("\ttest_valid_wav failed")
 
 def main():
     test_mic_chunk()
     test_mic_sr()
     test_write_to_file()
-    test_recording_length()
     test_valid_wav()
+    test_recording_length()
 
 if __name__ == '__main__':
     main()
