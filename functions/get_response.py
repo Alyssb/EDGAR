@@ -7,8 +7,8 @@ Able to display an image, but does not
 NOTE: DISPLAYING IMAGE WILL SIGNIFICANTLY SLOW EXECUTION
 
 FUNCTIONAL REQUIREMENTS
-FR.04
-NFR.07
+FR.04   EDGAR must show classification to the user
+NFR.07  EDGAR shall respond with detected emotion in less than 1 second
 '''
 # ********************************** imports **********************************
 

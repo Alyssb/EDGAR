@@ -11,18 +11,18 @@ If 60dB is exceeded,
     Execute the rest of the EDGAR program
 
 FUNCTIONAL REQUIREMENTS
-FR.01
-FR.03
-NFR.02
-NFR.03
-NFR.04
-NFR.05
-NFR.06
-NFR.07
-DC.01
-DC.03
-EIR.2
-LDR.1
+FR.01   EDGAR must record audio data
+FR.03   EDGAR must classify the emotion of a speaker
+NFR.02  EDGAR must convert audio data to WAV format
+NFR.03  EDGAR shall create LMS in less than 1 second
+NFR.04  EDGAR must be able to store LMS on host machine
+NFR.05  EDGAR must classify emotion of speaker in less than 3 seconds
+NFR.06  EDGAR must correctly identify emotion at least 75% of the time
+NFR.07  EDGAR shall respond with detected emotion in less than 1 second
+DC.01   EDGAR must not require a wake word to listen
+DC.03   EDGAR shall not use semantic context to identify emotion
+EIR.2   EDGAR shall allow users to input speech via microphone
+LDR.1   EDGAR must not store audio data
 '''
 
 # import path to file directory and change it to where our inputs are located

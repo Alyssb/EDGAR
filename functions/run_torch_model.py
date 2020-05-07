@@ -7,11 +7,11 @@ Loads a saved model
 Runs a spectrogram through loaded model
 
 FUNCTIONAL REQUIREMENTS
-FR.01
-FR.04
-NFR.05
-NFR.06
-DC.03
+FR.01   EDGAR must classify the emotion of a speaker
+FR.04   EDGAR must show classification to the user
+NFR.05  EDGAR must classify the emotion of the speaker in less than 3 seconds
+NFR.06  EDGAR must correctly identify emotion at least 75% of the time
+DC.03   EDGAR shall not use semantic context to identify emotion
 '''
 # ********************************** imports **********************************
 # general imports

@@ -6,12 +6,12 @@ Missouri State University
 Creates, stores, and returns a spectrogram for a given audio file
 
 FUNCTIONAL REQUIREMENTS
-FR.02
-NFR.03
-NFR.04
-EIR.1
-DC.02
-LDR.1
+FR.02   EDGAR shall create a log-mel spectrograph (LMS)
+NFR.03  EDGAR shall create LMS in less than 1 second
+NFR.04  EDGAR must be able to store LMS on host machine
+EIR.1   EDGAR shall be able to show the LMS to the user
+DC.02   EDGDAR must not retain audio files pot-processing
+LDR.1   EDGAR must not store audio data
 '''
 
 # ***************************** imports *****************************
