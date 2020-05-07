@@ -10,7 +10,7 @@ FR.02   EDGAR shall create a log-mel spectrograph (LMS)
 NFR.03  EDGAR shall create LMS in less than 1 second
 NFR.04  EDGAR must be able to store LMS on host machine
 EIR.1   EDGAR shall be able to show the LMS to the user
-DC.02   EDGDAR must not retain audio files pot-processing
+DC.02   EDGDAR must not retain audio files post-processing
 LDR.1   EDGAR must not store audio data
 '''
 
@@ -125,7 +125,7 @@ class melSpectrogram:
 
 
     '''
-    DC.02   EDGDAR must not retain audio files pot-processing
+    DC.02   EDGDAR must not retain audio files post-processing
     LDR.1   EDGAR must not store audio data
 
     function: deleteFile

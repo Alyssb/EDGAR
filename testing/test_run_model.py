@@ -6,8 +6,8 @@ MUST be run from EDGAR directory.
 '''
 '''
 test cases:
-    valid output
-    runtime
+    Valid output
+    Runtime
     
 from test suite
     FR.03-TC.01     system should classify the emotion of a speaker's speech

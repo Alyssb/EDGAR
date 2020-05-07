@@ -13,6 +13,7 @@ If 60dB is exceeded,
 FUNCTIONAL REQUIREMENTS
 FR.01   EDGAR must record audio data
 FR.03   EDGAR must classify the emotion of a speaker
+NFR.01  EDGAR must record audio in segments 3 seconds in length
 NFR.02  EDGAR must convert audio data to WAV format
 NFR.03  EDGAR shall create LMS in less than 1 second
 NFR.04  EDGAR must be able to store LMS on host machine
@@ -216,6 +217,7 @@ class do_record():
 
     '''
     FR.01   EDGAR must record audio data
+    NFR.01  EDGAR must record audio in segments 3 seconds in length
 
     function: record_3sec
     appends all frames to self.frames for 3 seconds
