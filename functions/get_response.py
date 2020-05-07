@@ -13,9 +13,9 @@ NFR.07
 # ********************************** imports **********************************
 
 ''' uncomment if using EDGAR with images '''
-import cv2
-import tkinter
-import PIL.Image, PIL.ImageTk
+# import cv2
+# import tkinter
+# import PIL.Image, PIL.ImageTk
 
 # ********************************** class get_response **********************************
 class get_response:
@@ -41,7 +41,7 @@ class get_response:
     def get_output(self):
         # set filepath to image location
         self.set_emotion()
-        self.display_emotion()
+        # self.display_emotion()
         print("\nTHE DETECTED EMOTION IS:\t" + self.response + "\n")
 
 

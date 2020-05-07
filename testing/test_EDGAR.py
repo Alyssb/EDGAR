@@ -8,9 +8,19 @@ MUST be run from EDGAR directory.
 Tests EDGAR.py
 
 test cases:
+    Mic using stream
+    Mic using Speech Recognition
+    Length of recording
+    Ability to write to file
+    Whether created file is a valid WAV file
+    Runtime of audio collection
+    Call to get_melspectrogram
+    Call to run_torch_model.py
+    Call to get_response.py
+    Overall EDGAR runtime
 
 from test suite:
-    FR.01-TC.01     User should be able to record audio in system
+    FR.01-TC.01     user should be able to record audio in system
     FR.01-TC.02     audio length should not be more than 3 seconds
     FR.01-TC.03     audio collection should initiate recording of user's speech
     NFR.01-TC.01    edgar should pad audio data shorter than 3 seconds
