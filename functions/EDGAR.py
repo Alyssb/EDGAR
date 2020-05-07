@@ -68,6 +68,7 @@ FILENAME = ""
 
 # for testing
 CONTINUE = True
+TIME = time.time()
 # ********************************** class do_record **********************************
 class do_record():
     ''' init function '''
@@ -234,6 +235,7 @@ class do_record():
         while(time.time() < (temp_time + 2.99)):
             data = self.stream.read(CHUNK, exception_on_overflow = False)
             self.frames.append(data)
+        self.currentTime = time.time()
         self.write_to_file()
         self.setup_record()
 
@@ -274,6 +276,8 @@ class do_record():
         continue_EDGAR.run_get_melSpectrogram()
         result = continue_EDGAR.run_run_model(continue_EDGAR.mSpec.data)
         continue_EDGAR.run_get_response(result)
+        print("TIME ELAPSED: ", round(time.time() - self.currentTime, 3), " seconds")
+
 
 
 class next_steps():
