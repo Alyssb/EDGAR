@@ -34,6 +34,7 @@ sys.path.insert(1, './unused/')
 
 # ********************************** imports **********************************
 # general imports
+import psutil
 import time
 from struct import unpack
 from math import pow
@@ -169,6 +170,7 @@ class do_record():
     def check_rms(self, rms):
         if (rms * 1000) > THRESHOLD:
             print("Threshold exceeded.")
+            print("CPU USAGE: ", psutil.cpu_percent())
             self.get_audio_for_check()
 
 
@@ -189,7 +191,8 @@ class do_record():
     '''   
     def get_audio_for_check(self):
         self.r = sr.Recognizer()
-        with sr.Microphone() as source:                                 # use the default microphone as the audio source
+        with sr.Microphone() as source: 
+            print("CPU USAGE: ", psutil.cpu_percent())                                # use the default microphone as the audio source
             self.audio = self.r.listen(source, phrase_time_limit=0.99)  # records for 0.99 seconds to check if audio is speech
         self.check_if_speech()
 
@@ -208,6 +211,7 @@ class do_record():
         try:
             if len(self.r.recognize_google(self.audio)) > 0:
                 print("Speech has been detected.")
+                print("CPU USAGE: ", psutil.cpu_percent())
                 self.record_3sec()
         except sr.UnknownValueError:
             print("Could not understand. Speak again or press 'Q' to quit.")
@@ -230,6 +234,7 @@ class do_record():
     def record_3sec(self):
         self.unique_num = int(time.time())
         self.filename = "live_audio/" + str(self.unique_num) + ".wav"
+        print("CPU USAGE: ", psutil.cpu_percent())
 
         temp_time = time.time()
         while(time.time() < (temp_time + 2.99)):
@@ -258,7 +263,9 @@ class do_record():
         self.p.terminate()
         print(self.filename + " saved.\n")
         if self.cont:
+            print("CPU USAGE: ", psutil.cpu_percent())
             self.continue_EDGAR()
+        
         
 
     '''
@@ -271,6 +278,7 @@ class do_record():
     calls and uses class next_steps()
     '''
     def continue_EDGAR(self):
+        print("CPU USAGE: ", psutil.cpu_percent())
         continue_EDGAR = next_steps(self.filename)
         continue_EDGAR.run_get_melSpectrogram()
         result = continue_EDGAR.run_run_model(continue_EDGAR.mSpec.data)
@@ -301,6 +309,7 @@ class next_steps():
         self.mSpec.saveSpectrogram()                # improves created melspectrogram
         self.mSpec.saveFile()                       # saves created melspectrogram
         self.mSpec.deleteFile()                     # deletes original WAV file
+        print("CPU USAGE: ", psutil.cpu_percent())
 
 
     '''
@@ -325,6 +334,7 @@ class next_steps():
         model_object.fine_tune()
         model_object.print_output()
         self.result = model_object.get_prediction()
+        print("CPU USAGE: ", psutil.cpu_percent())
         return(self.result)
 
     '''
@@ -340,6 +350,7 @@ class next_steps():
     def run_get_response(self, result):
         self.out = get_response(result)  # creates an instance of get_response
         self.out.get_output()                  # displays the image
+        print("CPU USAGE: ", psutil.cpu_percent())
 
 
 # ********************************** main **********************************
