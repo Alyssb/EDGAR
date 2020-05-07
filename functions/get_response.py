@@ -70,6 +70,21 @@ class get_response:
             self.response = "INVALID"
             print(self.classification, " is not a valid classification.")
 
+
+    '''
+    FR.04   EDGAR must show classification to the user
+
+    function display_emotion
+    BRIEFLY displays an image to represent the detected emotion
+    local variables:
+        window (Tk):        instance of tkinter
+        cv_img (image):     image loaded using OpenCV
+        height (int):       height of image to be displayed
+        width (int):        width of image to be displayed
+        no_channels (int):  number of channels in image to be displayed
+        canvas (Canvas):    canvas to pack image into
+        photo (PhotoImage): image created
+    '''
     def display_emotion(self):
         window = tkinter.Tk()
         window.title("Emotion Detected")
