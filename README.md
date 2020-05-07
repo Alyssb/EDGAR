@@ -16,6 +16,7 @@ Project started with 1.4 as most recent release, 1.5 came out April 21, 2020 and
 
 CUDA functionality is optional in use and in install, and considering the various available CUDA versions available, including install instructions for every possibility for EDGAR is unrealistic; as such refer to "QUICK START LOCALLY" on https://pytorch.org/ in order to customize an install command specific to OS, Package(recommended: Pip or Conda), Language(Python), CUDA version (your version or choose "none" for a CPU-only PyTorch). If CUDA version is selected on a system that does not have a GPU with CUDA support, PyTorch will simply install the CPU version
 ![PyTorch install command generator](https://i.imgur.com/ax0Hsf5.png)
+
 One example command for a 1.5, windows, pip, python, cpu-only install would be: 
 `pip install torch==1.5.0+cpu torchvision==0.6.0+cpu -f https://download.pytorch.org/whl/torch_stable.html`
 
@@ -53,7 +54,9 @@ To run the speech classification system component of EDGAR, or what we like to c
 Once the directory has been change run the command (for Windows) `functions\EDGAR.py` to begin the main component of EDGAR. The command prompt and the commands just described should look somewhat like this: 
 ![run EDGAR component example](https://i.imgur.com/5aNcJls.png)
 
-To create a new model file run the command `dev_tools\functions\pytorchModel.py` from the same directory from the previous step. (highly recommending having CUDA installed, and a CUDA enabled PyTorch, or editing the file to reduce the epoch number to 1 if staying on cpu, as otherwise generating a new model file will take hours) 
+# Creating a Model
+To create a new model file run the command `dev_tools\functions\pytorchModel.py` from the same directory from the previous step. (highly recommending having CUDA installed, and a CUDA enabled PyTorch, or editing the file to reduce the epoch number to 1 if staying on cpu, as otherwise generating a new model file will take hours)
+
 You will need an unzipped "mine" folder in the base directory of EDGAR(You can create one using a copy of the IEMOCAP database, running read_sessions.py(also in dev_tools/functions), and running pytorch_format on the generated files from read_Sessions.py(also in dev_tools/functions). A blank file structure needed for the 'mine' folder is provided in dev_tools, first run read_session to generate the list of mel spectrogram numpy files and list of labels while having an unzipped IEMOCAP database folder in the base EDGAR directory, then run pytorch_format while having the 'mine' folder structure in base directory, both steps will take a fair amount of time to complete as thousands of files are being generated and shuffled around. 
 
 Once the numpy files are arranged within the 'mine' folder after pytorch_format, you can then run pytorchModel and generate your own model, it is highly recommended to look inside the pytorchModel file and change desired settings around before running it, including changing the name of the output model file as to not overwrite the provided model.
