@@ -3,13 +3,18 @@ CSC450 SP2020 Group 4
 Missouri State University
 
 Displays an output based on calculated emotion
+Able to display an image, but does not
+NOTE: DISPLAYING IMAGE WILL SIGNIFICANTLY SLOW EXECUTION
 
 FUNCTIONAL REQUIREMENTS
 FR.04
 NFR.07
 '''
 # ********************************** imports **********************************
+
+''' uncomment if using EDGAR with images '''
 import cv2
+import tkinter
 import PIL.Image, PIL.ImageTk
 
 # ********************************** class get_response **********************************
@@ -36,6 +41,7 @@ class get_response:
     def get_output(self):
         # set filepath to image location
         self.set_emotion()
+        self.display_emotion()
         print("\nTHE DETECTED EMOTION IS:\t" + self.response + "\n")
 
 
@@ -63,6 +69,28 @@ class get_response:
         else:
             self.response = "INVALID"
             print(self.classification, " is not a valid classification.")
+
+    def display_emotion(self):
+        window = tkinter.Tk()
+        window.title("Emotion Detected")
+
+        cv_img = cv2.cvtColor(cv2.imread("./response_image/" + self.response + ".jpeg"), cv2.COLOR_BGR2RGB)
+
+        # get the image dimensions (OpenCV stores image data as a NumPy ndarray)
+        height, width, no_channels = cv_img.shape
+
+        # create a canvas that can fit the above image
+        canvas = tkinter.Canvas(window, width = width, height = height)
+        canvas.pack()
+
+        # use PIL (Pillow) to convert the NumPy ndarray to a PhotoImage
+        photo = PIL.ImageTk.PhotoImage(image = PIL.Image.fromarray(cv_img))
+
+        # add a a PhotoImage to the Canvas
+        canvas.create_image(0, 0, image=photo, anchor=tkinter.NW)
+
+        window.update()
+        window.after(3000, window.destroy())
 
 
 # ********************************** main **********************************
