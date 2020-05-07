@@ -55,6 +55,7 @@ Once the directory has been change run the command (for Windows) `functions\EDGA
 
 To create a new model file run the command `dev_tools\functions\pytorchModel.py` from the same directory from the previous step. (highly recommending having CUDA installed, and a CUDA enabled PyTorch, or editing the file to reduce the epoch number to 1 if staying on cpu, as otherwise generating a new model file will take hours) 
 You will need an unzipped "mine" folder in the base directory of EDGAR(You can create one using a copy of the IEMOCAP database, running read_sessions.py(also in dev_tools/functions), and running pytorch_format on the generated files from read_Sessions.py(also in dev_tools/functions). A blank file structure needed for the 'mine' folder is provided in dev_tools, first run read_session to generate the list of mel spectrogram numpy files and list of labels while having an unzipped IEMOCAP database folder in the base EDGAR directory, then run pytorch_format while having the 'mine' folder structure in base directory, both steps will take a fair amount of time to complete as thousands of files are being generated and shuffled around. 
+
 Once the numpy files are arranged within the 'mine' folder after pytorch_format, you can then run pytorchModel and generate your own model, it is highly recommended to look inside the pytorchModel file and change desired settings around before running it, including changing the name of the output model file as to not overwrite the provided model.
 
 # The Team and Contact
