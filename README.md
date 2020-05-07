@@ -4,14 +4,17 @@ Speech Emotion Recognition has been a major area of study in computer science fo
 # Install
 
 ## Python 3 Requirements
-Python version 64bit 3.6.x (3.6.8) (https://www.python.org/ftp/python/3.6.8/python-3.6.8-amd64.exe)
+Python version 64-bit 3.6.x (3.6.8) (https://www.python.org/ftp/python/3.6.8/python-3.6.8-amd64.exe)
 (32-bit should work just fine but only a single link will be provided for the purposes of install instructions)
-Be sure to hit the checkbox to add Python to PATH
+Click the checkbox to add Python to PATH during the installation.
+
 ## PyTorch
 PyTorch version 1.4 or 1.5 
-(project started with 1.4 as most recent release, 1.5 came out April 21, 2020 and while a few cases were added to make sure 1.5 would function, the code has been tested and measured using 1.4 and the model was created on 1.4)
+Project started with 1.4 as most recent release, 1.5 came out April 21, 2020 and while a few cases were added to make sure 1.5 would function, the code has been tested and measured using 1.4 and the model was created on version 1.4
 
-CUDA functionality is optional in use and in install, and considering the various available CUDA versions available, including install instructions for every possibility for EDGAR is unrealistic; as such refer to "QUICK START LOCALLY" on https://pytorch.org/ in order to customize an install command specific to OS, Package(recommended: Pip or Conda), Language(Python), CUDA version(your version or choose "none" for a cpu-only PyTorch) (one example command for a 1.5, windows, pip, python, cpu-only install would be: 
+CUDA functionality is optional in use and in install, and considering the various available CUDA versions available, including install instructions for every possibility for EDGAR is unrealistic; as such refer to "QUICK START LOCALLY" on https://pytorch.org/ in order to customize an install command specific to OS, Package(recommended: Pip or Conda), Language(Python), CUDA version(your version or choose "none" for a cpu-only PyTorch) 
+![PyTorch install command generator](https://i.imgur.com/ax0Hsf5.png)
+One example command for a 1.5, windows, pip, python, cpu-only install would be: 
 `pip install torch==1.5.0+cpu torchvision==0.6.0+cpu -f https://download.pytorch.org/whl/torch_stable.html`
 
 If using CUDA or wishing to use CUDA, please follow NVIDIA's CUDA install instructions (windows: https://docs.nvidia.com/cuda/cuda-installation-guide-microsoft-windows/index.html)
@@ -39,13 +42,14 @@ As of writing these instructions the "numba" package in the pip system has had a
 
 ## EDGAR Download/Install
 Once the previous dependencies have been installed, EDGAR itself can be downloaded from its GitHub page at https://github.com/Alyssb/EDGAR
-You have a couple of options for downloading EDGAR, you can either use git via the command line or a git viewer with a GUI such as SourceTree, with either option you can download via HTTPS(recommended) via https://github.com/Alyssb/EDGAR.git or SSH via [git@github.com:Alyssb/EDGAR.git](git@github.com:Alyssb/EDGAR.git)
+You have a couple of options for downloading EDGAR, you can either use git via the command line or a git GUI such as [SourceTree](https://www.sourcetreeapp.com/), with either option you can download via HTTPS(recommended) via https://github.com/Alyssb/EDGAR.git or SSH via [git@github.com:Alyssb/EDGAR.git](git@github.com:Alyssb/EDGAR.git)
 
-Or if you don't have a preferred way of cloning repositories setup, you can instead download the project directly by going to https://github.com/Alyssb/EDGAR/archive/master.zip and unzipping the folder (We recommend 7-Zip but any archiving/zip software should work) to whatever directory you so desire but we recommend making a new folder for EDGAR exclusively to avoid file overriding and ease of use.
+Or if you don't have a preferred way of cloning repositories setup, you can instead download the project directly by going to https://github.com/Alyssb/EDGAR/archive/master.zip and unzipping the folder (We recommend [7-Zip](https://www.7-zip.org/download.html) but any archiving/zip software should work) to whatever directory you so desire but we recommend making a new folder for EDGAR exclusively to avoid file overriding and ease of use.
 
 # Run
 To run the speech classification system component of EDGAR, or what we like to call "Main EDGAR", open the command line/prompt (there are many ways to do this on any given operating system, for windows see here: https://www.lifewire.com/how-to-open-command-prompt-2618089) and change directory to the upper folder of where you placed the EDGAR files, for example if you named the folder "EDGAR-master" your change directory command (on windows) should look similar to this: `cd C:\Users\<username>\documents\EDGAR-master` if you were to search the available folders from this directory you should be able to see the functions folder, but not be inside of it. 
-Once the directory has been change run the command (for windows) `functions\EDGAR.py` to begin the main component of EDGAR. The command prompt and the commands just described should look somewhat like this: ![run EDGAR component example](https://i.imgur.com/5aNcJls.png)
+Once the directory has been change run the command (for windows) `functions\EDGAR.py` to begin the main component of EDGAR. The command prompt and the commands just described should look somewhat like this: 
+![run EDGAR component example](https://i.imgur.com/5aNcJls.png)
 
 To create a new model file run the command `dev_tools\functions\pytorchModel.py` from the same directory from the previous step. (highly recommending having CUDA installed, and a CUDA enabled PyTorch, or editing the file to reduce the epoch number to 1 if staying on cpu, as otherwise generating a new model file will take hours) 
 You will need an unzipped "mine" folder in the base directory of EDGAR(You can create one using a copy of the IEMOCAP database, running read_sessions.py(also in dev_tools/functions), and running pytorch_format on the generated files from read_Sessions.py(also in dev_tools/functions). A blank file structure needed for the 'mine' folder is provided in dev_tools, first run read_session to generate the list of mel spectrogram numpy files and list of labels while having an unzipped IEMOCAP database folder in the base EDGAR directory, then run pytorch_format while having the 'mine' folder structure in base directory, both steps will take a fair amount of time to complete as thousands of files are being generated and shuffled around. 
