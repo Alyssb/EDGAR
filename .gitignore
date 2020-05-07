@@ -11,5 +11,7 @@ label_list_stretched_no_xxx.npy
 /__pycache__/
 /model/
 /functions/__pycache__/
-/unused/__pycache__/
 /pytorchTutorial/*
+/.idea/
+/.vscode/
+/__pycache__/
