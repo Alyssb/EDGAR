@@ -15,6 +15,7 @@ PyTorch version 1.4 or 1.5
 Project started with 1.4 as most recent release, 1.5 came out April 21, 2020 and while a few cases were added to make sure 1.5 would function, the code has been tested and measured using 1.4 and the model was created on version 1.4
 
 CUDA functionality is optional in use and in install, and considering the various available CUDA versions available, including install instructions for every possibility for EDGAR is unrealistic; as such refer to "QUICK START LOCALLY" on https://pytorch.org/ in order to customize an install command specific to OS, Package(recommended: Pip or Conda), Language(Python), CUDA version (your version or choose "none" for a CPU-only PyTorch). If CUDA version is selected on a system that does not have a GPU with CUDA support, PyTorch will simply install the CPU version
+
 ![PyTorch install command generator](https://i.imgur.com/ax0Hsf5.png)
 
 One example command for a 1.5, windows, pip, python, cpu-only install would be: 
