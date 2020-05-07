@@ -49,7 +49,6 @@ import speech_recognition as sr
 # function imports
 from get_melspectrogram import melSpectrogram
 from run_torch_model import run_model
-from output import response
 from get_response import get_response
 
 # ********************************** global variables **********************************
